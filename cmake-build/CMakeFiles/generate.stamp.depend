@@ -1,0 +1,29 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeCXXInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Compiler/MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/FindVulkan.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-Initialize.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.27/Modules/Platform/WindowsPaths.cmake
+F:/dev/git-ct/cpp project/PrimalDawnEngine/CMakeLists.txt
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/CMakeFiles/3.27.7/CMakeRCCompiler.cmake
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/CMakeFiles/3.27.7/CMakeSystem.cmake
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake/FindSDL2.cmake
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake/FindVulkan.cmake
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake/copydll.cmake
+F:/dev/git-ct/vcpkg/scripts/buildsystems/vcpkg.cmake

@@ -1,0 +1,4 @@
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/CMakeFiles/PrimalDawnEngine.dir
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/CMakeFiles/ALL_BUILD.dir
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/CMakeFiles/ZERO_CHECK.dir
+F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/sandbox/CMakeFiles/sandbox.dir
