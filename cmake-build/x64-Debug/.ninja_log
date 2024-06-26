@@ -1,12 +1,6 @@
 # ninja log v5
-6	2028	7409425426618935	CMakeFiles/PrimalDawnEngine.dir/src/engine.cpp.obj	a2cfd049b918b5e6
-2	2053	7409425426866935	CMakeFiles/PrimalDawnEngine.dir/src/context.cpp.obj	c5c99e7944cb9ede
-8	2141	7409425427739899	sandbox/CMakeFiles/sandbox.dir/sandbox.cpp.obj	6c7bffd96ab88d6e
-2053	2215	7409425427348060	PrimalDawnEngine.lib	6714cf48840f156c
-2215	3684	7409425438880065	sandbox/sandbox.exe	163153ccd28140ed
-3	2264	7409428485904850	sandbox/CMakeFiles/sandbox.dir/sandbox.cpp.obj	6c7bffd96ab88d6e
-2264	3118	7409428488796536	sandbox/sandbox.exe	163153ccd28140ed
-21	2538	7409438343808926	sandbox/CMakeFiles/sandbox.dir/sandbox.cpp.obj	6c7bffd96ab88d6e
-4	2141	7409438671213841	CMakeFiles/PrimalDawnEngine.dir/src/context.cpp.obj	c5c99e7944cb9ede
-2141	2286	7409438671690003	PrimalDawnEngine.lib	6714cf48840f156c
-2286	3304	7409438676372250	sandbox/sandbox.exe	163153ccd28140ed
+27	2735	7409467755338948	CMakeFiles/PrimalDawnEngine.dir/src/engine.cpp.obj	a2cfd049b918b5e6
+21	2286	7409468466236499	CMakeFiles/PrimalDawnEngine.dir/src/context.cpp.obj	c5c99e7944cb9ede
+31	2917	7409467757154306	sandbox/CMakeFiles/sandbox.dir/sandbox.cpp.obj	6c7bffd96ab88d6e
+2286	2388	7409468466677940	PrimalDawnEngine.lib	6714cf48840f156c
+2388	3099	7409468469837469	sandbox/sandbox.exe	163153ccd28140ed
