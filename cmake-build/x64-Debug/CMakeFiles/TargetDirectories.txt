@@ -1,6 +1,0 @@
-F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/x64-Debug/CMakeFiles/PrimalDawnEngine.dir
-F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/x64-Debug/CMakeFiles/edit_cache.dir
-F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/x64-Debug/CMakeFiles/rebuild_cache.dir
-F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/x64-Debug/sandbox/CMakeFiles/sandbox.dir
-F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/x64-Debug/sandbox/CMakeFiles/edit_cache.dir
-F:/dev/git-ct/cpp project/PrimalDawnEngine/cmake-build/x64-Debug/sandbox/CMakeFiles/rebuild_cache.dir
