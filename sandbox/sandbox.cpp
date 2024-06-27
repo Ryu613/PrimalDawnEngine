@@ -19,7 +19,24 @@ int main(int argc, char** argv) {
     bool shouldClose = false;
     SDL_Event event;
 
-    engine::Init();
+    // 取vulkan实例的扩展, 第一次取数量，第二次才是真正取扩展
+    unsigned int count;
+    SDL_Vulkan_GetInstanceExtensions(window, &count, nullptr);
+    std::vector<const char*> extensions(count);
+    SDL_Vulkan_GetInstanceExtensions(window, &count, extensions.data());
+
+    //for (auto& extension : extensions) {
+    //    std::cout << extension << std::endl;
+    //}
+
+    engine::Init(extensions,
+        [&](vk::Instance instance) {
+            VkSurfaceKHR surface;
+            if (!SDL_Vulkan_CreateSurface(window, instance, &surface)) {
+                throw std::runtime_error("can't create surface");
+            }
+            return surface;
+        }, 1024, 768);
 
     while (!shouldClose) {
         while (SDL_PollEvent(&event)) {
