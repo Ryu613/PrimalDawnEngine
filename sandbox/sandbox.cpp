@@ -36,7 +36,9 @@ int main(int argc, char** argv) {
                 throw std::runtime_error("can't create surface");
             }
             return surface;
-        }, 1024, 768);
+        }, 1024, 720);
+
+    auto& renderer = engine::GetRenderer();
 
     while (!shouldClose) {
         while (SDL_PollEvent(&event)) {
@@ -44,6 +46,7 @@ int main(int argc, char** argv) {
                 shouldClose = true;
             }
         }
+        renderer.render();
     }
 
     engine::Quit();

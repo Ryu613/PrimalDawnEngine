@@ -19,16 +19,14 @@ namespace engine {
 
         };
 
-        struct image {
-
-        };
-
         SwapchainInfo info;
         std::vector<vk::Image> images;
         std::vector<vk::ImageView> imageViews;
+        std::vector<vk::Framebuffer> framebuffers;
 
-        void queryInfo(int w, int h);
-        void getImages();
-        void createImageViews();
+        void QueryInfo(int w, int h);
+        void GetImages();
+        void CreateImageViews();
+        void CreateFramebuffers(int w, int h);
     };
 }

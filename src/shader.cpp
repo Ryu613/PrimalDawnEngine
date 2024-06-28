@@ -18,11 +18,11 @@ namespace engine {
     void Shader::initStage() {
         stage_.resize(2);
         stage_[0].setStage(vk::ShaderStageFlagBits::eVertex)
-            .setModule(Shader::GetInstance().vertexModule)
+            .setModule(vertexModule)
             // 指定入口函数
             .setPName("main");
-        stage_[1].setStage(vk::ShaderStageFlagBits::eVertex)
-            .setModule(Shader::GetInstance().fragmentModule)
+        stage_[1].setStage(vk::ShaderStageFlagBits::eFragment)
+            .setModule(fragmentModule)
             // 指定入口函数
             .setPName("main");
     }
@@ -36,6 +36,8 @@ namespace engine {
         createInfo.setCodeSize(fragSource.size())
             .setPCode((uint32_t*)fragSource.data());
         fragmentModule = Context::GetInstance().logicDevice.createShaderModule(createInfo);
+
+        initStage();
     }
 
     Shader::~Shader() {

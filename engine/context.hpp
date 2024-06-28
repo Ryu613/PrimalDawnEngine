@@ -7,6 +7,7 @@
 #include "tool.hpp"
 #include "swapchain.hpp"
 #include "render_process.hpp"
+#include "renderer.hpp"
 /*
     上下文（单例）
 */
@@ -35,6 +36,7 @@ namespace engine {
         vk::SurfaceKHR surface;
         std::unique_ptr<Swapchain> swapchain;
         std::unique_ptr<RenderProcess> renderProcess;
+        std::unique_ptr<Renderer> renderer;
         // 逻辑设备队列的索引
         QueueFamilyIndices queueFamilyIndices;
 
@@ -44,6 +46,10 @@ namespace engine {
 
         void DestroySwapchain() {
             swapchain.reset();
+        }
+
+        void InitRenderer() {
+            renderer.reset(new Renderer);
         }
     private:
         Context(const std::vector<const char*>& extensions, CreateSurfaceFunc func);

@@ -3,7 +3,7 @@
 
 namespace engine {
     Swapchain::Swapchain(int w, int h) {
-        queryInfo(w, h);
+        QueryInfo(w, h);
         vk::SwapchainCreateInfoKHR createInfo;
         // 是否裁切图片(当图片大于屏幕大小时)
         createInfo.setClipped(true)
@@ -37,22 +37,28 @@ namespace engine {
 
         swapchain = Context::GetInstance().logicDevice.createSwapchainKHR(createInfo);
 
+        GetImages();
+        CreateImageViews();
+
     }
     Swapchain::~Swapchain() {
+        for (auto& framebuffer : framebuffers) {
+            Context::GetInstance().logicDevice.destroyFramebuffer(framebuffer);
+        }
         for (auto& view : imageViews) {
             Context::GetInstance().logicDevice.destroyImageView(view);
         }
         Context::GetInstance().logicDevice.destroySwapchainKHR(swapchain);
     }
 
-    void Swapchain::queryInfo(int w, int h) {
+    void Swapchain::QueryInfo(int w, int h) {
         auto& physicalDevice = Context::GetInstance().physicalDevice;
         auto& surface = Context::GetInstance().surface;
         // 颜色空间和格式
         auto formats = physicalDevice.getSurfaceFormatsKHR(surface);
         info.format = formats[0];
         for (const auto& format : formats) {
-            if (format.format == vk::Format::eR8G8B8A8Srgb && format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
+            if (format.format == vk::Format::eB8G8R8A8Sint && format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
                 info.format = format;
                 break;
             }
@@ -80,11 +86,11 @@ namespace engine {
         }
     }
 
-    void Swapchain::getImages() {
+    void Swapchain::GetImages() {
         images = Context::GetInstance().logicDevice.getSwapchainImagesKHR(swapchain);
     }
 
-    void Swapchain::createImageViews() {
+    void Swapchain::CreateImageViews() {
         imageViews.resize(images.size());
         for (int i = 0; i < images.size(); i++) {
             vk::ImageViewCreateInfo createInfo;
@@ -103,6 +109,19 @@ namespace engine {
                 .setFormat(info.format.format)
                 .setSubresourceRange(range);
             imageViews[i] = Context::GetInstance().logicDevice.createImageView(createInfo);
+        }
+    }
+
+    void Swapchain::CreateFramebuffers(int w, int h) {
+        framebuffers.resize(images.size());
+        for (int i = 0; i < framebuffers.size(); i++) {
+            vk::FramebufferCreateInfo createInfo;
+            createInfo.setAttachments(imageViews[i])
+                .setWidth(w)
+                .setHeight(h)
+                .setRenderPass(Context::GetInstance().renderProcess->renderPass)
+                .setLayers(1);
+            framebuffers[i] = Context::GetInstance().logicDevice.createFramebuffer(createInfo);
         }
     }
 }
