@@ -126,8 +126,8 @@ namespace engine {
     }
 
     void Context::initGraphicsPipeline() {
-        auto vertexSource = ReadWholeFile("./vert.spv");
-        auto fragSource = ReadWholeFile("./frag.spv");
+        auto vertexSource = ReadWholeFile("./shaders/vert.spv");
+        auto fragSource = ReadWholeFile("./shaders/frag.spv");
         renderProcess->RecreateGraphicsPipeline(vertexSource, fragSource);
     }
 

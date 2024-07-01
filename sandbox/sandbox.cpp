@@ -30,15 +30,13 @@ int main(int argc, char** argv) {
     //}
 
     engine::Init(extensions,
-        [&](vk::Instance instance) {
+        [&](VkInstance instance) {
             VkSurfaceKHR surface;
-            if (!SDL_Vulkan_CreateSurface(window, instance, &surface)) {
-                throw std::runtime_error("can't create surface");
-            }
+            SDL_Vulkan_CreateSurface(window, instance, &surface);
             return surface;
         }, 1024, 720);
 
-    auto& renderer = engine::GetRenderer();
+    auto renderer = engine::GetRenderer();
 
     while (!shouldClose) {
         while (SDL_PollEvent(&event)) {
@@ -46,7 +44,7 @@ int main(int argc, char** argv) {
                 shouldClose = true;
             }
         }
-        renderer.render();
+        renderer->DrawTriangle();
     }
 
     engine::Quit();

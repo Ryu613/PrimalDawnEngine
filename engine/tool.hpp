@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-namespace toy2d {
+namespace engine {
 
     std::vector<char> ReadWholeFile(const std::string& filename);
 

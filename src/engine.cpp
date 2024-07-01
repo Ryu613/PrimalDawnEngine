@@ -17,7 +17,7 @@ namespace engine {
     }
 
     void Quit() {
-        toy2d::Context::Instance().device.waitIdle();
+        engine::Context::Instance().device.waitIdle();
         renderer_.reset();
         Context::Quit();
     }
