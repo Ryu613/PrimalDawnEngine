@@ -1,24 +1,34 @@
 #pragma once
 #include "vulkan/vulkan.hpp"
-#include <iostream>
+#include "engine/context.hpp"
+#include "engine/command_manager.hpp"
+#include "engine/swapchain.hpp"
+#include "engine/vertex.hpp"
+#include "engine/buffer.hpp"
+#include <limits>
 
 namespace engine {
     class Renderer final {
     public:
-        Renderer();
+        Renderer(int maxFlightCount = 2);
         ~Renderer();
 
-        void render();
+        void DrawTriangle();
     private:
-        vk::CommandPool cmdPool_;
-        vk::CommandBuffer cmdBuf_;
-        vk::Semaphore imageAvailable_;
-        vk::Semaphore imageDrawFinish_;
-        vk::Fence cmdAvailableFence_;
+        int maxFlightCount_;
+        int curFrame_;
+        std::vector<vk::Fence> fences_;
+        std::vector<vk::Semaphore> imageAvaliableSems_;
+        std::vector<vk::Semaphore> renderFinishSems_;
+        std::vector<vk::CommandBuffer> cmdBufs_;
 
-        void initCmdPool();
-        void allocCmdBuf();
-        void createSems();
-        void createFence();
+        std::unique_ptr<Buffer> hostVertexBuffer_;
+        std::unique_ptr<Buffer> deviceVertexBuffer_;
+
+        void createFences();
+        void createSemaphores();
+        void createCmdBuffers();
+        void createVertexBuffer();
+        void bufferVertexData();
     };
 }

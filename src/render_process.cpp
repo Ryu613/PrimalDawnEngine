@@ -1,122 +1,173 @@
 #include "engine/render_process.hpp"
-#include "engine/shader.hpp"
 #include "engine/context.hpp"
 #include "engine/swapchain.hpp"
+#include "engine/vertex.hpp"
 
 namespace engine {
-    void RenderProcess::InitPipeline(int width, int height) {
+
+    RenderProcess::RenderProcess() {
+        layout = createLayout();
+        renderPass = createRenderPass();
+        graphicsPipeline = nullptr;
+    }
+
+    RenderProcess::~RenderProcess() {
+        auto& ctx = Context::Instance();
+        ctx.device.destroyRenderPass(renderPass);
+        ctx.device.destroyPipelineLayout(layout);
+        ctx.device.destroyPipeline(graphicsPipeline);
+    }
+
+    void RenderProcess::RecreateGraphicsPipeline(const std::vector<char>& vertexSource, const std::vector<char>& fragSource) {
+        if (graphicsPipeline) {
+            Context::Instance().device.destroyPipeline(graphicsPipeline);
+        }
+        graphicsPipeline = createGraphicsPipeline(vertexSource, fragSource);
+    }
+
+    void RenderProcess::RecreateRenderPass() {
+        if (renderPass) {
+            Context::Instance().device.destroyRenderPass(renderPass);
+        }
+        renderPass = createRenderPass();
+    }
+
+    vk::PipelineLayout RenderProcess::createLayout() {
+        vk::PipelineLayoutCreateInfo createInfo;
+        createInfo.setPushConstantRangeCount(0)
+            .setSetLayoutCount(0);
+
+        return Context::Instance().device.createPipelineLayout(createInfo);
+    }
+
+    vk::Pipeline RenderProcess::createGraphicsPipeline(const std::vector<char>& vertexSource, const std::vector<char>& fragSource) {
+        auto& ctx = Context::Instance();
+
         vk::GraphicsPipelineCreateInfo createInfo;
-        // 1. Vertex Input
-        vk::PipelineVertexInputStateCreateInfo inputState;
-        createInfo.setPVertexInputState(&inputState);
-        // 2. Vertex Assembly
-        vk::PipelineInputAssemblyStateCreateInfo inputAsm;
-        inputAsm.setPrimitiveRestartEnable(false)
-            // 点如何连接
+
+        // 0. shader prepare
+        vk::ShaderModuleCreateInfo vertexModuleCreateInfo, fragModuleCreateInfo;
+        vertexModuleCreateInfo.codeSize = vertexSource.size();
+        vertexModuleCreateInfo.pCode = (std::uint32_t*)vertexSource.data();
+        fragModuleCreateInfo.codeSize = fragSource.size();
+        fragModuleCreateInfo.pCode = (std::uint32_t*)fragSource.data();
+
+        auto vertexModule = ctx.device.createShaderModule(vertexModuleCreateInfo);
+        auto fragModule = ctx.device.createShaderModule(fragModuleCreateInfo);
+
+        std::array<vk::PipelineShaderStageCreateInfo, 2> stageCreateInfos;
+        stageCreateInfos[0].setModule(vertexModule)
+            .setPName("main")
+            .setStage(vk::ShaderStageFlagBits::eVertex);
+        stageCreateInfos[1].setModule(fragModule)
+            .setPName("main")
+            .setStage(vk::ShaderStageFlagBits::eFragment);
+
+        // 1. vertex input
+        vk::PipelineVertexInputStateCreateInfo vertexInputCreateInfo;
+        auto attribute = Vertex::GetAttribute();
+        auto binding = Vertex::GetBinding();
+        vertexInputCreateInfo.setVertexBindingDescriptions(binding)
+            .setVertexAttributeDescriptions(attribute);
+
+        // 2. vertex assembly
+        vk::PipelineInputAssemblyStateCreateInfo inputAsmCreateInfo;
+        inputAsmCreateInfo.setPrimitiveRestartEnable(false)
             .setTopology(vk::PrimitiveTopology::eTriangleList);
-        createInfo.setPInputAssemblyState(&inputAsm);
 
-        // 3. Shader
-        auto stages = Shader::GetInstance().GetStage();
-        createInfo.setStages(stages);
+        // 3. viewport and scissor
+        vk::PipelineViewportStateCreateInfo viewportInfo;
+        vk::Viewport viewport(0, 0, ctx.swapchain->GetExtent().width, ctx.swapchain->GetExtent().height, 0, 1);
+        vk::Rect2D scissor(vk::Rect2D({ 0, 0 }, ctx.swapchain->GetExtent()));
+        viewportInfo.setViewports(viewport)
+            .setScissors(scissor);
 
-        // 4. viewport
-        vk::PipelineViewportStateCreateInfo viewportStateInfo;
-        vk::Viewport viewport(0, 0, width, height, 0, 1);
-        viewportStateInfo.setViewports(viewport);
-        // 设置屏幕实际展示图像的区域
-        vk::Rect2D rect({ 0,0 }, { static_cast<uint32_t>(width), static_cast<uint32_t>(height) });
-        viewportStateInfo.setScissors(rect);
-        createInfo.setPViewportState(&viewportStateInfo);
-
-        // 5. rasterization
-        vk::PipelineRasterizationStateCreateInfo rastInfo;
-        // 是否抛弃光栅化的结果
-        rastInfo.setRasterizerDiscardEnable(false)
-            .setCullMode(vk::CullModeFlagBits::eBack)
-            .setFrontFace(vk::FrontFace::eClockwise)
+        // 4. rasteraizer
+        vk::PipelineRasterizationStateCreateInfo rasterInfo;
+        rasterInfo.setCullMode(vk::CullModeFlagBits::eFront)
+            .setFrontFace(vk::FrontFace::eCounterClockwise)
+            .setDepthClampEnable(false)
+            .setLineWidth(1)
             .setPolygonMode(vk::PolygonMode::eFill)
-            .setLineWidth(1);
-        createInfo.setPRasterizationState(&rastInfo);
+            .setRasterizerDiscardEnable(false);
 
-        // 6. multisample
-        vk::PipelineMultisampleStateCreateInfo multisampleCreateInfo;
-        multisampleCreateInfo.setSampleShadingEnable(false)
-            // 指定光栅化时如何对点进行采样，默认0：不对点进行采样
+        // 5. multisampler
+        vk::PipelineMultisampleStateCreateInfo multisampleInfo;
+        multisampleInfo.setSampleShadingEnable(false)
             .setRasterizationSamples(vk::SampleCountFlagBits::e1);
-        createInfo.setPMultisampleState(&multisampleCreateInfo);
 
-        // 7. test - stencil test, depth test
+        // 6. depth and stencil buffer
+        // We currently don't need depth and stencil buffer
 
-        // 8. color blending(颜色融混)
-        vk::PipelineColorBlendStateCreateInfo blendCreateInfo;
-        vk::PipelineColorBlendAttachmentState attachs;
-        attachs.setBlendEnable(false)
+        // 7. blending
+        vk::PipelineColorBlendAttachmentState blendAttachmentState;
+        blendAttachmentState.setBlendEnable(false)
             .setColorWriteMask(vk::ColorComponentFlagBits::eA |
                 vk::ColorComponentFlagBits::eB |
                 vk::ColorComponentFlagBits::eG |
                 vk::ColorComponentFlagBits::eR);
-        blendCreateInfo.setLogicOpEnable(false)
-            .setAttachments(attachs);
-        createInfo.setPColorBlendState(&blendCreateInfo);
+        vk::PipelineColorBlendStateCreateInfo blendInfo;
+        blendInfo.setAttachments(blendAttachmentState)
+            .setLogicOpEnable(false);
 
-        // 9. renderPass and layout
-        createInfo.setRenderPass(renderPass)
-            .setLayout(layout);
+        // create graphics pipeline
+        createInfo.setStages(stageCreateInfos)
+            .setLayout(layout)
+            .setPVertexInputState(&vertexInputCreateInfo)
+            .setPInputAssemblyState(&inputAsmCreateInfo)
+            .setPViewportState(&viewportInfo)
+            .setPRasterizationState(&rasterInfo)
+            .setPMultisampleState(&multisampleInfo)
+            .setPColorBlendState(&blendInfo)
+            .setRenderPass(renderPass);
 
-        auto result = Context::GetInstance().logicDevice.createGraphicsPipeline(nullptr, createInfo);
+        auto result = ctx.device.createGraphicsPipeline(nullptr, createInfo);
         if (result.result != vk::Result::eSuccess) {
-            throw std::runtime_error("create pipeline failed");
+            std::cout << "create graphics pipeline failed: " << result.result << std::endl;
         }
-        pipeline = result.value;
 
+        // clear shader module
+        ctx.device.destroyShaderModule(vertexModule);
+        ctx.device.destroyShaderModule(fragModule);
+
+        return result.value;
     }
 
-    void RenderProcess::InitLayout() {
-        vk::PipelineLayoutCreateInfo createInfo;
-        layout = Context::GetInstance().logicDevice.createPipelineLayout(createInfo);
-    }
+    vk::RenderPass RenderProcess::createRenderPass() {
+        auto& ctx = Context::Instance();
 
-    RenderProcess::~RenderProcess() {
-        auto& device = Context::GetInstance().logicDevice;
-        device.destroyRenderPass(renderPass);
-        device.destroyPipelineLayout(layout);
-        device.destroyPipeline(pipeline);
-    }
-
-    void RenderProcess::InitRenderPass() {
         vk::RenderPassCreateInfo createInfo;
-        vk::AttachmentDescription attDesc;
-        attDesc.setFormat(Context::GetInstance().swapchain->info.format.format)
-            .setInitialLayout(vk::ImageLayout::eUndefined)
-            .setFinalLayout(vk::ImageLayout::ePresentSrcKHR)
+
+        vk::SubpassDependency dependency;
+        dependency.setSrcSubpass(VK_SUBPASS_EXTERNAL)
+            .setDstSubpass(0)
+            .setSrcStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
+            .setDstStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
+            .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
+
+        vk::AttachmentDescription attachDescription;
+        attachDescription.setFormat(ctx.swapchain->GetFormat().format)
+            .setSamples(vk::SampleCountFlagBits::e1)
             .setLoadOp(vk::AttachmentLoadOp::eClear)
             .setStoreOp(vk::AttachmentStoreOp::eStore)
             .setStencilLoadOp(vk::AttachmentLoadOp::eDontCare)
             .setStencilStoreOp(vk::AttachmentStoreOp::eDontCare)
-            .setSamples(vk::SampleCountFlagBits::e1);
-
-        vk::SubpassDescription subpass;
+            .setInitialLayout(vk::ImageLayout::eUndefined)
+            .setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
         vk::AttachmentReference reference;
-        reference.setLayout(vk::ImageLayout::eColorAttachmentOptimal)
-            // 第一个纹理
-            .setAttachment(0);
-        subpass.setPipelineBindPoint(vk::PipelineBindPoint::eGraphics)
-            .setColorAttachments(reference);
-        // 当有多个subpass时，如何指定先后执行的顺序
-        vk::SubpassDependency dependency;
-        // 要使用外部的subpass
-        dependency.setSrcSubpass(VK_SUBPASS_EXTERNAL)
-            .setDstSubpass(0)
-            // 渲染通道如何对attachment进行的访问操作
-            .setSrcAccessMask(vk::AccessFlagBits::eColorAttachmentWrite)
-            // 渲染后的图像如何使用
-            .setSrcStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
-            .setDstStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput);
-        createInfo.setSubpasses(subpass)
-            .setAttachments(attDesc)
-            .setDependencies(dependency);
+        reference.setAttachment(0)
+            .setLayout(vk::ImageLayout::eColorAttachmentOptimal);
 
-        renderPass = Context::GetInstance().logicDevice.createRenderPass(createInfo);
+        vk::SubpassDescription subpassDesc;
+        subpassDesc.setColorAttachments(reference)
+            .setPipelineBindPoint(vk::PipelineBindPoint::eGraphics);
+
+        subpassDesc.setColorAttachments(reference);
+        createInfo.setAttachments(attachDescription)
+            .setDependencies(dependency)
+            .setSubpasses(subpassDesc);
+
+        return Context::Instance().device.createRenderPass(createInfo);
     }
+
 }

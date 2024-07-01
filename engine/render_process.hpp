@@ -1,19 +1,23 @@
 #pragma once
 #include "vulkan/vulkan.hpp"
+#include <fstream>
 
 namespace engine {
     class RenderProcess final {
     public:
-        vk::Pipeline pipeline;
-        vk::PipelineLayout layout;
-        vk::RenderPass renderPass;
+        vk::Pipeline graphicsPipeline = nullptr;
+        vk::RenderPass renderPass = nullptr;
+        vk::PipelineLayout layout = nullptr;
 
+        RenderProcess();
         ~RenderProcess();
 
-        void InitLayout();
+        void RecreateGraphicsPipeline(const std::vector<char>& vertexSource, const std::vector<char>& fragSource);
+        void RecreateRenderPass();
 
-        void InitRenderPass();
-
-        void InitPipeline(int width, int height);
+    private:
+        vk::PipelineLayout createLayout();
+        vk::Pipeline createGraphicsPipeline(const std::vector<char>& vertexSource, const std::vector<char>& fragSource);
+        vk::RenderPass createRenderPass();
     };
 }

@@ -13,8 +13,11 @@ include(cmake/copydll.cmake)
 
 # 编译着色器
 find_program(GLSLC_PROGRAM glslc REQUIRED)
+
+message(STATUS "run glslc to compile shaders ...")
 execute_process(COMMAND ${GLSLC_PROGRAM} ${CMAKE_SOURCE_DIR}/shaders/shader.vert -o ${CMAKE_SOURCE_DIR}/shaders/vert.spv)
 execute_process(COMMAND ${GLSLC_PROGRAM} ${CMAKE_SOURCE_DIR}/shaders/shader.frag -o ${CMAKE_SOURCE_DIR}/shaders/frag.spv)
+message(STATUS "compile shader OK")
 
 # 查找路径下的所有源文件，使用SRC变量表示
 aux_source_directory(src SRC)

@@ -1,125 +1,146 @@
 #include "engine/context.hpp"
-#include <iostream>
 
 namespace engine {
 
-    std::unique_ptr<Context> Context::instance_ = nullptr;
+    Context* Context::instance_ = nullptr;
 
-    void Context::Init(const std::vector<const char*>& extensions, CreateSurfaceFunc func) {
-        instance_.reset(new Context(extensions, func));
-
+    void Context::Init(std::vector<const char*>& extensions, GetSurfaceCallback cb) {
+        instance_ = new Context(extensions, cb);
     }
+
     void Context::Quit() {
-        instance_.reset();
+        delete instance_;
     }
-    Context& Context::GetInstance() {
+
+    Context& Context::Instance() {
         return *instance_;
     }
 
-    Context::Context(const std::vector<const char*>& extensions, CreateSurfaceFunc func) {
-        createInstance(extensions);
-        pickupPhysicalDevice();
-        surface = func(instance);
-        queryQueueFamilyIndices();
-        createLogicDevice();
-        getQueues();
-        renderProcess.reset(new RenderProcess);
+    Context::Context(std::vector<const char*>& extensions, GetSurfaceCallback cb) {
+        getSurfaceCb_ = cb;
+
+        instance = createInstance(extensions);
+        if (!instance) {
+            std::cout << "instance create failed" << std::endl;
+            exit(1);
+        }
+
+        phyDevice = pickupPhysicalDevice();
+        if (!phyDevice) {
+            std::cout << "pickup physical device failed" << std::endl;
+            exit(1);
+        }
+
+        surface_ = getSurfaceCb_(instance);
+        if (!surface_) {
+            std::cout << "create surface failed" << std::endl;
+            exit(1);
+        }
+
+        device = createDevice(surface_);
+        if (!device) {
+            std::cout << "create device failed" << std::endl;
+            exit(1);
+        }
+
+        graphicsQueue = device.getQueue(queueInfo.graphicsIndex.value(), 0);
+        presentQueue = device.getQueue(queueInfo.presentIndex.value(), 0);
     }
 
-    Context::~Context() {
-        instance.destroySurfaceKHR(surface);
-        logicDevice.destroy();
-        instance.destroy();
-    }
-
-    void Context::createInstance(const std::vector<const char*>& extensions) {
-        // 要开启的layers
-        std::vector<const char*> layers = { "VK_LAYER_KHRONOS_validation" };
-        // 配置vk实例的参数和创建实例
-        vk::InstanceCreateInfo createInfo;
+    vk::Instance Context::createInstance(std::vector<const char*>& extensions) {
+        vk::InstanceCreateInfo info;
         vk::ApplicationInfo appInfo;
-        // 指定vk版本号
         appInfo.setApiVersion(VK_API_VERSION_1_3);
-
-        RemoveNosupportedElems<const char*, vk::LayerProperties>(layers, vk::enumerateInstanceLayerProperties(),
-            [](const char* e1, const vk::LayerProperties& e2) {
-                return std::strcmp(e1, e2.layerName) == 0;
-            });
-
-        // 配置createInfo
-        createInfo.setPApplicationInfo(&appInfo)
-            .setPEnabledLayerNames(layers)
+        info.setPApplicationInfo(&appInfo)
             .setPEnabledExtensionNames(extensions);
-        // 创建vulkan实例
-        instance = vk::createInstance(createInfo);
+
+        std::vector<const char*> layers = { "VK_LAYER_KHRONOS_validation" };
+        info.setPEnabledLayerNames(layers);
+
+        return vk::createInstance(info);
     }
 
-    void Context::pickupPhysicalDevice() {
-        // 列举所有物理设备
+    vk::PhysicalDevice Context::pickupPhysicalDevice() {
         auto devices = instance.enumeratePhysicalDevices();
-        // 自信选择第一个物理设备
-        physicalDevice = devices[0];
-        /*for (auto& device : devices) {
-            auto feature = device.getFeatures();
-            if(feature.geometryShader)
-        }*/
-        std::cout << "physical device name: " << physicalDevice.getProperties().deviceName << std::endl;
+        if (devices.size() == 0) {
+            std::cout << "you don't have suitable device to support vulkan" << std::endl;
+            exit(1);
+        }
+        return devices[0];
     }
 
-    void Context::createLogicDevice() {
+    vk::Device Context::createDevice(vk::SurfaceKHR surface) {
+        vk::DeviceCreateInfo deviceCreateInfo;
+        queryQueueInfo(surface);
         std::array extensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
-        vk::DeviceCreateInfo createInfo;
-        std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
-        float priorities = 1.0;
-        if (queueFamilyIndices.presentQueue.value() == queueFamilyIndices.graphicsQueue.value()) {
+        deviceCreateInfo.setPEnabledExtensionNames(extensions);
+
+        std::vector<vk::DeviceQueueCreateInfo> queueInfos;
+        float priority = 1;
+        if (queueInfo.graphicsIndex.value() == queueInfo.presentIndex.value()) {
             vk::DeviceQueueCreateInfo queueCreateInfo;
-            queueCreateInfo.setPQueuePriorities(&priorities)
-                .setQueueCount(1)
-                // 查询指令队列
-                .setQueueFamilyIndex(queueFamilyIndices.graphicsQueue.value());
-            // Queue：指定指令队列，用于把逻辑设备的指令(通过CommandBuffer(指令缓冲))传给物理设备
-            queueCreateInfos.push_back(std::move(queueCreateInfo));
+            queueCreateInfo.setPQueuePriorities(&priority);
+            queueCreateInfo.setQueueCount(1);
+            queueCreateInfo.setQueueFamilyIndex(queueInfo.graphicsIndex.value());
+            queueInfos.push_back(queueCreateInfo);
         }
         else {
             vk::DeviceQueueCreateInfo queueCreateInfo;
-            queueCreateInfo.setPQueuePriorities(&priorities)
-                .setQueueCount(1)
-                // 查询指令队列
-                .setQueueFamilyIndex(queueFamilyIndices.graphicsQueue.value());
-            // Queue：指定指令队列，用于把逻辑设备的指令(通过CommandBuffer(指令缓冲))传给物理设备
-            queueCreateInfos.push_back(queueCreateInfo);
-            queueCreateInfo.setPQueuePriorities(&priorities)
-                .setQueueCount(1)
-                // 查询指令队列
-                .setQueueFamilyIndex(queueFamilyIndices.presentQueue.value());
-            queueCreateInfos.push_back(queueCreateInfo);
+            queueCreateInfo.setPQueuePriorities(&priority);
+            queueCreateInfo.setQueueCount(1);
+            queueCreateInfo.setQueueFamilyIndex(queueInfo.graphicsIndex.value());
+            queueInfos.push_back(queueCreateInfo);
+
+            queueCreateInfo.setQueueFamilyIndex(queueInfo.presentIndex.value());
+            queueInfos.push_back(queueCreateInfo);
         }
-        // Queue：指定指令队列，用于把逻辑设备的指令(通过CommandBuffer(指令缓冲))传给物理设备
-        createInfo.setQueueCreateInfos(queueCreateInfos)
-            .setPEnabledExtensionNames(extensions);
-        logicDevice = physicalDevice.createDevice(createInfo);
+        deviceCreateInfo.setQueueCreateInfos(queueInfos);
+
+        return phyDevice.createDevice(deviceCreateInfo);
     }
 
-    void Context::queryQueueFamilyIndices() {
-        auto properties = physicalDevice.getQueueFamilyProperties();
-        for (int i = 0; i < properties.size(); i++) {
-            const auto& property = properties[i];
-            // 找到
-            if (property.queueFlags & vk::QueueFlagBits::eGraphics) {
-                queueFamilyIndices.graphicsQueue = i;
+    void Context::queryQueueInfo(vk::SurfaceKHR surface) {
+        auto queueProps = phyDevice.getQueueFamilyProperties();
+        for (int i = 0; i < queueProps.size(); i++) {
+            if (queueProps[i].queueFlags & vk::QueueFlagBits::eGraphics) {
+                queueInfo.graphicsIndex = i;
             }
-            // 看命令队列是否支持surface显示
-            if (physicalDevice.getSurfaceSupportKHR(i, surface)) {
-                queueFamilyIndices.presentQueue = i;
+
+            if (phyDevice.getSurfaceSupportKHR(i, surface)) {
+                queueInfo.presentIndex = i;
             }
-            if (queueFamilyIndices) {
+
+            if (queueInfo.graphicsIndex.has_value() &&
+                queueInfo.presentIndex.has_value()) {
                 break;
             }
         }
     }
 
-    void Context::getQueues() {
-        graphicsQueue = logicDevice.getQueue(queueFamilyIndices.graphicsQueue.value(), 0);
-        presentQueue = logicDevice.getQueue(queueFamilyIndices.presentQueue.value(), 0);
+    void Context::initSwapchain(int windowWidth, int windowHeight) {
+        swapchain = std::make_unique<Swapchain>(surface_, windowWidth, windowHeight);
     }
+
+    void Context::initRenderProcess() {
+        renderProcess = std::make_unique<RenderProcess>();
+    }
+
+    void Context::initGraphicsPipeline() {
+        auto vertexSource = ReadWholeFile("./vert.spv");
+        auto fragSource = ReadWholeFile("./frag.spv");
+        renderProcess->RecreateGraphicsPipeline(vertexSource, fragSource);
+    }
+
+    void Context::initCommandPool() {
+        commandManager = std::make_unique<CommandManager>();
+    }
+
+    Context::~Context() {
+        commandManager.reset();
+        renderProcess.reset();
+        swapchain.reset();
+        device.destroy();
+        instance.destroy();
+    }
+
 }
