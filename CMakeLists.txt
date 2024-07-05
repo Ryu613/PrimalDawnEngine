@@ -13,4 +13,3 @@ project(
 
 # лМ╪свсд©б╪
 add_subdirectory(engine)
-add_subdirectory("sanbox.exe")

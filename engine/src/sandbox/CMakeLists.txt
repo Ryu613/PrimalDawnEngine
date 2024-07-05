@@ -1,4 +1,5 @@
 include(${PROJECT_SOURCE_DIR}/cmake/FindSDL2.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/CopyDLL.cmake)
 
 add_executable(sandbox)
 
