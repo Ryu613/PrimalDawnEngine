@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "engine/engine.hpp"
+#include "engine.hpp"
 
 int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_EVERYTHING);

@@ -1,2 +1,2 @@
 # PrimalDawnEngine
-原初黎明：一个基于Vulkan的渲染引擎
+原初黎明：基于Vulkan的3d渲染引擎

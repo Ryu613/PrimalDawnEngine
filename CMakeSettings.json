@@ -7,15 +7,7 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\cmake-build\\${name}",
       "installRoot": "${projectDir}\\cmake-build\\${name}",
-      "ctestCommandArgs": "",
-      "variables": [
-        {
-          "name": "SDL2_ROOT",
-          "value": "F:\\dev\\git-ct\\vcpkg\\installed\\x64-windows",
-          "type": "PATH"
-        }
-      ],
-      "cmakeToolchain": "F:/dev/git-ct/vcpkg/scripts/buildsystems/vcpkg.cmake"
+      "ctestCommandArgs": ""
     }
   ]
 }

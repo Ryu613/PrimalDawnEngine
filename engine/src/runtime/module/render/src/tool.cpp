@@ -1,6 +1,6 @@
-#include "engine/tool.hpp"
+#include "tool.hpp"
 
-namespace engine {
+namespace PrimalDawn {
     std::vector<char> ReadWholeFile(const std::string& filename) {
         std::ifstream file(filename, std::ios::binary | std::ios::ate);
 

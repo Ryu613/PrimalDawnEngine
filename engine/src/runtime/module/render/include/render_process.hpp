@@ -2,7 +2,7 @@
 #include "vulkan/vulkan.hpp"
 #include <fstream>
 
-namespace engine {
+namespace PrimalDawn {
     class RenderProcess final {
     public:
         vk::Pipeline graphicsPipeline = nullptr;

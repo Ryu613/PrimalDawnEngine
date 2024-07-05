@@ -1,7 +1,7 @@
-#include "engine/swapchain.hpp"
-#include "engine/context.hpp"
+#include "swapchain.hpp"
+#include "context.hpp"
 
-namespace engine {
+namespace PrimalDawn {
 
     Swapchain::Swapchain(vk::SurfaceKHR surface, int windowWidth, int windowHeight) : surface(surface) {
         querySurfaceInfo(windowWidth, windowHeight);

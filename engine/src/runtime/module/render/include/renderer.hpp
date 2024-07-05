@@ -1,13 +1,13 @@
 #pragma once
 #include "vulkan/vulkan.hpp"
-#include "engine/context.hpp"
-#include "engine/command_manager.hpp"
-#include "engine/swapchain.hpp"
-#include "engine/vertex.hpp"
-#include "engine/buffer.hpp"
+#include "context.hpp"
+#include "command_manager.hpp"
+#include "swapchain.hpp"
+#include "vertex.hpp"
+#include "buffer.hpp"
 #include <limits>
 
-namespace engine {
+namespace PrimalDawn {
     class Renderer final {
     public:
         Renderer(int maxFlightCount = 2);

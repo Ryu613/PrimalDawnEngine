@@ -1,6 +1,6 @@
-#include "engine/engine.hpp"
+#include "engine.hpp"
 
-namespace engine {
+namespace PrimalDawn {
 
     std::unique_ptr<Renderer> renderer_;
 

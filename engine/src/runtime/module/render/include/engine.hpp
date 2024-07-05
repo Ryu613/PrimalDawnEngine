@@ -4,7 +4,7 @@
 #include "renderer.hpp"
 #include <memory>
 
-namespace engine {
+namespace PrimalDawn {
 
     void Init(std::vector<const char*>& extensions, Context::GetSurfaceCallback, int windowWidth, int windowHeight);
     void Quit();
