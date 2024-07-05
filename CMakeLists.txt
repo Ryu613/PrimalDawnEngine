@@ -10,10 +10,6 @@ project(
     DESCRIPTION "PRIMAL DAWN ENGINE version 0.2"
     VERSION 0.2.0
 )
-# 把cmake脚本包含进来
-set(CMAKE_MODULE_PATH
-    "${PROJECT_SOURCE_DIR}/cmake"
-)
 
 # 添加子目录
 add_subdirectory(engine)
