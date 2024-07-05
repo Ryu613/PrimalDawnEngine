@@ -1,6 +1,6 @@
-#include "engine/renderer.hpp"
+#include <renderer.hpp>
 
-namespace engine {
+namespace PrimalDawnEngine {
 
     const std::array<Vertex, 3> vertices = {
         Vertex{0.0, -0.5},

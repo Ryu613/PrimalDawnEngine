@@ -1,6 +1,6 @@
-#include "engine/context.hpp"
+#include "context.hpp"
 
-namespace engine {
+namespace PrimalDawnEngine {
 
     Context* Context::instance_ = nullptr;
 
@@ -126,8 +126,8 @@ namespace engine {
     }
 
     void Context::initGraphicsPipeline() {
-        auto vertexSource = ReadWholeFile("./shaders/vert.spv");
-        auto fragSource = ReadWholeFile("./shaders/frag.spv");
+        auto vertexSource = ReadWholeFile("./engine/shader/vert.spv");
+        auto fragSource = ReadWholeFile("./engine/shader/frag.spv");
         renderProcess->RecreateGraphicsPipeline(vertexSource, fragSource);
     }
 

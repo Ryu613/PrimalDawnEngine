@@ -1,9 +1,9 @@
-#include "engine/render_process.hpp"
-#include "engine/context.hpp"
-#include "engine/swapchain.hpp"
-#include "engine/vertex.hpp"
+#include "render_process.hpp"
+#include "context.hpp"
+#include "swapchain.hpp"
+#include "vertex.hpp"
 
-namespace engine {
+namespace PrimalDawnEngine {
 
     RenderProcess::RenderProcess() {
         layout = createLayout();

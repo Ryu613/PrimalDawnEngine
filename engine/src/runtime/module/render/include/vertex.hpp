@@ -2,7 +2,7 @@
 
 #include "vulkan/vulkan.hpp"
 
-namespace engine {
+namespace PrimalDawnEngine {
 
     struct Vertex final {
         float x, y;

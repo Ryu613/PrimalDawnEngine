@@ -1,30 +1,15 @@
 cmake_minimum_required(VERSION 3.20)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# 作者开发环境:windows10 + vs2022（暂不支持其他OS和环境）
 project(
     PrimalDawnEngine 
     LANGUAGES CXX
-    DESCRIPTION "PRIMAL DAWN ENGINE initial version"
-    VERSION 0.1.0
+    DESCRIPTION "PRIMAL DAWN ENGINE version 0.2"
+    VERSION 0.2.0
 )
-# 把cmake脚本包含进来
-include(cmake/FindVulkan.cmake)
-include(cmake/FindSDL2.cmake)
-include(cmake/copydll.cmake)
 
-# 编译着色器
-find_program(GLSLC_PROGRAM glslc REQUIRED)
-
-message(STATUS "run glslc to compile shaders ...")
-execute_process(COMMAND ${GLSLC_PROGRAM} ${CMAKE_SOURCE_DIR}/shaders/shader.vert -o ${CMAKE_SOURCE_DIR}/shaders/vert.spv)
-execute_process(COMMAND ${GLSLC_PROGRAM} ${CMAKE_SOURCE_DIR}/shaders/shader.frag -o ${CMAKE_SOURCE_DIR}/shaders/frag.spv)
-message(STATUS "compile shader OK")
-
-# 查找路径下的所有源文件，使用SRC变量表示
-aux_source_directory(src SRC)
-
-add_library(PrimalDawnEngine STATIC ${SRC})
-target_include_directories(PrimalDawnEngine PUBLIC .)
-target_link_libraries(PrimalDawnEngine PUBLIC Vulkan::Vulkan)
-target_compile_features(PrimalDawnEngine PUBLIC cxx_std_17)
-
-add_subdirectory(sandbox)
+# 添加子目录
+add_subdirectory(engine)

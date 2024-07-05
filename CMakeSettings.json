@@ -14,8 +14,7 @@
           "value": "F:\\dev\\git-ct\\vcpkg\\installed\\x64-windows",
           "type": "PATH"
         }
-      ],
-      "cmakeToolchain": "F:/dev/git-ct/vcpkg/scripts/buildsystems/vcpkg.cmake"
+      ]
     }
   ]
 }
