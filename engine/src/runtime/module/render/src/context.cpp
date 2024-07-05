@@ -127,7 +127,7 @@ namespace PrimalDawnEngine {
 
     void Context::initGraphicsPipeline() {
         auto vertexSource = ReadWholeFile("./engine/shader/vert.spv");
-        auto fragSource = ReadWholeFile("/engine/shader/frag.spv");
+        auto fragSource = ReadWholeFile("./engine/shader/frag.spv");
         renderProcess->RecreateGraphicsPipeline(vertexSource, fragSource);
     }
 
