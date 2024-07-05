@@ -2,7 +2,7 @@
 
 #include "vulkan/vulkan.hpp"
 
-namespace PrimalDawn {
+namespace PrimalDawnEngine {
     class Swapchain final {
     public:
         struct Image {

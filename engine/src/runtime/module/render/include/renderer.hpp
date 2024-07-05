@@ -7,7 +7,7 @@
 #include "buffer.hpp"
 #include <limits>
 
-namespace PrimalDawn {
+namespace PrimalDawnEngine {
     class Renderer final {
     public:
         Renderer(int maxFlightCount = 2);

@@ -29,14 +29,14 @@ int main(int argc, char** argv) {
     //    std::cout << extension << std::endl;
     //}
 
-    engine::Init(extensions,
+    PrimalDawnEngine::Init(extensions,
         [&](VkInstance instance) {
             VkSurfaceKHR surface;
             SDL_Vulkan_CreateSurface(window, instance, &surface);
             return surface;
         }, 1024, 720);
 
-    auto renderer = engine::GetRenderer();
+    auto renderer = PrimalDawnEngine::GetRenderer();
 
     while (!shouldClose) {
         while (SDL_PollEvent(&event)) {
@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
         renderer->DrawTriangle();
     }
 
-    engine::Quit();
+    PrimalDawnEngine::Quit();
 
     SDL_DestroyWindow(window);
     SDL_Quit();

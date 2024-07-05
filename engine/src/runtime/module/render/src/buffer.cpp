@@ -1,7 +1,7 @@
 #include "buffer.hpp"
 #include "context.hpp"
 
-namespace PrimalDawn {
+namespace PrimalDawnEngine {
 
     Buffer::Buffer(size_t size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags property) : size(size) {
         createBuffer(size, usage);

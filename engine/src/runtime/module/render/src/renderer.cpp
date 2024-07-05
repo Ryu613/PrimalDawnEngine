@@ -1,6 +1,6 @@
 #include <renderer.hpp>
 
-namespace PrimalDawn {
+namespace PrimalDawnEngine {
 
     const std::array<Vertex, 3> vertices = {
         Vertex{0.0, -0.5},

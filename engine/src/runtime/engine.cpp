@@ -1,6 +1,6 @@
 #include "engine.hpp"
 
-namespace PrimalDawn {
+namespace PrimalDawnEngine {
 
     std::unique_ptr<Renderer> renderer_;
 
@@ -17,7 +17,7 @@ namespace PrimalDawn {
     }
 
     void Quit() {
-        engine::Context::Instance().device.waitIdle();
+        PrimalDawnEngine::Context::Instance().device.waitIdle();
         renderer_.reset();
         Context::Quit();
     }
