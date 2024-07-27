@@ -1,10 +1,10 @@
-include(${PROJECT_SOURCE_DIR}/cmake/FindSDL2.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/CopyDLL.cmake)
+cmake_minimum_required(VERSION 3.20)
 
-add_executable(sandbox)
-aux_source_directory(./src SANDBOX_SRC)
-target_sources(sandbox PRIVATE ${SANDBOX_SRC})
+project(sandbox)
 
-# 添加 SDL2 的头文件目录
-target_link_libraries(sandbox PUBLIC render SDL2)
-CopyDLL(sandbox)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(sandbox src/sandbox.cpp)
+
+target_link_libraries(sandbox PrimalDawnBites)
