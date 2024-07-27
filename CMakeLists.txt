@@ -7,9 +7,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(
     PrimalDawnEngine 
     LANGUAGES CXX
-    DESCRIPTION "PRIMAL DAWN ENGINE version 0.2"
-    VERSION 0.2.0
+    DESCRIPTION "PRIMAL DAWN ENGINE version 0.3"
+    VERSION 0.3.0
 )
 
 # Ìí¼Ó×ÓÄ¿Â¼
 add_subdirectory(engine)
+add_subdirectory(components)

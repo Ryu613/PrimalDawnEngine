@@ -1,13 +1,17 @@
 #pragma once
-#include "context.hpp"
-#include "render_process.hpp"
-#include "renderer.hpp"
-#include <memory>
+#include "core/render_system.hpp"
 
-namespace PrimalDawnEngine {
-
-    void Init(std::vector<const char*>& extensions, Context::GetSurfaceCallback, int windowWidth, int windowHeight);
-    void Quit();
-    Renderer* GetRenderer();
-
+namespace PrimalDawn
+{
+    class Engine {
+    public:
+        Engine();
+        ~Engine();
+        void init();
+        void shutdown();
+        void setRenderSystem(RenderSystem* renderSystem);
+    private:
+        RenderSystem* currentRenderer;
+        void _createWindow();
+    };
 }
