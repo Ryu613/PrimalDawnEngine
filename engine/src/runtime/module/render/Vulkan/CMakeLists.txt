@@ -1,11 +1,10 @@
 file(GLOB_RECURSE render_vulkan_src CONFIGURE_DEPENDS src/*.cpp include/*.hpp)
 add_library(render_vulkan STATIC ${render_vulkan_src})
 target_include_directories(render_vulkan PUBLIC include)
-
 # 引入vulkan库
 include(${PROJECT_SOURCE_DIR}/cmake/FindVulkan.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/FindSDL2.cmake)
-target_link_libraries(render_vulkan PUBLIC Vulkan::Vulkan SDL2::SDL2main)
+target_link_libraries(render_vulkan PUBLIC core_lib Vulkan::Vulkan SDL2::SDL2main)
 
 # 编译着色器
 find_program(GLSLC_PROGRAM glslc REQUIRED)

@@ -1,7 +1,7 @@
 #include "command_manager.hpp"
 #include "context.hpp"
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     CommandManager::CommandManager() {
         pool_ = createCommandPool();

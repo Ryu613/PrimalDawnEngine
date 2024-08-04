@@ -4,10 +4,10 @@
 #include "renderer.hpp"
 #include <memory>
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     void Init(std::vector<const char*>& extensions, Context::GetSurfaceCallback, int windowWidth, int windowHeight);
     void Quit();
-    Renderer* GetRenderer();
+    Render* GetRenderer();
 
 }

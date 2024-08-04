@@ -2,7 +2,7 @@
 
 #include "vulkan/vulkan.hpp"
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     class Buffer final {
     public:

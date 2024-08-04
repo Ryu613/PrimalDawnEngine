@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     std::vector<char> ReadWholeFile(const std::string& filename);
 

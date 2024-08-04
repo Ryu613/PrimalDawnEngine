@@ -3,7 +3,7 @@
 #include "swapchain.hpp"
 #include "vertex.hpp"
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     RenderProcess::RenderProcess() {
         layout = createLayout();

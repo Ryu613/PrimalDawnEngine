@@ -1,6 +1,6 @@
 #include "context.hpp"
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     Context* Context::instance_ = nullptr;
 

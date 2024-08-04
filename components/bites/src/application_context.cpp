@@ -4,11 +4,12 @@ namespace PrimalDawnBites {
     
     ApplicationContext::ApplicationContext(const std::string& name) {
         appName = name;
-        engine = NULL;
+    }
+    ApplicationContext::~ApplicationContext() {
     }
     void ApplicationContext::initApp() {
-        engine = new PrimalDawn::Engine();
-        engine->init();
+        PrimalDawn::Engine::init();
+        staticPluginLoader.load();
     }
 
     void ApplicationContext::closeApp() {
