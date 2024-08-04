@@ -13,7 +13,7 @@
 #include "tool.hpp"
 #include "command_manager.hpp"
 
-namespace PrimalDawnEngine {
+namespace PrimalDawn {
 
     class Context {
     public:
