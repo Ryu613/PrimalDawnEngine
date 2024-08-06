@@ -1,8 +1,6 @@
-# ‘› ± π”√vulkan
-set(RENDERSYSTEM_VULKAN 1)
-if(RENDERSYSTEM_OPENGL) 
-	add_subdirectory(OpenGL)
+if(RENDERER_TYPE STREQUAL "GL4") 
+	add_subdirectory(GL4)
 endif()
-if(RENDERSYSTEM_VULKAN)
+if(RENDERER_TYPE STREQUAL "Vulkan") 
 	add_subdirectory(Vulkan)
 endif()

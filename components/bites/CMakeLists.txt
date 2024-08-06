@@ -1,7 +1,12 @@
 file(GLOB_RECURSE bites_src CONFIGURE_DEPENDS src/*.cpp include/*.hpp)
 add_library(PrimalDawnBites STATIC ${bites_src})
-target_link_libraries(PrimalDawnBites PUBLIC render_vulkan)
+
+if(RENDERER_TYPE STREQUAL "GL4") 
+	target_link_libraries(PrimalDawnBites PUBLIC render_gl4)
+	target_compile_definitions(PrimalDawnBites PRIVATE RENDERSYSTEM_OPENGL4)
+endif()
+if(RENDERER_TYPE STREQUAL "Vulkan") 
+	target_link_libraries(PrimalDawnBites PUBLIC render_vulkan)
+	target_compile_definitions(PrimalDawnBites PRIVATE RENDERSYSTEM_VULKAN)
+endif()
 target_include_directories(PrimalDawnBites PUBLIC include)
-#[[
- ¶àÐÐ×¢ÊÍ
-]]

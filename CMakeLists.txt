@@ -11,6 +11,9 @@ project(
     VERSION 0.1.0
 )
 
+# 设置使用的渲染器
+set(RENDERER_TYPE "GL4")
+
 # 添加子目录
 add_subdirectory(engine)
 add_subdirectory(components)
