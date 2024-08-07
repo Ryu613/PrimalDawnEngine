@@ -2,10 +2,10 @@
 #include "plugin.hpp"
 #include "GL4_render_system.hpp"
 #include "engine.hpp"
+#include <memory>
 
 namespace PrimalDawn {
     class GL4Plugin : public Plugin {
-        GL4RenderSystem* renderSystem;
     public:
         GL4Plugin();
 
@@ -16,5 +16,7 @@ namespace PrimalDawn {
         void shutdown() override;
 
         void uninstall() override;
+    protected:
+        std::unique_ptr<GL4RenderSystem> renderSystem;
     };
 }

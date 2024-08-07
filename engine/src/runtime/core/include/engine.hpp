@@ -1,6 +1,7 @@
 #pragma once
 #include "render_system.hpp"
 #include "plugin.hpp"
+#include <memory>
 
 namespace PrimalDawn
 {
@@ -15,8 +16,8 @@ namespace PrimalDawn
     private:
         Engine();
         ~Engine();
-        static Engine* _instance;
-        RenderSystem* currentRenderer;
         void _createWindow();
+        static Engine* _instance;
+        std::unique_ptr<RenderSystem> currentRenderer;
     };
 }

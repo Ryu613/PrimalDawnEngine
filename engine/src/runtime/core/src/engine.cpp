@@ -10,7 +10,7 @@ namespace PrimalDawn {
     }
 
     Engine::Engine() {
-        currentRenderer = nullptr;
+        currentRenderer.reset();
         loadPlugins();
     }
 
@@ -27,7 +27,7 @@ namespace PrimalDawn {
     }
 
     void Engine::setRenderSystem(RenderSystem* renderer) {
-        currentRenderer = renderer;
+        currentRenderer.reset(renderer);
     }
 
     void Engine::loadPlugins() {

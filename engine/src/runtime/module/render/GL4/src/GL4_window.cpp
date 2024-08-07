@@ -32,5 +32,6 @@ namespace PrimalDawn {
             glfwSwapBuffers(thisWindow);
             glfwPollEvents();
         }
+        return true;
     }
 }
