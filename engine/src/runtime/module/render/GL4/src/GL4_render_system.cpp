@@ -3,13 +3,13 @@
 
 namespace PrimalDawn {
     GL4RenderSystem::GL4RenderSystem() {
-        GL4Window* window = new GL4Window();
+        _window.reset(new GL4Window());
         GLFWWIndowCreateInfo createInfo;
-        window->initialize(createInfo);
+        _window->initialize(createInfo);
     }
 
     GL4RenderSystem::~GL4RenderSystem() {
-
+        
     }
 
     void  GL4RenderSystem::shutdown() {
