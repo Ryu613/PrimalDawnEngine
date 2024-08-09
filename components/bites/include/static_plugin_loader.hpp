@@ -7,12 +7,13 @@
 #include "vulkan_plugin.hpp"
 #endif
 
-#include "engine.hpp"
 #include <vector>
+#include "engine.hpp"
 
 namespace PrimalDawnBites {
     class StaticPluginLoader {
-        std::vector<PrimalDawn::Plugin*> plugins;
+    public:
+        std::vector<PrimalDawn::Plugin*> mPlugins;
     public:
         void load();
         void unload();

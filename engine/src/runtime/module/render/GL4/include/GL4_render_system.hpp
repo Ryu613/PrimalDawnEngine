@@ -1,7 +1,7 @@
 #pragma once
+#include <memory>
 #include "render_system.hpp"
 #include "GL4_window.hpp"
-#include <memory>
 
 namespace PrimalDawn {
     class GL4RenderSystem : public RenderSystem {

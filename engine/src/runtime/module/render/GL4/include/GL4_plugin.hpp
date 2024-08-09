@@ -1,8 +1,8 @@
 #pragma once
-#include "plugin.hpp"
-#include "GL4_render_system.hpp"
-#include "engine.hpp"
 #include <memory>
+#include "plugin.hpp"
+#include "engine.hpp"
+#include "GL4_render_system.hpp"
 
 namespace PrimalDawn {
     class GL4Plugin : public Plugin {

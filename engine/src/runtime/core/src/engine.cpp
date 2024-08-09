@@ -1,6 +1,6 @@
+#include<string>
 #include "engine.hpp"
 #include "render_system.hpp"
-#include <string>
 
 namespace PrimalDawn {
     Engine* Engine::_instance = nullptr;
@@ -30,10 +30,34 @@ namespace PrimalDawn {
         currentRenderer.reset(renderer);
     }
 
+    RenderSystem* Engine::getRenderSystem() {
+        return currentRenderer.get();
+    }
+
     void Engine::loadPlugins() {
     }
 
     void Engine::installPlugin(Plugin* p) {
         p->install();
+    }
+
+    void Engine::startRendering() {
+        while (true) {
+            if (!renderOneFrame()) {
+                break;
+            }
+        }
+    }
+
+    bool Engine::renderOneFrame() {
+        if (!_updateAllRenderTargets()) {
+            return false;
+        }
+        return true;
+    }
+
+    bool Engine::_updateAllRenderTargets() {
+        currentRenderer->_updateAllRenderTargets();
+        return true;
     }
 }
