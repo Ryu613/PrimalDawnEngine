@@ -1,7 +1,8 @@
 #pragma once
-#include "render_system.hpp"
-#include "plugin.hpp"
+
 #include <memory>
+#include "plugin.hpp"
+#include "render_system.hpp"
 
 namespace PrimalDawn
 {
@@ -10,14 +11,18 @@ namespace PrimalDawn
         static Engine& Instance();
         static Engine* init();
         void shutdown();
-        void setRenderSystem(RenderSystem* renderSystem);
+        void setRenderSystem(PrimalDawn::RenderSystem* renderSystem);
+        PrimalDawn::RenderSystem* getRenderSystem();
         void loadPlugins();
         void installPlugin(Plugin* p);
+        void startRendering();
+        bool renderOneFrame();
     private:
         Engine();
         ~Engine();
         void _createWindow();
+        bool _updateAllRenderTargets();
         static Engine* _instance;
-        std::unique_ptr<RenderSystem> currentRenderer;
+        std::unique_ptr<PrimalDawn::RenderSystem> currentRenderer;
     };
 }
