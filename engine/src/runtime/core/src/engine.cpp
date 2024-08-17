@@ -1,40 +1,34 @@
 #include<string>
 #include "engine.hpp"
-#include "render_system.hpp"
 
 namespace PrimalDawn {
-    Engine* Engine::_instance = nullptr;
 
-    Engine& Engine::Instance() {
-        return *_instance;
+    template<> Engine* Singleton<Engine>::msSingleton = 0;
+    Engine* Engine::getSingletonPtr(void) {
+        return msSingleton;
+    }
+    Engine& Engine::getSingleton(void) {
+        assert(msSingleton);
+        return (*msSingleton);
     }
 
     Engine::Engine() {
-        currentRenderer.reset();
-        loadPlugins();
+        mLogManager = std::make_unique<LogManager>();
     }
 
     Engine::~Engine() {
-
-    }
-
-   Engine* Engine::init() {
-        _instance = new Engine();
-        return _instance;
+        mLogManager.reset();
     }
 
     void Engine::_createWindow() {
     }
 
     void Engine::setRenderSystem(RenderSystem* renderer) {
-        currentRenderer.reset(renderer);
+        mRenderer.reset(renderer);
     }
 
     RenderSystem* Engine::getRenderSystem() {
-        return currentRenderer.get();
-    }
-
-    void Engine::loadPlugins() {
+        return mRenderer.get();
     }
 
     void Engine::installPlugin(Plugin* p) {
@@ -42,6 +36,7 @@ namespace PrimalDawn {
     }
 
     void Engine::startRendering() {
+        // äÖÈ¾Ñ­»·
         while (true) {
             if (!renderOneFrame()) {
                 break;
@@ -50,14 +45,19 @@ namespace PrimalDawn {
     }
 
     bool Engine::renderOneFrame() {
-        if (!_updateAllRenderTargets()) {
-            return false;
-        }
+        //_updateCamera();
+        //_updateSceneElements();
+        //_renderScene();
+        //_swapBuffers();
         return true;
     }
 
     bool Engine::_updateAllRenderTargets() {
-        currentRenderer->_updateAllRenderTargets();
+        mRenderer->_updateAllRenderTargets();
         return true;
+    }
+
+    SceneManager* Engine::createSceneManager() {
+        return new SceneManager();
     }
 }

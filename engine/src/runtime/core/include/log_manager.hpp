@@ -4,8 +4,10 @@
 #include<cstdint>
 #include <stdexcept>
 
+#include "singleton.hpp"
+
 namespace PrimalDawn {
-    class LogSystem final {
+    class LogManager : public Singleton<LogManager> {
     public:
         enum class LogLevel : uint8_t {
             debug,
@@ -16,8 +18,10 @@ namespace PrimalDawn {
         };
 
     public:
-        LogSystem();
-        ~LogSystem();
+        static LogManager& getSingleton();
+        static LogManager* getSingletonPtr();
+        LogManager();
+        ~LogManager();
 
         template<typename... TARGS>
         void log(LogLevel level, TARGS&&... args) {

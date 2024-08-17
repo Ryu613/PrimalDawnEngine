@@ -11,7 +11,7 @@ namespace PrimalDawnBites {
         plugin = new VulkanPlugin();
         mPlugins.push_back(plugin);
 #endif
-        PrimalDawn::Engine& engine = PrimalDawn::Engine::Instance();
+        PrimalDawn::Engine& engine = PrimalDawn::Engine::getSingleton();
         for (auto& p : mPlugins) {
             engine.installPlugin(p);
         }

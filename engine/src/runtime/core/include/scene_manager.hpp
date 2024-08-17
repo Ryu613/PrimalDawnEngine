@@ -6,5 +6,6 @@ namespace PrimalDawn {
     class SceneManager {
     public:
         virtual void _renderScene(Camera* camera, Viewport* vp);
+        void _renderVisibleObjects();
     };
 }

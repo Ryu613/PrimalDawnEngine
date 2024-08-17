@@ -1,10 +1,10 @@
 #pragma once
 
-#include "log_system.hpp"
-#include "global_context.hpp"
+#include "log_manager.hpp"
+#include "engine.hpp"
 
 #define LOG_HELPER(LOG_LEVEL, ...) \
-    PrimalDawn::global_runtime_context.g_logger_system->log(LOG_LEVEL, "[" + std::string(__FUNCTION__) + "] " + __VA_ARGS__);
+    PrimalDawn::Engine.getSingleton().mLogManager->log(LOG_LEVEL, "[" + std::string(__FUNCTION__) + "] " + __VA_ARGS__);
 
 #define LOG_DEBUG(...) LOG_HELPER(LogSystem::LogLevel::debug, __VA_ARGS__);
 
