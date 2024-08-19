@@ -7,7 +7,7 @@ namespace PrimalDawn {
         : mSceneManager{0} {
         mSceneManager = sm;
     }
-    void Camera::_renderScene(Viewport* vp) {
-        mSceneManager->_renderScene(this, vp);
-    }
+    //void Camera::_renderScene(Viewport* vp) {
+    //    mSceneManager->_renderScene(this, vp);
+    //}
 }

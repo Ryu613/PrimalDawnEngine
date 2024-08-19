@@ -3,11 +3,19 @@
 #include "viewport.hpp"
 
 namespace PrimalDawn {
-	void SceneManager::_renderScene(Camera* camera, Viewport* vp) {
-		_renderVisibleObjects();
+
+	void SceneManager::loadScene(Scene* scene) {
+		LOG_INFO("¶ÁÈ¡³¡¾°[" + scene->getName() + "]...")
 	}
 
-	void SceneManager::_renderVisibleObjects() {
-		//_renderQueueGroupObjects();
+	void SceneManager::unloadScene() {
+
 	}
+	//void SceneManager::_renderScene(Camera* camera, Viewport* vp) {
+	//	_renderVisibleObjects();
+	//}
+
+	//void SceneManager::_renderVisibleObjects() {
+	//	//_renderQueueGroupObjects();
+	//}
 }
