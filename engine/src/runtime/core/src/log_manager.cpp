@@ -1,4 +1,4 @@
-#include "log_system.hpp"
+#include "log_manager.hpp"
 
 #include <spdlog/async.h>
 #include <spdlog/sinks/basic_file_sink.h>
@@ -6,7 +6,17 @@
 #include <spdlog/spdlog.h>
 
 namespace PrimalDawn {
-    LogSystem::LogSystem()
+    template<> LogManager* Singleton<LogManager>::msSingleton = 0;
+    LogManager& LogManager::getSingleton() {
+        assert(msSingleton);
+        return *msSingleton;
+    }
+
+    LogManager* LogManager::getSingletonPtr() {
+        return msSingleton;
+    }
+
+    LogManager::LogManager()
     {
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
         console_sink->set_level(spdlog::level::trace);
@@ -26,7 +36,7 @@ namespace PrimalDawn {
         spdlog::register_logger(_logger);
     }
 
-    LogSystem::~LogSystem()
+    LogManager::~LogManager()
     {
         _logger->flush();
         spdlog::drop_all();

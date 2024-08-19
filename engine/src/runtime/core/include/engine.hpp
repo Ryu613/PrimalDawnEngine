@@ -1,28 +1,35 @@
 #pragma once
 
 #include <memory>
+#include "macro.hpp"
+#include "singleton.hpp"
 #include "plugin.hpp"
 #include "render_system.hpp"
+#include "scene_manager.hpp"
+#include "log_manager.hpp"
+#include "asset_manager.hpp"
 
 namespace PrimalDawn
 {
-    class Engine {
+    class Engine : public Singleton<Engine> {
     public:
-        static Engine& Instance();
-        static Engine* init();
-        void shutdown();
-        void setRenderSystem(PrimalDawn::RenderSystem* renderSystem);
-        PrimalDawn::RenderSystem* getRenderSystem();
-        void loadPlugins();
+        static Engine& getSingleton();
+        static Engine* getSingletonPtr();
+        Engine();
+        ~Engine();
+        void setRenderSystem(RenderSystem* renderSystem);
+        RenderSystem* getRenderSystem();
+        SceneManager* getSceneManager();
         void installPlugin(Plugin* p);
         void startRendering();
         bool renderOneFrame();
     private:
-        Engine();
-        ~Engine();
         void _createWindow();
         bool _updateAllRenderTargets();
-        static Engine* _instance;
-        std::unique_ptr<PrimalDawn::RenderSystem> currentRenderer;
+    private:
+        std::unique_ptr<RenderSystem> mRenderer;
+        std::unique_ptr<LogManager> mLogManager;
+        std::unique_ptr<SceneManager> mSceneManager;
+        std::unique_ptr<AssetManager> mAssetManager;
     };
 }

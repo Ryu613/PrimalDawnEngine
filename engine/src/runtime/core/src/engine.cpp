@@ -1,40 +1,43 @@
 #include<string>
+#include <assert.h>
 #include "engine.hpp"
-#include "render_system.hpp"
 
 namespace PrimalDawn {
-    Engine* Engine::_instance = nullptr;
 
-    Engine& Engine::Instance() {
-        return *_instance;
+    template<> Engine* Singleton<Engine>::msSingleton = 0;
+    Engine* Engine::getSingletonPtr(void) {
+        return msSingleton;
+    }
+    Engine& Engine::getSingleton(void) {
+        assert(msSingleton);
+        return (*msSingleton);
     }
 
     Engine::Engine() {
-        currentRenderer.reset();
-        loadPlugins();
+        mLogManager = std::make_unique<LogManager>();
+        mAssetManager = std::make_unique<AssetManager>();
+        mSceneManager = std::make_unique<SceneManager>();
+        LOG_INFO("原初黎明引擎初始化中...");
+        LOG_INFO("当前版本: 0.2.0");
     }
 
     Engine::~Engine() {
-
-    }
-
-   Engine* Engine::init() {
-        _instance = new Engine();
-        return _instance;
+        mLogManager.reset();
     }
 
     void Engine::_createWindow() {
     }
 
     void Engine::setRenderSystem(RenderSystem* renderer) {
-        currentRenderer.reset(renderer);
+        mRenderer.reset(renderer);
     }
 
     RenderSystem* Engine::getRenderSystem() {
-        return currentRenderer.get();
+        return mRenderer.get();
     }
 
-    void Engine::loadPlugins() {
+    SceneManager* Engine::getSceneManager() {
+        return mSceneManager.get();
     }
 
     void Engine::installPlugin(Plugin* p) {
@@ -42,6 +45,7 @@ namespace PrimalDawn {
     }
 
     void Engine::startRendering() {
+        // 渲染循环
         while (true) {
             if (!renderOneFrame()) {
                 break;
@@ -50,14 +54,19 @@ namespace PrimalDawn {
     }
 
     bool Engine::renderOneFrame() {
-        if (!_updateAllRenderTargets()) {
-            return false;
-        }
+        //_updateCamera();
+        //_updateSceneElements();
+        //_renderScene();
+        //_swapBuffers();
         return true;
     }
 
     bool Engine::_updateAllRenderTargets() {
-        currentRenderer->_updateAllRenderTargets();
+        mRenderer->_updateAllRenderTargets();
         return true;
     }
+
+    //SceneManager* Engine::createSceneManager() {
+    //    return new SceneManager();
+    //}
 }

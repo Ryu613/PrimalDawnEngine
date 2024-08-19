@@ -1,21 +1,18 @@
-#include "macro.hpp"
 #include "application_context.hpp"
-#include "global_context.hpp"
 
 namespace PrimalDawnBites {
-    PrimalDawn::Engine* ApplicationContext::engine = nullptr;
+    std::unique_ptr<PrimalDawn::Engine> ApplicationContext::engine = nullptr;
     
-    ApplicationContext::ApplicationContext(const std::string& name) {
-        appName = name;
-        PrimalDawn::global_runtime_context.startSystems();
-        //LOG_INFO("app init");
+    ApplicationContext::ApplicationContext(const std::string& name)
+        : appName(name) {
+        engine = std::make_unique<PrimalDawn::Engine>();
+        LOG_INFO("应用 [ " + appName + "] 启动中...");
     }
     ApplicationContext::~ApplicationContext() {
     }
     void ApplicationContext::initApp() {
-        PrimalDawn::Engine::init();
+        LOG_INFO("应用 [ " + appName + "] 正在初始化");
         staticPluginLoader.load();
-        engine = &PrimalDawn::Engine::Instance();
     }
 
     void ApplicationContext::closeApp() {
@@ -23,6 +20,6 @@ namespace PrimalDawnBites {
     }
 
     PrimalDawn::Engine* ApplicationContext::getEngine() const {
-        return engine;
+        return engine.get();
     }
 }

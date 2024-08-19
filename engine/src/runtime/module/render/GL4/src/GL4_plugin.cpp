@@ -5,7 +5,7 @@ namespace PrimalDawn {
 
     void GL4Plugin::install() {
         renderSystem.reset(new GL4RenderSystem());
-        Engine::Instance().setRenderSystem(renderSystem.get());
+        Engine::getSingleton().setRenderSystem(renderSystem.get());
     }
 
     void GL4Plugin::init() {}
