@@ -1,7 +1,8 @@
 #include "application_context.hpp"
 
 PrimalDawn::Scene* createTestScene() {
-    return new PrimalDawn::Scene();
+    PrimalDawn::Scene* sandboxScene = new PrimalDawn::Scene();
+    return sandboxScene;
 }
 
 int main() {

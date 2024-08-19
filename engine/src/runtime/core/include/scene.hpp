@@ -1,5 +1,5 @@
 /*
-    场景，一个场景包含物体，光源，相机等
+    场景，一个场景包含物体，光源，相机等。以场景图（树）组织这些SceneNode
 */
 #pragma once
 #include <memory>
@@ -35,7 +35,8 @@ namespace PrimalDawn {
         ~Scene();
         void setName(std::string& sceneName);
         std::string& getName();
-        void addNode(SceneNode* node);
+        SceneNode* getSceneNodeRoot();
+        SceneNode* getSceneNode(const std::string& name) const;
         void addCamera(Camera* camera);
         
     };

@@ -6,12 +6,12 @@ namespace PrimalDawnBites {
     ApplicationContext::ApplicationContext(const std::string& name)
         : appName(name) {
         engine = std::make_unique<PrimalDawn::Engine>();
-        LOG_INFO(name + "启动中...");
+        LOG_INFO("应用 [ " + appName + "] 启动中...");
     }
     ApplicationContext::~ApplicationContext() {
     }
     void ApplicationContext::initApp() {
-        LOG_INFO(appName + "正在初始化");
+        LOG_INFO("应用 [ " + appName + "] 正在初始化");
         staticPluginLoader.load();
     }
 

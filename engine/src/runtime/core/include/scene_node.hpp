@@ -15,11 +15,12 @@ namespace PrimalDawn {
         ObjList mObjects;
     public:
         SceneNode();
-        SceneNode(std::string& name);
         ~SceneNode();
         // 绑定物体
         virtual void bindObject(AbstractObject* obj);
         // 解绑物体
         virtual void unbindObject(AbstractObject* obj);
+        // 创建子场景节点
+        virtual SceneNode* createChildSceneNode(const std::string& name);
     };
 }

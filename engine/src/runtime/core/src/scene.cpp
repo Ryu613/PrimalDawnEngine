@@ -7,4 +7,8 @@ namespace PrimalDawn {
     std::string& Scene::getName() {
         return mSceneName;
     }
+
+    void Scene::addChildNode(SceneNode* sceneNode) {
+
+    }
 }

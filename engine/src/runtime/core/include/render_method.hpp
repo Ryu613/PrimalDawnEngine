@@ -7,6 +7,7 @@ namespace PrimalDawn {
     public:
         typedef std::vector<RenderMethodPass*> renderMethodPasses;
     private:
+        // 渲染方法对应的渲染流程
         renderMethodPasses mRenderMethodPasses;
     };
 }
