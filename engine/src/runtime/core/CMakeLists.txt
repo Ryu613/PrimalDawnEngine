@@ -5,4 +5,4 @@ include(${PROJECT_SOURCE_DIR}/cmake/Find3rdParty.cmake)
 
 target_include_directories(core_lib PUBLIC include)
 
-target_link_libraries(core_lib PUBLIC spdlog::spdlog glm::glm)
+target_link_libraries(core_lib PUBLIC spdlog::spdlog glm::glm nlohmann_json::nlohmann_json)
