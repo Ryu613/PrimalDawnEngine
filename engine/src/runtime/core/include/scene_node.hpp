@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include "prequisites.hpp"
 #include "node.hpp"
-#include "abstract_object.hpp"
 
 namespace PrimalDawn {
     class SceneNode : public Node {
@@ -21,6 +21,6 @@ namespace PrimalDawn {
         // 解绑物体
         virtual void unbindObject(AbstractObject* obj);
         // 创建子场景节点
-        virtual SceneNode* createChildSceneNode(const std::string& name);
+        virtual SceneNode* createChildSceneNode(const String& name);
     };
 }

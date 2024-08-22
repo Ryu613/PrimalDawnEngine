@@ -4,11 +4,11 @@ namespace PrimalDawn {
     Scene::Scene() {
     }
 
-    std::string& Scene::getName() {
+    String& Scene::getName() {
         return mSceneName;
     }
 
-    void Scene::addChildNode(SceneNode* sceneNode) {
-
+    SceneNode* Scene::getSceneNodeRoot() {
+        return nullptr;
     }
 }

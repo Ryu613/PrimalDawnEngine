@@ -1,6 +1,5 @@
 #pragma once
-
-#include "resource.hpp"
+#include "prequisites.hpp"
 
 namespace PrimalDawn {
     class TextureUnit {
@@ -8,6 +7,5 @@ namespace PrimalDawn {
         TextureUnit();
         ~TextureUnit();
     private:
-
     };
 }

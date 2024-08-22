@@ -1,15 +1,17 @@
 #pragma once
-#include <string>
+
+#include "prequisites.hpp"
+#include "abstract_object.hpp"
 
 namespace PrimalDawn {
-    class Viewport;
-    class SceneManager;
-    class Camera {
+    class Camera : public AbstractObject {
     public:
-        Camera(const std::string& name, SceneManager* sm);
+        Camera();
+        ~Camera();
+        Camera(const String& name, Scene* scene);
         void _renderScene(Viewport* vp);
     protected:
-        SceneManager* mSceneManager;
+        Scene* mScene;
     private:
         float mPixelDisplayRatio;
     };
