@@ -1,11 +1,18 @@
 #include "camera.hpp"
-#include "viewport.hpp"
-#include "scene_manager.hpp"
+#include "scene.hpp"
 
 namespace PrimalDawn {
-    Camera::Camera(const std::string& name, SceneManager* sm) 
-        : mSceneManager{0} {
-        mSceneManager = sm;
+    Camera::Camera() {
+
+    }
+
+    Camera::~Camera() {
+
+    }
+
+    Camera::Camera(const String& name, Scene* scene) 
+        : mScene{NULL} {
+        mScene = scene;
     }
     //void Camera::_renderScene(Viewport* vp) {
     //    mSceneManager->_renderScene(this, vp);

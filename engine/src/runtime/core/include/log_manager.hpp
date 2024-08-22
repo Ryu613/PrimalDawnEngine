@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 #include "singleton.hpp"
+#include "scene.hpp"
 
 namespace PrimalDawn {
     class LogManager : public Singleton<LogManager> {

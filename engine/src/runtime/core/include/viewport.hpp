@@ -1,7 +1,8 @@
 #pragma once
 
+#include "prequisites.hpp"
+
 namespace PrimalDawn {
-    class Camera;
     class Viewport {
     public:
         void update();

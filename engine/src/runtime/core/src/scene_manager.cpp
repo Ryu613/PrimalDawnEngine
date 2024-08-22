@@ -1,6 +1,8 @@
 #include "scene_manager.hpp"
+#include "macro.hpp"
 #include "camera.hpp"
-#include "viewport.hpp"
+#include "light.hpp"
+#include "scene.hpp"
 #include "builtin_factories.hpp"
 
 namespace PrimalDawn {
@@ -15,6 +17,19 @@ namespace PrimalDawn {
 
 	Entity* SceneManager::createEntity(enum ENTITY_TYPE entityType) {
 		return EntityFactory::createPrimitive(entityType);
+	}
+
+	Scene* SceneManager::createScene(const String& sceneName) {
+		Scene* scene = new Scene();
+		return scene;
+	}
+
+	Camera* SceneManager::createCamera(const String& name) {
+		return new Camera();
+	}
+
+	Light* SceneManager::createLight(const String& name) {
+		return new Light();
 	}
 
 	//void SceneManager::_renderScene(Camera* camera, Viewport* vp) {

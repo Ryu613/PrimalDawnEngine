@@ -1,7 +1,6 @@
 #pragma once
-#include <string>
+#include "prequisites.hpp"
 #include "macro.hpp"
-#include "engine.hpp"
 #include "static_plugin_loader.hpp"
 
 namespace PrimalDawnBites {
@@ -10,14 +9,14 @@ namespace PrimalDawnBites {
         StaticPluginLoader staticPluginLoader;
         static std::unique_ptr<PrimalDawn::Engine> engine;
     public:
-        ApplicationContext(const std::string& name);
+        ApplicationContext(const PrimalDawn::String& name);
         ~ApplicationContext();
         
         void initApp();
         void closeApp();
         PrimalDawn::Engine* getEngine() const;
     protected:
-        std::string appName;
+        PrimalDawn::String& appName;
 
     };
 }

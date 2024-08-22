@@ -2,13 +2,8 @@
     场景，一个场景包含物体，光源，相机等。以场景图（树）组织这些SceneNode
 */
 #pragma once
-#include <memory>
-#include <vector>
-#include <string>
-#include <map>
+#include "prequisites.hpp"
 #include "scene_node.hpp"
-#include "camera.hpp"
-#include "light.hpp"
 
 namespace PrimalDawn {
     class Scene {
@@ -34,10 +29,9 @@ namespace PrimalDawn {
         Scene(std::string& name);
         ~Scene();
         void setName(std::string& sceneName);
-        std::string& getName();
+        String& getName();
         SceneNode* getSceneNodeRoot();
         SceneNode* getSceneNode(const std::string& name) const;
-        void addCamera(Camera* camera);
         
     };
 }
