@@ -1,6 +1,10 @@
 #include "node.hpp"
 
 namespace PrimalDawn {
+
+    Node::~Node() {
+
+    }
     void Node::setOrientation(const glm::quat& q) {
 
     }

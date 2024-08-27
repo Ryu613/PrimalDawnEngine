@@ -6,11 +6,11 @@ namespace PrimalDawn {
     class Resource {
     public:
         virtual ~Resource();
-        // 读取资源
+        // 璇诲彇璧勬簮
         virtual void load();
-        // 卸载资源
+        // 鍗歌浇璧勬簮
         virtual void unload();
-        // 获取资源大小
+        // 鑾峰彇璧勬簮澶у皬
         size_t getSize() const {
             return mSize;
         }
@@ -19,16 +19,16 @@ namespace PrimalDawn {
             return mName;
         }
     protected:
-        // 资源名称
+        // 璧勬簮鍚嶇О
         std::string mName;
-        // 资源大小
+        // 璧勬簮澶у皬
         size_t mSize;
     protected:
-        // 抽象类，避免默认构造器
-        Resource() 
-          : mSize(0)
+        // 鎶借薄绫伙紝閬垮厤榛樿鏋勯�犲櫒
+        Resource()
+            : mSize(0)
         {}
-        // 把赋值操作也避免
+        // 鎶婅祴鍊兼搷浣滀篃閬垮厤
         Resource& operator=(const Resource& rhs);
     };
 }

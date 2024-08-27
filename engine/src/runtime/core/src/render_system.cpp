@@ -2,7 +2,7 @@
 
 namespace PrimalDawn {
     void RenderSystem::_updateAllRenderTargets(bool swapBuffers) {
-        // ¸ù¾ÝÓÅÏÈ¼¶¸üÐÂËùÓÐäÖÈ¾Ä¿±ê
+        // æ ¹æ®ä¼˜å…ˆçº§æ›´æ–°æ‰€æœ‰æ¸²æŸ“ç›®æ ‡
         for (auto& rt : mPrioritisedRenderTargets) {
             rt.second->update(swapBuffers);
         }

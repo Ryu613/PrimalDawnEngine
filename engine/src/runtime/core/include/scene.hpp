@@ -1,5 +1,5 @@
 /*
-    ³¡¾°£¬Ò»¸ö³¡¾°°üº¬ÎïÌå£¬¹âÔ´£¬Ïà»úµÈ¡£ÒÔ³¡¾°Í¼£¨Ê÷£©×éÖ¯ÕâĞ©SceneNode
+    åœºæ™¯ï¼Œä¸€ä¸ªåœºæ™¯åŒ…å«ç‰©ä½“ï¼Œå…‰æºï¼Œç›¸æœºç­‰ã€‚ä»¥åœºæ™¯å›¾ï¼ˆæ ‘ï¼‰ç»„ç»‡è¿™äº›SceneNode
 */
 #pragma once
 #include "prequisites.hpp"
@@ -12,26 +12,26 @@ namespace PrimalDawn {
         typedef std::map<std::string, Camera*> CameraList;
         typedef std::vector<Light*> LightList;
     private:
-        // ³¡¾°Í¼¸ù½Úµã
+        // åœºæ™¯å›¾æ ¹èŠ‚ç‚¹
         std::unique_ptr<SceneNode> mSceneNodeRoot;
-        // ³¡¾°Ãû³Æ
+        // åœºæ™¯åç§°
         std::string mSceneName;
-        // ³¡¾°ÀïµÄËùÓĞÏà»úÁĞ±í
+        // åœºæ™¯é‡Œçš„æ‰€æœ‰ç›¸æœºåˆ—è¡¨
         CameraList mCameras;
-        // ³¡¾°½ÚµãÁĞ±í
+        // åœºæ™¯èŠ‚ç‚¹åˆ—è¡¨
         SceneNodeList sceneNodeList;
-        // ¸ù½ÚµãÖ¸Õë
+        // æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
         std::unique_ptr<SceneNode> mSceneRoot;
-        // ¹âÏßÁĞ±í
+        // å…‰çº¿åˆ—è¡¨
         LightList mLightList;
     public:
         Scene();
         Scene(std::string& name);
         ~Scene();
         void setName(std::string& sceneName);
-        String& getName();
+        const String& getName();
         SceneNode* getSceneNodeRoot();
         SceneNode* getSceneNode(const std::string& name) const;
-        
+
     };
 }

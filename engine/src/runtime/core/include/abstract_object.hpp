@@ -1,5 +1,5 @@
 /*
-    所有物体的抽象总类
+    鎵�鏈夌墿浣撶殑鎶借薄鎬荤被
 */
 #pragma once
 #include "prequisites.hpp"

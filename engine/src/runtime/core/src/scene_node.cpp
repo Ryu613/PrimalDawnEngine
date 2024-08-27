@@ -16,6 +16,10 @@ namespace PrimalDawn {
 
     }
 
+    void SceneNode::unbindObject(AbstractObject* obj) {
+
+    }
+
     SceneNode* SceneNode::createChildSceneNode(const String& name) {
         return new SceneNode();
     }

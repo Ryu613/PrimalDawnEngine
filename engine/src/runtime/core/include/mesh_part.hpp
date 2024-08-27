@@ -1,18 +1,25 @@
 /*
-    Íø¸ñ²¿¼ş£ºÓë²ÄÖÊ£¨Material£©¶ÔÓ¦
+    ç½‘æ ¼éƒ¨ä»¶ï¼šä¸æè´¨ï¼ˆMaterialï¼‰å¯¹åº”
 */
 #pragma once
 #include "prequisites.hpp"
+#include "vertex_data.hpp"
+#include "material.hpp"
 
 namespace PrimalDawn {
     class MeshPart {
+    private:
+        // æè´¨
+        std::shared_ptr<Material> mMaterial;
+        // é¡¶ç‚¹æ•°æ®
+        std::unique_ptr<VertexData> mVertexData;
     public:
         MeshPart();
         ~MeshPart();
         void setMaterial(const Material* material);
-        const std::shared_ptr<Material> getMaterial();
-    private:
-        // ²ÄÖÊ
-        std::shared_ptr<Material> mMaterial;
+        const Material* getMaterial();
+        void setVertexData(const VertexData* vertexData);
+        VertexData* getVertexData();
+
     };
 }

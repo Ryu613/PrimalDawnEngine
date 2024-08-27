@@ -1,25 +1,26 @@
 #include "application_context.hpp"
 
 namespace PrimalDawnBites {
-    std::unique_ptr<PrimalDawn::Engine> ApplicationContext::engine = nullptr;
-    
+    std::unique_ptr<PrimalDawn::Engine> ApplicationContext::mEngine = nullptr;
+
     ApplicationContext::ApplicationContext(const PrimalDawn::String& name)
-        : appName((PrimalDawn::String&)name) {
-        engine = std::make_unique<PrimalDawn::Engine>();
-        LOG_INFO("”¶”√ [ " + appName + "] ∆Ù∂Ø÷–...");
+        : mAppName((PrimalDawn::String&)name) {
+        mEngine = std::make_unique<PrimalDawn::Engine>();
+        LOG_INFO("Â∫îÁî® [ " + mAppName + " ] ÂêØÂä®‰∏≠...");
+        mStaticPluginLoader = std::make_unique<StaticPluginLoader>();
     }
     ApplicationContext::~ApplicationContext() {
     }
     void ApplicationContext::initApp() {
-        LOG_INFO("”¶”√ [ " + appName + "] ’˝‘⁄≥ı ºªØ");
-        staticPluginLoader.load();
+        LOG_INFO("Â∫îÁî® [ " + mAppName + " ] Ê≠£Âú®ÂàùÂßãÂåñ");
+        mStaticPluginLoader->load();
     }
 
     void ApplicationContext::closeApp() {
-
+        ApplicationContext::mEngine.release();
     }
 
     PrimalDawn::Engine* ApplicationContext::getEngine() const {
-        return engine.get();
+        return mEngine.get();
     }
 }

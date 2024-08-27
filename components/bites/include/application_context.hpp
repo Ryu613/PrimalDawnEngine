@@ -6,9 +6,6 @@
 namespace PrimalDawnBites {
     class ApplicationContext {
     public:
-        StaticPluginLoader staticPluginLoader;
-        static std::unique_ptr<PrimalDawn::Engine> engine;
-    public:
         ApplicationContext(const PrimalDawn::String& name);
         ~ApplicationContext();
         
@@ -16,7 +13,9 @@ namespace PrimalDawnBites {
         void closeApp();
         PrimalDawn::Engine* getEngine() const;
     protected:
-        PrimalDawn::String& appName;
+        std::unique_ptr<StaticPluginLoader> mStaticPluginLoader;
+        static std::unique_ptr<PrimalDawn::Engine> mEngine;
+        PrimalDawn::String& mAppName;
 
     };
 }

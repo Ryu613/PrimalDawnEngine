@@ -7,17 +7,15 @@ namespace PrimalDawn {
     private:
         Scene* currentScene;
     public:
-        // ¶ÁÈëµ½³¡¾°
+        // è¯»å…¥åˆ°åœºæ™¯
         void loadScene(Scene* scene);
-        // Ğ¶ÔØµ±Ç°³¡¾°
+        // å¸è½½å½“å‰åœºæ™¯
         void unloadScene();
-        // ´´½¨³¡¾°
+        // åˆ›å»ºåœºæ™¯
         Scene* createScene(const String& sceneName);
-        // ´´½¨ÊµÌå(³ÌĞòÔ¤¶¨ÒåµÄ»ù´¡¼¸ºÎÍ¼ĞÎ)
-        Entity* createEntity(enum ENTITY_TYPE entityType);
-        // ´´½¨Ïà»ú
+        // åˆ›å»ºç›¸æœº
         Camera* createCamera(const String& name);
-        // ´´½¨¹âÔ´
+        // åˆ›å»ºå…‰æº
         Light* createLight(const String& name);
     };
 }
