@@ -4,14 +4,14 @@
 
 namespace PrimalDawn {
 
-    // ÓÃÀ´´æ´¢°´ÓÅÏÈ¼¶ÅÅĞòµÄäÖÈ¾Ä¿±ê
-    typedef std::multimap<unsigned char, RenderTarget * > RenderTargetPriorityMap;
+    // ç”¨æ¥å­˜å‚¨æŒ‰ä¼˜å…ˆçº§æ’åºçš„æ¸²æŸ“ç›®æ ‡
+    typedef std::multimap<unsigned char, RenderTarget* > RenderTargetPriorityMap;
     class RenderSystem {
     public:
         RenderSystem() {};
         virtual ~RenderSystem() {};
         virtual void shutdown() = 0;
-        // ÄÚ²¿º¯Êı£¬ÓÃÀ´¸üĞÂËùÓĞÓëµ±Ç°äÖÈ¾ÏµÍ³°ó¶¨µÄäÖÈ¾Ä¿±ê
+        // å†…éƒ¨å‡½æ•°ï¼Œç”¨æ¥æ›´æ–°æ‰€æœ‰ä¸å½“å‰æ¸²æŸ“ç³»ç»Ÿç»‘å®šçš„æ¸²æŸ“ç›®æ ‡
         virtual void _updateAllRenderTargets(bool swapBuffers = true);
     protected:
         RenderTargetPriorityMap mPrioritisedRenderTargets;

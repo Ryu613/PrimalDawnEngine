@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# ×÷Õß¿ª·¢»·¾³:windows10 + vs2022£¨Ôİ²»Ö§³ÖÆäËûOSºÍ»·¾³£©
+# ä½œè€…å¼€å‘ç¯å¢ƒ:windows10 + vs2022ï¼ˆæš‚ä¸æ”¯æŒå…¶ä»–OSå’Œç¯å¢ƒï¼‰
 project(
     PrimalDawnEngine 
     LANGUAGES CXX
@@ -11,10 +11,13 @@ project(
     VERSION 0.1.0
 )
 
-# ÉèÖÃÊ¹ÓÃµÄäÖÈ¾Æ÷
+# è®¾ç½®ä½¿ç”¨çš„æ¸²æŸ“å™¨
 set(RENDERER_TYPE "GL4")
 
-# Ìí¼Ó×ÓÄ¿Â¼
+# è®¾ç½®ä½¿ç”¨utf-8ç¼–è¯‘
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
+
+# æ·»åŠ å­ç›®å½•
 add_subdirectory(engine)
 add_subdirectory(components)
 add_subdirectory(samples)

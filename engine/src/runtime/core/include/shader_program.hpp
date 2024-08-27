@@ -3,7 +3,7 @@
 #include "resource.hpp" 
 
 namespace PrimalDawn {
-    // 支持的着色器类型
+    // 鏀寔鐨勭潃鑹插櫒绫诲瀷
     enum ShaderProgramType : uint8_t {
         VERTEX_PROGRAM = 0,
         FRAGMENT_PROGRAM,

@@ -12,7 +12,7 @@ namespace PrimalDawn {
         virtual void _updateAutoUpdatedViewports();
     protected:
         ViewportList mViewportList;
-        // updateµÄÄÚ²¿ÊµÏÖ
+        // updateçš„å†…éƒ¨å®žçŽ°
         virtual void updateImpl();
     };
 }

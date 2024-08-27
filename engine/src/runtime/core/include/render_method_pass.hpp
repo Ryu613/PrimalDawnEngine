@@ -1,8 +1,7 @@
 #pragma once
 
-#include <memory>
+#include "prequisites.hpp"
 #include "color_value.hpp"
-#include "texture_unit.hpp"
 #include "shader_program.hpp"
 
 namespace PrimalDawn {
@@ -15,6 +14,9 @@ namespace PrimalDawn {
         ColorValue mDiffuse;
         ColorValue mSpecular;
         TextureUnitList mTextureObjects;
-        std::unique_ptr<ShaderProgram> mShaderProgram[SHADER_COUNT]
+        std::unique_ptr<ShaderProgram> mShaderProgram[SHADER_COUNT];
+    public:
+        RenderMethodPass();
+        ~RenderMethodPass();
     };
 }

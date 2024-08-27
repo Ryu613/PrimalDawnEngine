@@ -1,26 +1,26 @@
 /*
-    µ¥ÀıÄ£°åÀà£¬ÈÎºÎĞèÒªµ¥ÀıÊµÏÖµÄÀà¿ÉÒÔ¼Ì³Ğ´ËÀà
+    å•ä¾‹æ¨¡æ¿ç±»ï¼Œä»»ä½•éœ€è¦å•ä¾‹å®ç°çš„ç±»å¯ä»¥ç»§æ‰¿æ­¤ç±»
 */
 #pragma once
 
 namespace PrimalDawn {
     template<typename T> class Singleton {
     private:
-        // ½ûÖ¹¸´ÖÆ¹¹ÔìÆ÷
+        // ç¦æ­¢å¤åˆ¶æ„é€ å™¨
         Singleton(const Singleton<T>&);
-        // ½ûÖ¹¸³Öµ²Ù×÷·û
+        // ç¦æ­¢èµ‹å€¼æ“ä½œç¬¦
         Singleton& operator=(const Singleton<T>&);
     protected:
         static T* msSingleton;
     public:
-// ½ûÓÃ±àÒëÆ÷Ğéº¯Êı¼ì²éµ¼ÖÂµÄ±¨´í
-// static_castÈôÔÚÅÉÉúÀàµÄ¹¹ÔìÆ÷ÖĞÖ´ĞĞÊ±£¬thisÖ¸Õë¿ÉÄÜ»áÓÉÓÚ¹¹ÔìÆ÷Ì«Ôçµ÷ÓÃ»¹Ã»ÄÜÖ¸ÏòÅÉÉúÀà¶øÊÇ»ùÀàÊ±µ¼ÖÂ±¨´í
+        // ç¦ç”¨ç¼–è¯‘å™¨è™šå‡½æ•°æ£€æŸ¥å¯¼è‡´çš„æŠ¥é”™
+        // static_castè‹¥åœ¨æ´¾ç”Ÿç±»çš„æ„é€ å™¨ä¸­æ‰§è¡Œæ—¶ï¼ŒthisæŒ‡é’ˆå¯èƒ½ä¼šç”±äºæ„é€ å™¨å¤ªæ—©è°ƒç”¨è¿˜æ²¡èƒ½æŒ‡å‘æ´¾ç”Ÿç±»è€Œæ˜¯åŸºç±»æ—¶å¯¼è‡´æŠ¥é”™
 #if defined(__has_attribute)
 #  if __has_attribute(no_sanitize)
         __attribute__((no_sanitize("vptr")))
 #  endif
 #endif
-        Singleton() {
+            Singleton() {
             msSingleton = static_cast<T*>(this);
         }
         ~Singleton() {

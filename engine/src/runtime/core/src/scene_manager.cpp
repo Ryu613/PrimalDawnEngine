@@ -8,15 +8,11 @@
 namespace PrimalDawn {
 
 	void SceneManager::loadScene(Scene* scene) {
-		LOG_INFO("¶ÁÈ¡³¡¾°[" + scene->getName() + "]...")
+		LOG_INFO("è¯»å–åœºæ™¯[" + scene->getName() + "]...")
 	}
 
 	void SceneManager::unloadScene() {
 
-	}
-
-	Entity* SceneManager::createEntity(enum ENTITY_TYPE entityType) {
-		return EntityFactory::createPrimitive(entityType);
 	}
 
 	Scene* SceneManager::createScene(const String& sceneName) {

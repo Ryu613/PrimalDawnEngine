@@ -1,28 +1,23 @@
 /*
-    ÊµÌå£º¼´¾ßÌåµÄÎïÌå£¬ÓëÒ»¸öMesh¹ØÁª£¬ÏÂÃæÓĞÒ»¸ö»ò¶à¸öEntityPart
+    å®ä½“ï¼šå³å…·ä½“çš„ç‰©ä½“ï¼Œä¸ä¸€ä¸ªMeshå…³è”ï¼Œä¸‹é¢æœ‰ä¸€ä¸ªæˆ–å¤šä¸ªEntityPart
 */
 #pragma once
 
 #include "abstract_object.hpp"
-#include "mesh.hpp"
-#include "entity_part.hpp"
 
 namespace PrimalDawn{
-    enum ENTITY_TYPE {
-        PRIMITIVE_TYPE_CUBE = 1,
-        PRIMITIVE_TYPE_SPHERE,
-    };
     class Entity : public AbstractObject {
     public:
-        typedef std::vector<EntityPart*> EntityPartList;
+        typedef std::vector<std::unique_ptr<EntityPart>> EntityPartList;
     private:
-        // ÊµÌå¹ØÁªµÄÍø¸ñ
-        std::unique_ptr<Mesh> mMesh;
-        // ÊµÌå²¿¼şµÄÁĞ±í
+        // å®ä½“å…³è”çš„ç½‘æ ¼
+        std::shared_ptr<Mesh> mMesh;
+        // å®ä½“éƒ¨ä»¶çš„åˆ—è¡¨
         EntityPartList mEntityPartList;
-        // ÊµÌåÎŞ·¨Ö±½Ó¹¹Ôì
+        // å®ä½“æ— æ³•ç›´æ¥æ„é€ 
         Entity();
     public:
+        Entity(std::shared_ptr<Mesh> mesh);
         ~Entity();
     };
 }

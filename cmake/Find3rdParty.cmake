@@ -1,6 +1,6 @@
-# 日志打印
+# 鏃ュ織鎵撳嵃
 find_package(spdlog CONFIG REQUIRED)
-# 线性代数库
+# 绾挎�т唬鏁板簱
 find_package(glm CONFIG REQUIRED)
-# json操作
-find_package(nlohmann_json CONFIG REQUIRED)
+# boost(json,鍙嶅皠)
+find_package(Boost REQUIRED COMPONENTS fusion json)

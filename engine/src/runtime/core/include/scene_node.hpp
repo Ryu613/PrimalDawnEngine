@@ -1,5 +1,5 @@
 /*
-    ³¡¾°½Úµã(ÓÃÓÚÉú³Éscene graph)
+    åœºæ™¯èŠ‚ç‚¹(ç”¨äºç”Ÿæˆscene graph)
 */
 
 #pragma once
@@ -16,11 +16,11 @@ namespace PrimalDawn {
     public:
         SceneNode();
         ~SceneNode();
-        // °ó¶¨ÎïÌå
+        // ç»‘å®šç‰©ä½“
         virtual void bindObject(AbstractObject* obj);
-        // ½â°óÎïÌå
+        // è§£ç»‘ç‰©ä½“
         virtual void unbindObject(AbstractObject* obj);
-        // ´´½¨×Ó³¡¾°½Úµã
+        // åˆ›å»ºå­åœºæ™¯èŠ‚ç‚¹
         virtual SceneNode* createChildSceneNode(const String& name);
     };
 }

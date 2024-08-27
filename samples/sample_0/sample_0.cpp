@@ -4,6 +4,7 @@
 #include "scene.hpp"
 #include "camera.hpp"
 #include "light.hpp"
+#include "primitive_shape.hpp"
 
 
 using namespace PrimalDawn;
@@ -13,25 +14,26 @@ Scene* createTestScene() {
     SceneManager* scnMgr = engine->getSceneManager();
     String sceneName("scene0");
     Scene* scene = scnMgr->createScene(sceneName);
-    // ´´½¨1¸öÇò1¸öÁ¢·½Ìå
-    Entity* sphere = scnMgr->createEntity(ENTITY_TYPE::PRIMITIVE_TYPE_SPHERE);
-    Entity* cube = scnMgr->createEntity(ENTITY_TYPE::PRIMITIVE_TYPE_CUBE);
-    // ´´½¨³¡¾°½Úµã²¢¹ØÁªÎïÌå
+    // åˆ›å»º1ä¸ªçƒ1ä¸ªç«‹æ–¹ä½“
+    std::unique_ptr<PrimalDawnBites::PrimitiveShape> pmtShape = std::make_unique< PrimalDawnBites::PrimitiveShape>();
+    // è·å–åŸºæœ¬å®ä½“
+    Entity* sphere = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_SPHERE);
+    Entity* cube = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_CUBE);
+    // åˆ›å»ºåœºæ™¯èŠ‚ç‚¹å¹¶å…³è”ç‰©ä½“
     SceneNode* nodeCube = scene->getSceneNodeRoot()->createChildSceneNode("primitiveCube");
     SceneNode* nodeSphere = scene->getSceneNodeRoot()->createChildSceneNode("primitiveSphere");
-    // Îª2¸öÊµÌåÉèÖÃÎ»ÖÃºÍ·½Ïò
+    // ä¸º2ä¸ªå®ä½“è®¾ç½®ä½ç½®å’Œæ–¹å‘
     nodeCube->setPosition(glm::vec3(0,10,15));
     nodeSphere->setPosition(glm::vec3(5,20,-5));
     nodeCube->bindObject(cube);
     nodeSphere->bindObject(sphere);
-    // ÉèÖÃÏà»ú
+    // è®¾ç½®ç›¸æœº
     String cameraName("cam1");
     Camera* camera = scnMgr->createCamera(cameraName);
-    AbstractObject* obj = camera;
     SceneNode* camNode = scene->getSceneNodeRoot()->createChildSceneNode(cameraName);
     camNode->setPosition(glm::vec3(0, 0, 15));
     camNode->bindObject(camera);
-    // ÉèÖÃ¹âÔ´
+    // è®¾ç½®å…‰æº
     Light* light = scnMgr->createLight("mainLight");
     SceneNode* lightNode = scene->getSceneNodeRoot()->createChildSceneNode("mainLight");
     lightNode->setPosition(glm::vec3(0, 10, 15));

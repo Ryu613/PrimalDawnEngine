@@ -1,13 +1,16 @@
 #pragma once
-#include <vector>
+#include "prequisites.hpp"
 #include "render_method_pass.hpp"
 
 namespace PrimalDawn {
     class RenderMethod {
     public:
-        typedef std::vector<RenderMethodPass*> renderMethodPasses;
+        typedef std::vector<std::unique_ptr<RenderMethodPass>> renderMethodPasses;
     private:
-        // äÖÈ¾·½·¨¶ÔÓ¦µÄäÖÈ¾Á÷³Ì
+        // æ¸²æŸ“æ–¹æ³•å¯¹åº”çš„æ¸²æŸ“æµç¨‹
         renderMethodPasses mRenderMethodPasses;
+    public:
+        RenderMethod();
+        ~RenderMethod();
     };
 }

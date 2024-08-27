@@ -17,8 +17,8 @@ namespace PrimalDawn {
         mLogManager = std::make_unique<LogManager>();
         mAssetManager = std::make_unique<AssetManager>();
         mSceneManager = std::make_unique<SceneManager>();
-        LOG_INFO("原初黎明引擎初始化中...");
-        LOG_INFO("当前版本: 0.2.0");
+        LOG_INFO("鍘熷垵榛庢槑寮曟搸鍒濆鍖栦腑...");
+        LOG_INFO("褰撳墠鐗堟湰: 0.2.0");
     }
 
     Engine::~Engine() {
@@ -45,7 +45,7 @@ namespace PrimalDawn {
     }
 
     void Engine::startRendering() {
-        // 渲染循环
+        // 娓叉煋寰幆
         while (true) {
             if (!renderOneFrame()) {
                 break;

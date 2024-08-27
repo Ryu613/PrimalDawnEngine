@@ -1,10 +1,18 @@
 /*
-    ÊµÌåµÄÒ»²¿·Ö(ÓÃÓÚÖ§³ÖÒ»¸öÎïÌå¶àÖÖ²ÄÖÊ)
+    å®ä½“çš„ä¸€éƒ¨åˆ†(ç”¨äºæ”¯æŒä¸€ä¸ªç‰©ä½“å¤šç§æè´¨)
 */
 #pragma once
 
+#include "prequisites.hpp"
+#include "mesh_part.hpp"
+
 namespace PrimalDawn {
     class EntityPart {
-
+    private:
+        MeshPart* mMeshPart;
+    public:
+        EntityPart();
+        EntityPart(MeshPart* meshPart);
+        ~EntityPart();
     };
 }

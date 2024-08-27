@@ -7,27 +7,27 @@ namespace PrimalDawn {
     }
 
     bool GL4Window::initialize(GLFWWIndowCreateInfo createInfo) {
-        //³õÊ¼»¯glfw¿â£¬ÈôÊ§°ÜÔòÍË³ö
+        //åˆå§‹åŒ–glfwåº“ï¼Œè‹¥å¤±è´¥åˆ™é€€å‡º
         if (!glfwInit()) {
             return false;
         }
-        // ÊµÀı»¯glfwWindow£¬Ö¸¶¨¼ÆËã»ú±ØĞëÓëOpenGL 4.3¼æÈİ
+        // å®ä¾‹åŒ–glfwWindowï¼ŒæŒ‡å®šè®¡ç®—æœºå¿…é¡»ä¸OpenGL 4.3å…¼å®¹
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         thisWidth = createInfo.width;
         thisHeight = createInfo.height;
-        // ´´½¨glfw´°¿Ú£¬²ÎÊıÎª£¨¿í£¬¸ß£¬±êÌâ£¬ÔÊĞíÈ«ÆÁÏÔÊ¾£¬×ÊÔ´¹²Ïí£©
+        // åˆ›å»ºglfwçª—å£ï¼Œå‚æ•°ä¸ºï¼ˆå®½ï¼Œé«˜ï¼Œæ ‡é¢˜ï¼Œå…è®¸å…¨å±æ˜¾ç¤ºï¼Œèµ„æºå…±äº«ï¼‰
         thisWindow = glfwCreateWindow(thisWidth, thisHeight, createInfo.title, NULL, NULL);
         if (!thisWindow) {
             glfwTerminate();
             return false;
         }
-        
-        // °ÑglfwµÄ´°¿ÚºÍµ±Ç°OpenGLµÄÉÏÏÂÎÄ¹ØÁªÆğÀ´
+
+        // æŠŠglfwçš„çª—å£å’Œå½“å‰OpenGLçš„ä¸Šä¸‹æ–‡å…³è”èµ·æ¥
         glfwMakeContextCurrent(thisWindow);
 
         while (!glfwWindowShouldClose(thisWindow)) {
-            // ÓÃglfw³õÊ¼»¯ºó¾­¹ıµÄÊ±¼ä£¬±£Ö¤ÔÙ²»Í¬¼ÆËã»úÉÏÒÔÏàÍ¬ËÙ¶È²¥·Å
+            // ç”¨glfwåˆå§‹åŒ–åç»è¿‡çš„æ—¶é—´ï¼Œä¿è¯å†ä¸åŒè®¡ç®—æœºä¸Šä»¥ç›¸åŒé€Ÿåº¦æ’­æ”¾
             //display(thisWindow, glfwGetTime());
             glfwSwapBuffers(thisWindow);
             glfwPollEvents();

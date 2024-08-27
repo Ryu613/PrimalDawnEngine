@@ -1,5 +1,5 @@
 /*
-    Í¨ÓÃ½ÚµãÊµÏÖ(Ê÷)
+    é€šç”¨èŠ‚ç‚¹å®šä¹‰(æ ‘)
 */
 #pragma once
 #include <vector>
@@ -10,23 +10,23 @@
 namespace PrimalDawn {
     class Node {
     public:
-        // ×Ó½Úµã¼¯ºÏ
+        // å­èŠ‚ç‚¹é›†åˆ
         typedef std::vector<Node*> ChildNodes;
     protected:
-        // ¸¸½Úµã
+        // çˆ¶èŠ‚ç‚¹
         Node* mParent;
-        // ×Ó½ÚµãµÄ¼¯ºÏ
+        // å­èŠ‚ç‚¹çš„é›†åˆ
         ChildNodes mChildren;
-        // ½ÚµãµÄÃû×Ö
+        // èŠ‚ç‚¹çš„åå­—
         std::string mName;
-        // ³¯Ïò(Ïà¶ÔÓÚ¸¸½Úµã)
+        // æœå‘(ç›¸å¯¹äºçˆ¶èŠ‚ç‚¹)
         glm::quat mOrientation;
-        // Î»ÖÃ(Ïà¶ÔÓÚ¸¸½Úµã)
+        // ä½ç½®(ç›¸å¯¹äºçˆ¶èŠ‚ç‚¹)
         glm::vec3 mPosition;
-        // Ëõ·Å
+        // ç¼©æ”¾
         glm::vec3 mScale;
     public:
-        Node();
+        Node() = default;
         Node(const std::string& name);
         virtual ~Node();
         const std::string& getName() const {
