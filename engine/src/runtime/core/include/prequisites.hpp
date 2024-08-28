@@ -6,7 +6,12 @@
 #include <map>
 #include <unordered_map>
 
+
+#include <glm/glm.hpp>
+
 namespace PrimalDawn {
+    constexpr float M_PI = 3.14159265358979323846f;
+
     class AbstractObject;
     class Camera;
     class Engine;
@@ -26,6 +31,7 @@ namespace PrimalDawn {
     class ShaderProgram;
     class TextureUnit;
     class VertexData;
+    class VertexDataBuilder;
 
 
     typedef std::string String;

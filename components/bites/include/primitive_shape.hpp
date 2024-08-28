@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include "bites_prequisites.hpp"
 #include "mesh.hpp"
 
@@ -18,6 +17,6 @@ namespace PrimalDawnBites {
 	public:
 		PrimitiveShape();
 		PrimitiveShape(String& name);
-		Entity* getPrimitiveEntity(enum SHAPE_TYPE shapeType);
+		std::unique_ptr<Entity> getPrimitiveEntity(enum SHAPE_TYPE shapeType);
 	};
 }

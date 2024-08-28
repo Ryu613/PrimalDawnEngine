@@ -2,7 +2,12 @@
 #include "scene_node.hpp"
 
 namespace PrimalDawn {
-    Scene::Scene() {
+    Scene::Scene()
+        : mSceneName{""} {
+    }
+
+    Scene::Scene(String& sceneName) 
+        : mSceneName{sceneName} {
     }
 
     const String& Scene::getName() {

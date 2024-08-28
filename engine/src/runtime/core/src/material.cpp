@@ -8,8 +8,4 @@ namespace PrimalDawn {
 	Material::~Material() {
 
 	}
-
-	void Material::setVertexData(VertexData& vertexData) {
-
-	}
 }

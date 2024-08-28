@@ -16,7 +16,8 @@ namespace PrimalDawn {
 	}
 
 	Scene* SceneManager::createScene(const String& sceneName) {
-		Scene* scene = new Scene();
+		Scene* scene = new Scene(sceneName);
+		currentScene = scene;
 		return scene;
 	}
 

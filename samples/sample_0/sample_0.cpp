@@ -17,16 +17,16 @@ Scene* createTestScene() {
     // 创建1个球1个立方体
     std::unique_ptr<PrimalDawnBites::PrimitiveShape> pmtShape = std::make_unique< PrimalDawnBites::PrimitiveShape>();
     // 获取基本实体
-    Entity* sphere = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_SPHERE);
-    Entity* cube = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_CUBE);
+    std::unique_ptr<Entity> sphere = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_SPHERE);
+    std::unique_ptr<Entity> cube = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_CUBE);
     // 创建场景节点并关联物体
     SceneNode* nodeCube = scene->getSceneNodeRoot()->createChildSceneNode("primitiveCube");
     SceneNode* nodeSphere = scene->getSceneNodeRoot()->createChildSceneNode("primitiveSphere");
     // 为2个实体设置位置和方向
     nodeCube->setPosition(glm::vec3(0,10,15));
     nodeSphere->setPosition(glm::vec3(5,20,-5));
-    nodeCube->bindObject(cube);
-    nodeSphere->bindObject(sphere);
+    nodeCube->bindObject(cube.get());
+    nodeSphere->bindObject(sphere.get());
     // 设置相机
     String cameraName("cam1");
     Camera* camera = scnMgr->createCamera(cameraName);

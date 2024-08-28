@@ -15,7 +15,7 @@ namespace PrimalDawn {
         // 场景图根节点
         std::unique_ptr<SceneNode> mSceneNodeRoot;
         // 场景名称
-        std::string mSceneName;
+        String& mSceneName;
         // 场景里的所有相机列表
         CameraList mCameras;
         // 场景节点列表
@@ -26,7 +26,7 @@ namespace PrimalDawn {
         LightList mLightList;
     public:
         Scene();
-        Scene(std::string& name);
+        Scene(String& name);
         ~Scene();
         void setName(std::string& sceneName);
         const String& getName();

@@ -18,4 +18,8 @@ namespace PrimalDawn {
     Entity::~Entity() {
 
     }
+
+    Mesh* Entity::getMesh() {
+        return mMesh.get();
+    }
 }
