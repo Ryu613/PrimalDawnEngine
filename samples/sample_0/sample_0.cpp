@@ -20,8 +20,8 @@ Scene* createTestScene() {
     std::unique_ptr<Entity> sphere = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_SPHERE);
     std::unique_ptr<Entity> cube = pmtShape->getPrimitiveEntity(PrimalDawnBites::SHAPE_TYPE::PRIMITIVE_CUBE);
     // 创建场景节点并关联物体
-    SceneNode* nodeCube = scene->getSceneNodeRoot()->createChildSceneNode("primitiveCube");
-    SceneNode* nodeSphere = scene->getSceneNodeRoot()->createChildSceneNode("primitiveSphere");
+    SceneNode* nodeCube = scene->getSceneNodeRoot()->createChildSceneNode("cube");
+    SceneNode* nodeSphere = scene->getSceneNodeRoot()->createChildSceneNode("sphere");
     // 为2个实体设置位置和方向
     nodeCube->setPosition(glm::vec3(0,10,15));
     nodeSphere->setPosition(glm::vec3(5,20,-5));
@@ -47,7 +47,7 @@ int main() {
     engine = ctx.getEngine();
     Scene* sample0(createTestScene());
     engine->getSceneManager()->loadScene(sample0);
-    ctx.getEngine()->startRendering();
+    ctx.getEngine()->startRenderings();
     ctx.closeApp();
     return 0;
 }

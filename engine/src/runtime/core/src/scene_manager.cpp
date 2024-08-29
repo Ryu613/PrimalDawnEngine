@@ -9,6 +9,7 @@ namespace PrimalDawn {
 
 	void SceneManager::loadScene(Scene* scene) {
 		LOG_INFO("读取场景[" + scene->getName() + "]...")
+		currentScene = scene;
 	}
 
 	void SceneManager::unloadScene() {

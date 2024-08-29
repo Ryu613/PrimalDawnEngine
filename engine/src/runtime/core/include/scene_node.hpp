@@ -3,18 +3,24 @@
 */
 
 #pragma once
-
-#include "prequisites.hpp"
 #include "node.hpp"
 
 namespace PrimalDawn {
     class SceneNode : public Node {
+    private:
+        Node* createChildImpl() override;
+
+        Node* createChildImpl(const String& name) override;
     public:
-        typedef std::vector<AbstractObject*> ObjList;
+        typedef std::vector<AbstractObject*> ObjectList;
     protected:
-        ObjList mObjects;
+        ObjectList mObjects;
+        // 节点所属的场景
+        Scene* mScene;
     public:
-        SceneNode();
+        SceneNode() = default;
+        SceneNode(Scene* scene);
+        SceneNode(Scene* scene, const String& name);
         ~SceneNode();
         // 绑定物体
         virtual void bindObject(AbstractObject* obj);

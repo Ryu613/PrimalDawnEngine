@@ -16,4 +16,8 @@ namespace PrimalDawnBites {
             engine.installPlugin(p);
         }
     }
+
+    void StaticPluginLoader::unload() {
+
+    }
 }

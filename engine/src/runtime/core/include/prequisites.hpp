@@ -1,13 +1,16 @@
 #pragma once
 
+// internal
 #include <string>
 #include <memory>
 #include <vector>
 #include <map>
 #include <unordered_map>
 
-
+// 3rd party
 #include <glm/glm.hpp>
+
+// this project
 
 namespace PrimalDawn {
     constexpr float M_PI = 3.14159265358979323846f;
