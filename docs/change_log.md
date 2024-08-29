@@ -7,11 +7,11 @@
 1. project structure design
 2. render system, core Managers design
 3. engine init function, window create
+4. resource, object, scene design
 4. samples
 
 ## v0.3.0(working)
 
-1. resource, object design
-2. asset load, scene load
-3. samples
+1. render pipeline
+2. resource management
  
