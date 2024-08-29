@@ -20,7 +20,6 @@ namespace PrimalDawn {
         MeshPartList mMeshPartList;
     public:
         Mesh();
-        Mesh(MESH_TYPE meshType);
         ~Mesh();
         size_t getMeshPartsSize() const {
             return mMeshPartList.size();

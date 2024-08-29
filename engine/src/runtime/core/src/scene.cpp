@@ -2,7 +2,18 @@
 #include "scene_node.hpp"
 
 namespace PrimalDawn {
-    Scene::Scene() {
+    Scene::Scene()
+      : mSceneName(),
+        mCurrentViewport(0){
+    }
+
+    Scene::Scene(const String& sceneName) 
+      : mSceneName(sceneName),
+        mCurrentViewport(0){
+    }
+
+    Scene::~Scene() {
+
     }
 
     const String& Scene::getName() {
@@ -10,12 +21,21 @@ namespace PrimalDawn {
     }
 
     SceneNode* Scene::getSceneNodeRoot() {
-        if (mSceneNodeRoot) {
-            return mSceneNodeRoot.get();
+        if (!mSceneNodeRoot) {
+            mSceneNodeRoot.reset(new SceneNode(this, String("PrimalDawn/SceneRoot")));
         }
-        else {
-            mSceneNodeRoot = std::make_unique<SceneNode>();
-            return mSceneNodeRoot.get();
-        }
+        return mSceneNodeRoot.get();
+    }
+
+    SceneNode* Scene::createSceneNode() {
+        SceneNode* sn = new SceneNode();
+        mSceneNodeList.push_back(sn);
+        return sn;
+    }
+
+    SceneNode* Scene::createSceneNode(Scene* scene, const String& name) {
+        SceneNode* sn = new SceneNode(scene, name);
+        mSceneNodeList.push_back(sn);
+        return sn;
     }
 }

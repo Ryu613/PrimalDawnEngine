@@ -2,10 +2,10 @@
     通用节点定义(树)
 */
 #pragma once
-#include <vector>
-#include <string>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include "prequisites.hpp"
 
 namespace PrimalDawn {
     class Node {
@@ -25,10 +25,17 @@ namespace PrimalDawn {
         glm::vec3 mPosition;
         // 缩放
         glm::vec3 mScale;
+    private:
+        virtual Node* createChildImpl() = 0;
+
+        virtual Node* createChildImpl(const String& name) = 0;
     public:
         Node() = default;
-        Node(const std::string& name);
+        Node(const String& name);
         virtual ~Node();
+
+        virtual void setParent(Node* parent);
+
         const std::string& getName() const {
             return mName;
         }
@@ -56,5 +63,7 @@ namespace PrimalDawn {
         }
 
         void addChild(Node* child);
+
+        Node* createChild(const String& name);
     };
 }

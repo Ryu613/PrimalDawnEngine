@@ -18,7 +18,7 @@ namespace PrimalDawn {
         ~MeshPart();
         void setMaterial(const Material* material);
         const Material* getMaterial();
-        void setVertexData(const VertexData* vertexData);
+        void setVertexData(const VertexData& vertexData);
         VertexData* getVertexData();
 
     };

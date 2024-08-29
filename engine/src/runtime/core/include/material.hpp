@@ -13,6 +13,5 @@ namespace PrimalDawn {
     public:
         Material();
         ~Material();
-        void setVertexData(VertexData& vertexData);
     };
 }

@@ -6,10 +6,6 @@ namespace PrimalDawn {
 		mMeshPartList.push_back(std::make_unique<MeshPart>());
 	}
 
-	Mesh::Mesh(MESH_TYPE meshType) {
-
-	}
-
 	Mesh::~Mesh() {
 
 	}

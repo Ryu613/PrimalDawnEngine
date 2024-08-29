@@ -19,5 +19,6 @@ namespace PrimalDawn{
     public:
         Entity(std::shared_ptr<Mesh> mesh);
         ~Entity();
+        Mesh* getMesh();
     };
 }

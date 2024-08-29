@@ -7,31 +7,35 @@
 
 namespace PrimalDawn {
     class Scene {
-    protected:
-        typedef std::vector<SceneNode*> SceneNodeList;
-        typedef std::map<std::string, Camera*> CameraList;
-        typedef std::vector<Light*> LightList;
     private:
+        // 当前视口
+        Viewport* mCurrentViewport;
         // 场景图根节点
         std::unique_ptr<SceneNode> mSceneNodeRoot;
+    public:
+        typedef std::vector<SceneNode*> SceneNodeList;
+        typedef std::map<std::string, Camera*> CameraList;
+        typedef std::map<String, AbstractObject*> ObjectMap;
+        typedef std::vector<Light*> LightList;
+    protected:
         // 场景名称
-        std::string mSceneName;
+        String mSceneName;
         // 场景里的所有相机列表
         CameraList mCameras;
         // 场景节点列表
-        SceneNodeList sceneNodeList;
-        // 根节点指针
-        std::unique_ptr<SceneNode> mSceneRoot;
+        SceneNodeList mSceneNodeList;
         // 光线列表
         LightList mLightList;
     public:
         Scene();
-        Scene(std::string& name);
+        Scene(const String& name);
         ~Scene();
         void setName(std::string& sceneName);
         const String& getName();
         SceneNode* getSceneNodeRoot();
         SceneNode* getSceneNode(const std::string& name) const;
+        SceneNode* createSceneNode();
+        SceneNode* createSceneNode(Scene* scene, const String& name);
 
     };
 }
