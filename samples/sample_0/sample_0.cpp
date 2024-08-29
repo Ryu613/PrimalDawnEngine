@@ -47,7 +47,7 @@ int main() {
     engine = ctx.getEngine();
     Scene* sample0(createTestScene());
     engine->getSceneManager()->loadScene(sample0);
-    ctx.getEngine()->startRenderings();
+    ctx.getEngine()->startRendering();
     ctx.closeApp();
     return 0;
 }
