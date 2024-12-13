@@ -45,8 +45,7 @@ int main() {
     PrimalDawnBites::ApplicationContext ctx("sample_0");
     ctx.initApp();
     engine = ctx.getEngine();
-    Scene* sample0(createTestScene());
-    engine->getSceneManager()->loadScene(sample0);
+    engine->getSceneManager()->loadScene(createTestScene());
     ctx.getEngine()->startRendering();
     ctx.closeApp();
     return 0;

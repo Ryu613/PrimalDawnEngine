@@ -12,11 +12,12 @@
 
 ## v0.3.0(working)
 
-1. render pipeline
-2. resource management
-3. scene load from file
+1. basic render object implementation
+2. render pipeline
 
 ## v0.4.0(todo)
 
-1. config load
+1. resource management
+2. config load
+3. scene load from file
  
