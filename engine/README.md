@@ -1,7 +1,9 @@
 # Primal Dawn Engine
 
-此目录为引擎主目录
+引擎主体
 
 ## module
+
+- `core`: 核心功能
 
 

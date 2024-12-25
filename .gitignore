@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 cmake-build/
 *.spv
+
+docs/html/
