@@ -1,6 +1,0 @@
-if(RENDERER_TYPE STREQUAL "GL4") 
-	add_subdirectory(GL4)
-endif()
-if(RENDERER_TYPE STREQUAL "Vulkan") 
-	add_subdirectory(Vulkan)
-endif()
