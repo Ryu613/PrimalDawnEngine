@@ -3,12 +3,12 @@
 
 namespace pd {
     /**
-    * entrypoint
+    * @brief 引擎主类
     */
     class Engine {
     public:
         /**
-        * 获取引擎指针
+        * @brief 获取引擎指针
         */
         static Engine* getEngine();
     };
