@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "pdapp/Application.h"
 
 using namespace pd;
 
@@ -22,4 +22,9 @@ void Application::finish() {
 
 Application::Application() {
     mName{ "default" };
+    initWindow();
+}
+
+void Application::initWindow() {
+
 }

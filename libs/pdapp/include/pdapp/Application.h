@@ -2,12 +2,14 @@
 #define DAWN_PRIMALDAWN_PDAPP_APPLICATION_H
 
 #include <string>
+#include "core/Engine.h"
+#include "SDL.h"
 
 namespace pd {
     class Window;
 
     struct AppConfig {
-
+        Window* window{ nullptr };
     };
     /**
     * @brief 应用，所有渲染实例的主抽象
@@ -47,8 +49,10 @@ namespace pd {
         float mFps{ 0.f };
         float mFrameTime{ 0.f };
         Window* mWindow{ nullptr };
+        Engine* mEngine{ nullptr };
     private:
         Application();
+        void initWindow();
         std::string mName{};
         bool mClosed{ false };
     };
