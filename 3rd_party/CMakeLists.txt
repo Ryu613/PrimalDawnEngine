@@ -30,7 +30,6 @@ set_property(TARGET spdlog PROPERTY FOLDER "3rd-party")
 
 # SDL2
 add_library(sdl2 INTERFACE)
-set(SDL2_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sdl2)
-target_sources(sdl2 INTERFACE ${SDL2_DIR}/include/SDL.h)
-target_include_directories(sdl2 SYSTEM INTERFACE "${SDL2_DIR}/include")
-set_property(TARGET sdl2 PROPERTY FOLDER "3rd-party")
+find_package(SDL2 REQUIRED)
+target_link_libraries(sdl2 INTERFACE ${SDL2_LIBRARIES})
+target_include_directories(sdl2 SYSTEM INTERFACE ${SDL2_INCLUDE_DIRS})

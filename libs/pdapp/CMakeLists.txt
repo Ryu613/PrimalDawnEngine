@@ -28,5 +28,3 @@ add_library(${TARGET} STATIC ${HEADERS} ${SRCS})
 target_link_libraries(${TARGET} PUBLIC ${LIBS})
 
 target_include_directories(${TARGET} PUBLIC ${HEADER_DIR})
-
-# 库依赖
