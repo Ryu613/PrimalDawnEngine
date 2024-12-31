@@ -34,6 +34,8 @@ namespace pd {
         Window(const WindowOptions& windowOptions);
 
         virtual ~Window() = default;
+    protected:
+        WindowOptions mOptions;
     };
 }
 

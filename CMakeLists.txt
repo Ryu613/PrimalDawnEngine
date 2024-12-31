@@ -36,6 +36,7 @@ endif()
 add_subdirectory(${PRIMALDAWN}/engine)
 add_subdirectory(${PRIMALDAWN}/samples)
 add_subdirectory(${LIBRARIES}/pdapp)
+add_subdirectory(3rd_party)
 
 if(SUPPORT_VULKAN)
     add_subdirectory(${LIBRARIES}/lumavk)
