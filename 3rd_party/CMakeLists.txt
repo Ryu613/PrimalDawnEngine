@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 
 project(3rd-party LANGUAGES C CXX)
 
@@ -33,3 +33,4 @@ add_library(sdl2 INTERFACE)
 find_package(SDL2 REQUIRED)
 target_link_libraries(sdl2 INTERFACE ${SDL2_LIBRARIES})
 target_include_directories(sdl2 SYSTEM INTERFACE ${SDL2_INCLUDE_DIRS})
+

@@ -1,14 +1,10 @@
 #include "pdapp/Application.h"
+#include "platform/Window.h"
 
 using namespace pd;
 
-Application& Application::get() {
-    static Application app;
-    return app;
-}
-
 bool Application::prepare(const AppConfig& options) {
-
+    return false;
 }
 
 void Application::runOneFrame(float ms) {
@@ -20,11 +16,6 @@ void Application::finish() {
 }
 
 
-Application::Application() {
-    mName{ "default" };
-    initWindow();
-}
-
-void Application::initWindow() {
-
+Application::Application()
+    : mName{"default"} {
 }

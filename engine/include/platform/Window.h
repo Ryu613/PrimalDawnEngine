@@ -34,8 +34,23 @@ namespace pd {
         Window(const WindowOptions& windowOptions);
 
         virtual ~Window() = default;
+
+        /**
+        * @brief 用于检查窗口是否应该被关闭
+        */
+        virtual bool shouldClose() = 0;
+
+        /**
+        * @brief 处理窗口事件
+        */
+        virtual void doEvents();
+
+        /**
+        * @brief 关闭窗口
+        */
+        virtual void close() = 0;
     protected:
-        WindowOptions mOptions;
+        WindowOptions mWindowOptions;
     };
 }
 
