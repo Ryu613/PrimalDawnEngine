@@ -11,3 +11,7 @@
 - `samples`: 可执行的引擎示例
 - `shader`: 着色器文件
 - `cmake`: cmake相关脚本
+
+## setup
+
+git clone --recurse-submodules

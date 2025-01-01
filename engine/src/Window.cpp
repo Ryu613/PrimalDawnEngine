@@ -2,4 +2,8 @@
 
 using namespace pd;
 
-Window::Window(const WindowOptions& windowOptions) : mOptions{ windowOptions } {}
+Window::Window(const WindowOptions& windowOptions) : mWindowOptions{ windowOptions } {}
+
+void Window::doEvents() {
+
+}
