@@ -20,7 +20,6 @@ set(LIBS
 	engine
 	sdl2
 )
-
 include_directories(${HEADER_DIR})
 
 add_library(${TARGET} STATIC ${HEADERS} ${SRCS})
