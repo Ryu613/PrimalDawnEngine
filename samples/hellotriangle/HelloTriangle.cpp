@@ -22,7 +22,9 @@ void HelloTriangle::finish() {
 }
 
 void HelloTriangle::run() {
-
+    while (!mClosed && !mWindow->shouldClose()) {
+        runOneFrame();
+    }
 }
 
 void HelloTriangle::initWindow() {

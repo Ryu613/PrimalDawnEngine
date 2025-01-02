@@ -24,5 +24,6 @@ void Engine::init() {
     // 初始化日志
     logging::init();
     LOG_INFO("logger initialized")
+    // 创建渲染器
 }
 
