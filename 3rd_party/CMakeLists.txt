@@ -29,8 +29,9 @@ add_subdirectory(spdlog)
 set_property(TARGET spdlog PROPERTY FOLDER "3rd-party")
 
 # SDL2
+set( BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE )
+add_subdirectory(sdl2)
 add_library(sdl2 INTERFACE)
-find_package(SDL2 REQUIRED)
-target_link_libraries(sdl2 INTERFACE ${SDL2_LIBRARIES})
-target_include_directories(sdl2 SYSTEM INTERFACE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(sdl2 INTERFACE SDL2::SDL2main SDL2::SDL2-static)
+target_include_directories(sdl2 SYSTEM INTERFACE ${THIRD_PARTY}/sdl2/include)
 

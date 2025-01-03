@@ -1,8 +1,10 @@
-if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-  set(SDL2_DLL "${PRIMALDAWN}/3rd_party/sdl2/lib/x64/SDL2.dll")
-else ()
-  set(SDL2_DLL "${PRIMALDAWN}/3rd_party/sdl2/lib/x86/SDL2.dll")
-endif ()
+if(WIN32)
+    if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
+      set(SDL2_DLL "${PRIMALDAWN}/3rd_party/sdl2/lib/x64/SDL2.dll")
+    else ()
+      set(SDL2_DLL "${PRIMALDAWN}/3rd_party/sdl2/lib/x86/SDL2.dll")
+    endif ()
+endif()
 
 add_custom_command(
     TARGET hello-triangle POST_BUILD

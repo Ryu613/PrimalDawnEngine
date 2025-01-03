@@ -26,6 +26,7 @@ project(
 # 库地址
 set(LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 set(PRIMALDAWN ${CMAKE_CURRENT_SOURCE_DIR})
+set(THIRD_PARTY ${PRIMALDAWN}/3rd_party)
 
 # current only support windows vulkan
 if(WIN32) 
@@ -40,4 +41,5 @@ add_subdirectory(3rd_party)
 
 if(SUPPORT_VULKAN)
     add_subdirectory(${LIBRARIES}/lumavk)
+    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
 endif()
