@@ -3,9 +3,9 @@
 
 #include <memory>
 #include "platform/DriverEnums.h"
+#include "platform/Platform.h"
 
 namespace pd {
-    class Platform;
 
     /**
     * @brief 根据图形API创建对应平台,平台对图形API做了统一封装

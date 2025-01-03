@@ -15,6 +15,7 @@ set(HEADERS
 	include/platform/DriverEnums.h
 	include/platform/PlatformFactory.h
 	include/platform/PlatformVulkan.h
+	include/platform/Driver.h
 
 )
 # 源代码
