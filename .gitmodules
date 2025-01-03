@@ -10,4 +10,3 @@
 [submodule "3rd_party/sdl2"]
 	path = 3rd_party/sdl2
 	url = https://github.com/libsdl-org/SDL
-	branch = fa24d86
