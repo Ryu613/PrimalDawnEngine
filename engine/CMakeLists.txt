@@ -24,6 +24,7 @@ set(SRCS
 	src/Logging.cpp
 	src/SDLWindow.cpp
 	src/PlatformFactory.cpp
+	src/vulkan/PlatformVulkan.cpp
 )
 
 set(LIBS
