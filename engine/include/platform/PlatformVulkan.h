@@ -5,7 +5,10 @@
 
 namespace pd {
     class PlatformVulkan : public Platform {
-
+    public:
+        PlatformVulkan() = default;
+        ~PlatformVulkan() override = default;
+        virtual Driver* createDriver() noexcept override;
     };
 }
 

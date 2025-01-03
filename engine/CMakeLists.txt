@@ -15,6 +15,7 @@ set(HEADERS
 	include/platform/DriverEnums.h
 	include/platform/PlatformFactory.h
 	include/platform/PlatformVulkan.h
+	include/platform/Driver.h
 
 )
 # 源代码
@@ -31,6 +32,12 @@ set(LIBS
 	spdlog::spdlog
 	sdl2
 )
+
+if(SUPPORT_VULKAN)
+   list(APPEND LIBS
+	 lumavk
+   )
+endif()
 
 include_directories(${HEADER_DIR})
 

@@ -8,8 +8,8 @@
 
 using namespace pd;
 
-std::unique_ptr<Platform> PlatformFactory::create(Backend* backend) {
-    if (backend == Backend::VULKAN) {
+std::unique_ptr<Platform> PlatformFactory::create(Backend* backend) noexcept {
+    if ((*backend) == Backend::VULKAN) {
 #if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
         return std::make_unique<PlatformVulkan>();
 #else
