@@ -32,6 +32,12 @@ set(LIBS
 	sdl2
 )
 
+if(SUPPORT_VULKAN)
+   list(APPEND LIBS
+	 lumavk
+   )
+endif()
+
 include_directories(${HEADER_DIR})
 
 add_library(${TARGET} STATIC ${HEADERS} ${SRCS})
