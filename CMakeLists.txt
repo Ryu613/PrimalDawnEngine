@@ -26,6 +26,7 @@ project(
 # 库地址
 set(LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 set(PRIMALDAWN ${CMAKE_CURRENT_SOURCE_DIR})
+set(THIRD_PARTY ${PRIMALDAWN}/3rd_party)
 
 # current only support windows vulkan
 if(WIN32) 
