@@ -29,11 +29,9 @@ add_subdirectory(spdlog)
 set_property(TARGET spdlog PROPERTY FOLDER "3rd-party")
 
 # SDL2
-if(WIN32)
-    if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-      set(SDL2_LIB_DIR "${THIRD_PARTY}/sdl2/lib/x64")
-    else ()
-      set(SDL2_LIB_DIR "${THIRD_PARTY}/sdl2/lib/x86")
-    endif ()
-endif()
+set( BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE )
+add_subdirectory(sdl2)
+add_library(sdl2 INTERFACE)
+target_link_libraries(sdl2 INTERFACE SDL2::SDL2main SDL2::SDL2-static)
+target_include_directories(sdl2 SYSTEM INTERFACE ${THIRD_PARTY}/sdl2/include)
 

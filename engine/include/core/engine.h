@@ -3,7 +3,10 @@
 
 #include <memory>
 
+#include "platform/DriverEnums.h"
+
 namespace pd {
+    class Platform;
     /**
     * @brief 引擎主类
     */
@@ -15,6 +18,10 @@ namespace pd {
         class Builder {
             friend class Engine;
         public:
+            /**
+            * @brief 设置图形底层API
+            */
+            Builder& backend(Backend backend) noexcept;
             Builder() noexcept;
             Builder(Builder const& rhs) noexcept;
             Builder(Builder&& rhs) noexcept;
@@ -25,6 +32,8 @@ namespace pd {
             * @brief 创建引擎实例，返回指针
             */
             std::unique_ptr<Engine> build() const;
+        private:
+            Backend mBackend = Backend::VULKAN;
         };
         /**
         * @brief 获取引擎指针
@@ -44,6 +53,11 @@ namespace pd {
         * @brief 初始化引擎，在create时执行
         */
         void init();
+
+        void setBackend(Backend backend);
+
+        Backend mBackend = Backend::VULKAN;
+        std::unique_ptr<Platform> mPlatform = nullptr;
     };
 }
 

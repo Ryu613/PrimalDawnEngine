@@ -41,4 +41,5 @@ add_subdirectory(3rd_party)
 
 if(SUPPORT_VULKAN)
     add_subdirectory(${LIBRARIES}/lumavk)
+    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
 endif()

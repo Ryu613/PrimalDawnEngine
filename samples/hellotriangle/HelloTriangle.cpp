@@ -8,8 +8,8 @@ HelloTriangle::HelloTriangle() {
 }
 
 bool HelloTriangle::prepare(const AppConfig& options) {
-    initEngine();
     initWindow();
+    initEngine();
     return true;
 }
 
@@ -23,7 +23,7 @@ void HelloTriangle::finish() {
 
 void HelloTriangle::run() {
     while (!mClosed && !mWindow->shouldClose()) {
-        runOneFrame();
+        runOneFrame(1);
     }
 }
 
@@ -36,6 +36,8 @@ void HelloTriangle::initWindow() {
 
 void HelloTriangle::initEngine() {
     mEngine = Engine::Builder().build();
+    // TODO: createSwapchain()
+    // TODO: 
 }
 
 

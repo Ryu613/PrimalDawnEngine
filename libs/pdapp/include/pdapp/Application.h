@@ -50,7 +50,6 @@ namespace pd {
         float mFrameTime{ 0.f };
         std::unique_ptr<Window> mWindow{ nullptr };
         std::unique_ptr<Engine> mEngine{ nullptr };
-    private:
         std::string mName{};
         bool mClosed{ false };
     };

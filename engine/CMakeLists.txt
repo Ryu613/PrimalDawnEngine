@@ -12,6 +12,9 @@ set(HEADERS
 	include/core/util/Logging.h
 	include/platform/Window.h
 	include/platform/SDLWindow.h
+	include/platform/DriverEnums.h
+	include/platform/PlatformFactory.h
+	include/platform/PlatformVulkan.h
 
 )
 # 源代码
@@ -20,6 +23,7 @@ set(SRCS
 	src/Window.cpp
 	src/Logging.cpp
 	src/SDLWindow.cpp
+	src/PlatformFactory.cpp
 )
 
 set(LIBS

@@ -10,4 +10,4 @@ target_sources(hello-triangle PUBLIC HelloTriangle.cpp)
 
 target_link_libraries(hello-triangle PUBLIC pdapp)
 
-include(${PRIMALDAWN}/cmake/CopyDLL.cmake)
+#include(${PRIMALDAWN}/cmake/CopyDLL.cmake)

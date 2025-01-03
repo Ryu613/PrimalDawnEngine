@@ -12,6 +12,15 @@
 - `shader`: 着色器文件
 - `cmake`: cmake相关脚本
 
-## setup
+## 环境
 
-git clone --recurse-submodules
+Windows + Visual Studio 2022(MSVC)
+
+## 设置
+
+克隆项目
+
+```git
+git clone --recurse-submodules 
+```
+
