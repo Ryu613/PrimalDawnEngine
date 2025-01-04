@@ -36,8 +36,6 @@ void HelloTriangle::initWindow() {
 
 void HelloTriangle::initEngine() {
     mEngine = Engine::Builder().build();
-    // TODO: createSwapchain()
-    // TODO: 
 }
 
 

@@ -34,6 +34,7 @@ void Engine::init() {
     // 初始化vulkan
     LOG_INFO("Initializing backend...")
     mPlatform = PlatformFactory::create(&mBackend);
+    mPlatform->createDriver();
 
 }
 
