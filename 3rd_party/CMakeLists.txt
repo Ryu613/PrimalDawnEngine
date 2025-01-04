@@ -35,3 +35,13 @@ add_library(sdl2 INTERFACE)
 target_link_libraries(sdl2 INTERFACE SDL2::SDL2main SDL2::SDL2-static)
 target_include_directories(sdl2 SYSTEM INTERFACE ${THIRD_PARTY}/sdl2/include)
 
+# volk
+if (WIN32)
+   set(VOLK_STATIC_DEFINES VK_USE_PLATFORM_WIN32_KHR)
+endif()
+
+add_subdirectory(volk)
+add_library(vulkan_volk INTERFACE)
+target_link_libraries(vulkan_volk INTERFACE volk_headers)
+target_include_directories(vulkan_volk SYSTEM INTERFACE ${THIRD_PARTY}/volk)
+

@@ -37,6 +37,7 @@ if(SUPPORT_VULKAN)
    list(APPEND LIBS
 	 lumavk
    )
+   add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
 endif()
 
 include_directories(${HEADER_DIR})

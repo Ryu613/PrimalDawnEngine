@@ -6,11 +6,19 @@ set(TARGET lumavk)
 set(HEADER_DIR include)
 
 set(HEADERS
-	include/lumavk/LumaVK.h
+	include/lumavk/LumaVk.h
 )
 
-set(SRCS src/LumaVK.cpp)
+set(SRCS 
+	src/LumaVk.cpp
+)
+
+set(LIBS
+	vulkan_volk
+)
 
 add_library(${TARGET} STATIC ${HEADERS} ${SRCS})
+
+target_link_libraries(${TARGET} PUBLIC ${LIBS})
 
 target_include_directories(${TARGET} PUBLIC ${HEADER_DIR})

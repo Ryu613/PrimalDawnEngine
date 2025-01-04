@@ -10,3 +10,6 @@
 [submodule "3rd_party/sdl2"]
 	path = 3rd_party/sdl2
 	url = https://github.com/libsdl-org/SDL
+[submodule "3rd_party/volk"]
+	path = 3rd_party/volk
+	url = https://github.com/zeux/volk.git
