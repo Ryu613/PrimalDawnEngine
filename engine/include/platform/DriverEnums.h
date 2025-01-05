@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_DRIVERENUMS_H
-#define DAWN_PRIMALDAWN_ENGINE_DRIVERENUMS_H
+#pragma once
 
 namespace pd {
     enum class Backend {
@@ -7,4 +6,3 @@ namespace pd {
         VULKAN = 2,
     };
 }
-#endif

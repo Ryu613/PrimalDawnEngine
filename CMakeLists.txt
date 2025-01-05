@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.27)
 
 project(DAWN)
 
@@ -38,8 +38,3 @@ add_subdirectory(${PRIMALDAWN}/engine)
 add_subdirectory(${PRIMALDAWN}/samples)
 add_subdirectory(${LIBRARIES}/pdapp)
 add_subdirectory(3rd_party)
-
-if(SUPPORT_VULKAN)
-    add_subdirectory(${LIBRARIES}/lumavk)
-    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
-endif()

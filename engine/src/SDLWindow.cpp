@@ -19,7 +19,7 @@ SDLWindow::SDLWindow(const Window::WindowOptions& windowOptions) :
 }
 
 bool SDLWindow::shouldClose() {
-    return false;
+    return mClosed;
 }
 
 void SDLWindow::doEvents() {

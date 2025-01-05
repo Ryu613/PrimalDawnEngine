@@ -1,9 +1,8 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_DRIVER_H
-#define DAWN_PRIMALDAWN_ENGINE_DRIVER_H
+#pragma once
 
 namespace pd {
     class Driver {
-
+    public:
+        virtual ~Driver() noexcept;
     };
 }
-#endif

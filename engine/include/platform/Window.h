@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_WINDOW_H
-#define DAWN_PRIMALDAWN_ENGINE_WINDOW_H
+#pragma once
 
 #include <string>
 
@@ -51,7 +50,7 @@ namespace pd {
         virtual void close() = 0;
     protected:
         WindowOptions mWindowOptions;
+        bool mClosed = false;
+
     };
 }
-
-#endif

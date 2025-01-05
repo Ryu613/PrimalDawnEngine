@@ -1,10 +1,12 @@
 #include "pdapp/Application.h"
 #include "platform/Window.h"
+#include "core/util/Logging.h"
 
 using namespace pd;
 
 bool Application::prepare(const AppConfig& options) {
-    return false;
+    LOG_INFO("Application {} initializing", options.appName)
+    return true;
 }
 
 void Application::runOneFrame(float ms) {

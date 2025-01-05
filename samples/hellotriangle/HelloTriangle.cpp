@@ -8,6 +8,10 @@ HelloTriangle::HelloTriangle() {
 }
 
 bool HelloTriangle::prepare(const AppConfig& options) {
+    if (!Application::prepare(options)) {
+        LOG_ERROR("app prepare failed!")
+        return false;
+    }
     initWindow();
     initEngine();
     return true;
