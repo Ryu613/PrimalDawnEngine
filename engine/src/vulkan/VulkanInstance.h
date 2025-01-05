@@ -6,7 +6,7 @@ namespace pd {
     namespace vkcore {
         class VulkanInstance {
         public:
-            VulkanInstance(const std::string);
+            VulkanInstance(const std::string &instanceName);
             ~VulkanInstance()
         };
     }
