@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_SDLWINDOW_H
-#define DAWN_PRIMALDAWN_ENGINE_SDLWINDOW_H
+#pragma once
 
 #include "platform/Window.h"
 #include "SDL.h"
@@ -31,5 +30,3 @@ namespace pd {
         SDL_Window* mSDLWindow{ nullptr };
     };
 }
-
-#endif

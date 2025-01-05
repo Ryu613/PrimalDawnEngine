@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_PLATFORMVULKAN_H
-#define DAWN_PRIMALDAWN_ENGINE_PLATFORMVULKAN_H
+#pragma once
 
 #include "platform/Platform.h"
 
@@ -9,7 +8,7 @@ namespace pd {
         PlatformVulkan() = default;
         ~PlatformVulkan() override = default;
         virtual Driver* createDriver() noexcept override;
+    private:
+        // Luma Vulkan类封装
     };
 }
-
-#endif

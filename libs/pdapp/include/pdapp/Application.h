@@ -9,6 +9,7 @@
 namespace pd {
 
     struct AppConfig {
+        std::string appName{"default"};
         Window* window{ nullptr };
     };
     /**

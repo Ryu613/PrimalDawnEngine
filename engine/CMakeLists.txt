@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.27)
 
 project(engine LANGUAGES CXX)
 
@@ -14,7 +14,6 @@ set(HEADERS
 	include/platform/SDLWindow.h
 	include/platform/DriverEnums.h
 	include/platform/PlatformFactory.h
-	include/platform/PlatformVulkan.h
 	include/platform/Driver.h
 
 )
@@ -25,7 +24,6 @@ set(SRCS
 	src/Logging.cpp
 	src/SDLWindow.cpp
 	src/PlatformFactory.cpp
-	src/vulkan/PlatformVulkan.cpp
 )
 
 set(LIBS
@@ -34,8 +32,20 @@ set(LIBS
 )
 
 if(SUPPORT_VULKAN)
+	find_package(Vulkan REQUIRED)
+	if(NOT Vulkan_FOUND)
+		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
+	endif()
    list(APPEND LIBS
-	 lumavk
+	 ${Vulkan_LIBRARIES}
+   )
+   list(APPEND HEADER_DIR
+	 ${Vulkan_INCLUDE_DIR}
+   )
+   list(APPEND SRCS
+		src/vulkan/platform/PlatformVulkan.cpp
+		src/vulkan/VulkanInstance.h
+		src/vulkan/VulkanInstance.cpp
    )
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
 endif()

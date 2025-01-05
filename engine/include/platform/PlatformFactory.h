@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_PLATFORMFACTORY_H
-#define DAWN_PRIMALDAWN_ENGINE_PLATFORMFACTORY_H
+#pragma once
 
 #include <memory>
 #include "platform/DriverEnums.h"
@@ -18,5 +17,3 @@ namespace pd {
         static std::unique_ptr<Platform> create(Backend* backend) noexcept;
     };
 }
-
-#endif
