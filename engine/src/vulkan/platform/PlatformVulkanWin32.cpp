@@ -31,6 +31,22 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
         }
         // TODO 做设备扩展验证
     }
+    // create device
+    std::vector<vk::ExtensionProperties> deviceExtensions = mPhysicalDevice.enumerateDeviceExtensionProperties();
+    std::vector<const char*> requiredDeviceExtensions({ VK_KHR_SWAPCHAIN_EXTENSION_NAME });
+    if (!validateExtensions(requiredDeviceExtensions, deviceExtensions)) {
+        throw std::runtime_error("Required device extensions are missing!");
+    }
+    float queuePriority = 1.f;
+    vk::DeviceQueueCreateInfo queueInfo({}, mGraphicsQueueIndex, 1, &queuePriority);
+    vk::DeviceCreateInfo deviceInfo({}, queueInfo, {}, requiredDeviceExtensions);
+    // device create
+    mDevice = mPhysicalDevice.createDevice(deviceInfo);
+    mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
+    // init swapchain
+    // create render pass
+    // create pipeline
+    // init framebuffers
 }
 
 PlatformVulkanWin32::~PlatformVulkanWin32() {

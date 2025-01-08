@@ -12,6 +12,7 @@ namespace pd {
     private:
         vk::Instance mInstance = VK_NULL_HANDLE;
         vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
+        unsigned int mGraphicsQueueIndex = 0;
         vk::Device mDevice = VK_NULL_HANDLE;
         vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
     };
