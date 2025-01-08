@@ -10,20 +10,19 @@ set(HEADER_DIR include)
 set(HEADERS 
 	include/core/Engine.h
 	include/core/util/Logging.h
-	include/platform/Window.h
-	include/platform/SDLWindow.h
-	include/platform/DriverEnums.h
+	include/platform/WindowSystem.h
+	include/platform/WindowSystemSDL.h
+	include/platform/PlatformEnums.h
 	include/platform/PlatformFactory.h
-	include/platform/Driver.h
 
 )
 # 源代码
 set(SRCS
 	src/Engine.cpp
-	src/Window.cpp
 	src/Logging.cpp
-	src/SDLWindow.cpp
 	src/PlatformFactory.cpp
+	src/WindowSystem.cpp
+	src/WindowSystemSDL.cpp
 )
 
 set(LIBS
@@ -42,8 +41,11 @@ if(SUPPORT_VULKAN)
    list(APPEND HEADER_DIR
 	 ${Vulkan_INCLUDE_DIR}
    )
+   list(APPEND HEADERS
+     include/platform/PlatformVulkanWin32.h
+   )
    list(APPEND SRCS
-		src/vulkan/platform/PlatformVulkan.cpp
+		src/vulkan/platform/PlatformVulkanWin32.cpp
 		src/vulkan/VulkanInstance.h
 		src/vulkan/VulkanInstance.cpp
    )

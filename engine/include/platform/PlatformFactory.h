@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include "platform/DriverEnums.h"
 #include "platform/Platform.h"
 
 namespace pd {
@@ -12,8 +11,8 @@ namespace pd {
     class PlatformFactory {
     public:
         /**
-        * 根据backend创建平台类，这里的backend只代表偏好，实际看情况
+        * 根据操作系统和backend创建平台类，这里的backend只代表偏好，实际看情况
         */
-        static std::unique_ptr<Platform> create(Backend* backend) noexcept;
+        static std::unique_ptr<Platform> create(PlatformConfig &platformConfig) noexcept;
     };
 }

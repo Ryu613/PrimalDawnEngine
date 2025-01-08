@@ -4,13 +4,13 @@
 #include <string>
 #include <memory>
 #include "core/Engine.h"
-#include "platform/Window.h"
+#include "platform/WindowSystem.h"
 
 namespace pd {
 
     struct AppConfig {
         std::string appName{"default"};
-        Window* window{ nullptr };
+        WindowSystem* window{ nullptr };
     };
     /**
     * @brief 应用，所有渲染实例的主抽象
@@ -49,7 +49,7 @@ namespace pd {
     protected:
         float mFps{ 0.f };
         float mFrameTime{ 0.f };
-        std::unique_ptr<Window> mWindow{ nullptr };
+        std::unique_ptr<WindowSystem> mWindowSystem{ nullptr };
         std::unique_ptr<Engine> mEngine{ nullptr };
         std::string mName{};
         bool mClosed{ false };
