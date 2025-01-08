@@ -7,7 +7,7 @@ namespace pd {
         class VulkanInstance {
         public:
             VulkanInstance(const std::string &instanceName);
-            ~VulkanInstance()
+            ~VulkanInstance();
         };
     }
 }

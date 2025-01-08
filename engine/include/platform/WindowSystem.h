@@ -6,23 +6,23 @@ namespace pd {
     /**
     * @brief 窗口系统的封装
     */
-    class Window {
+    class WindowSystem {
     public:
         struct Extent {
             unsigned int width = 1024;
             unsigned int height = 768;
         };
 
-        enum class WindowMode {
+        enum class WindowSystemMode {
             Headless,
             FullScreen,
             Borderless,
             Default
         };
 
-        struct WindowOptions {
+        struct WindowSystemOptions {
             std::string title{};
-            WindowMode windowMode = WindowMode::Default;
+            WindowSystemMode windowSystemMode = WindowSystemMode::Default;
             bool resizable = true;
             Extent extent{ 1024, 768 };
         };
@@ -30,9 +30,9 @@ namespace pd {
         /**
         * @brief 构造一个窗口系统
         */
-        Window(const WindowOptions& windowOptions);
+        WindowSystem(const WindowSystemOptions& windowSystemOptions);
 
-        virtual ~Window() = default;
+        virtual ~WindowSystem() = default;
 
         /**
         * @brief 用于检查窗口是否应该被关闭
@@ -49,7 +49,7 @@ namespace pd {
         */
         virtual void close() = 0;
     protected:
-        WindowOptions mWindowOptions;
+        WindowSystemOptions mWindowSystemOptions;
         bool mClosed = false;
 
     };

@@ -32,15 +32,10 @@ void Engine::init() {
     logging::init();
     LOG_INFO("logger initialized")
     // 初始化平台层
-    LOG_INFO("Initializing backend...")
-    mPlatform = PlatformFactory::create(&mBackend);
-    // TODO: 驱动级操作的执行
-    mPlatform->createDriver();
-    // 创建Swapchain封装
-    // 创建渲染器
-
-    
-
+    LOG_INFO("initializing {}", "Win32 Vulkan")
+    PlatformConfig pConfig;
+    mPlatform = PlatformFactory::create(pConfig);
+    LOG_INFO("Win32 Vulkan initialized")
 }
 
 void Engine::setBackend(Backend backend) {

@@ -1,5 +1,5 @@
 #include "HelloTriangle.h"
-#include "platform/SDLWindow.h"
+#include "platform/WindowSystemSDL.h"
 #include "core/util/Logging.h"
 
 using namespace pd;
@@ -26,16 +26,16 @@ void HelloTriangle::finish() {
 }
 
 void HelloTriangle::run() {
-    while (!mClosed && !mWindow->shouldClose()) {
+    while (!mClosed && !mWindowSystem->shouldClose()) {
         runOneFrame(1);
     }
 }
 
 void HelloTriangle::initWindow() {
-    Window::WindowOptions winOpt{
+    WindowSystemSDL::WindowSystemOptions winOpt{
         "Hello-Triangle"
     };
-    mWindow = std::make_unique<SDLWindow>(winOpt);
+    mWindowSystem = std::make_unique<WindowSystemSDL>(winOpt);
 }
 
 void HelloTriangle::initEngine() {

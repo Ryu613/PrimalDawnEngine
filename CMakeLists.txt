@@ -36,5 +36,5 @@ endif()
 # 添加子目录
 add_subdirectory(${PRIMALDAWN}/engine)
 add_subdirectory(${PRIMALDAWN}/samples)
-add_subdirectory(${LIBRARIES}/pdapp)
+add_subdirectory(${LIBRARIES}/application)
 add_subdirectory(3rd_party)

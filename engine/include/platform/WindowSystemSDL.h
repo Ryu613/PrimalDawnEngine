@@ -1,16 +1,16 @@
 #pragma once
 
-#include "platform/Window.h"
+#include "platform/WindowSystem.h"
 #include "SDL.h"
 
 namespace pd {
     /**
     * @brief SDL2窗口的封装
     */
-    class SDLWindow : public Window {
+    class WindowSystemSDL : public WindowSystem {
     public:
-        SDLWindow(const Window::WindowOptions& windowOptions);
-        virtual ~SDLWindow() = default;
+        WindowSystemSDL(const WindowSystem::WindowSystemOptions& windowOptions);
+        virtual ~WindowSystemSDL() = default;
 
         /**
         * @brief 用于检查窗口是否应该被关闭

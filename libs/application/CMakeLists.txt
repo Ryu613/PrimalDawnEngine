@@ -8,7 +8,7 @@ set(HEADER_DIR include)
 
 # 头文件
 set(HEADERS 
-	include/pdapp/Application.h
+	include/application/Application.h
 )
 # 源代码
 set(SRCS

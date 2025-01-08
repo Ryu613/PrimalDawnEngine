@@ -1,7 +1,7 @@
 #ifndef DAWN_PRIMALDAWN_SAMPLES_HELLOTRIANGLE_H
 #define DAWN_PRIMALDAWN_SAMPLES_HELLOTRIANGLE_H
 
-#include "pdapp/Application.h"
+#include "application/Application.h"
 
 /**
 * @brief vulkan最简样例，旨在确认项目是否能正常运行
