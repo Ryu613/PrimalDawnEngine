@@ -48,6 +48,8 @@ namespace pd {
         static void destroy(Engine* engine);
 
         static std::unique_ptr<Engine> create(const Builder& builder);
+
+        void createSwapChain();
     private:
         /**
         * @brief 初始化引擎，在create时执行
