@@ -14,6 +14,8 @@ bool HelloTriangle::prepare(const AppConfig& options) {
     }
     initWindow();
     initEngine();
+    LOG_INFO("creating swapchain...")
+    mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
     return true;
 }
 

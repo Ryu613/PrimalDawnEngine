@@ -51,6 +51,7 @@ namespace pd {
         float mFrameTime{ 0.f };
         std::unique_ptr<WindowSystem> mWindowSystem{ nullptr };
         std::unique_ptr<Engine> mEngine{ nullptr };
+        std::unique_ptr<SwapChain> mSwapChain = nullptr;
         std::string mName{};
         bool mClosed{ false };
     };

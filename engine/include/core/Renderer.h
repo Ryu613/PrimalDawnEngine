@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_CORE_RENDERER_H
-#define DAWN_PRIMALDAWN_ENGINE_CORE_RENDERER_H
+#pragma once
 
 namespace pd {
     /**
@@ -9,5 +8,3 @@ namespace pd {
 
     };
 }
-
-#endif

@@ -1,12 +1,14 @@
-#ifndef DAWN_PRIMALDAWN_ENGINE_CORE_ENGINE_H
-#define DAWN_PRIMALDAWN_ENGINE_CORE_ENGINE_H
+#pragma once
 
 #include <memory>
+
+#include "core/SwapChain.h"
 
 #include "platform/PlatformEnums.h"
 #include "platform/Platform.h"
 
 namespace pd {
+    class WindowSystem;
     /**
     * @brief 引擎主类
     */
@@ -49,7 +51,7 @@ namespace pd {
 
         static std::unique_ptr<Engine> create(const Builder& builder);
 
-        void createSwapChain();
+        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem);
     private:
         /**
         * @brief 初始化引擎，在create时执行
@@ -62,5 +64,3 @@ namespace pd {
         std::unique_ptr<Platform> mPlatform = nullptr;
     };
 }
-
-#endif

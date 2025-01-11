@@ -26,6 +26,8 @@ namespace pd {
         * @brief 关闭窗口
         */
         virtual void close() override;
+
+        void* getNativeWindow() const override;
     private:
         SDL_Window* mSDLWindow{ nullptr };
     };

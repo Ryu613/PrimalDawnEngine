@@ -9,10 +9,12 @@ namespace pd {
     public:
         PlatformVulkanWin32(PlatformConfig &platformConfig);
         ~PlatformVulkanWin32();
+        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) override;
     private:
         vk::Instance mInstance = VK_NULL_HANDLE;
         vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
         unsigned int mGraphicsQueueIndex = 0;
+        vk::SurfaceKHR mSurface = VK_NULL_HANDLE;
         vk::Device mDevice = VK_NULL_HANDLE;
         vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
     };
