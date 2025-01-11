@@ -46,9 +46,6 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
     // device create
     mDevice = mPhysicalDevice.createDevice(deviceInfo);
     mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
-    // create render pass
-    // create pipeline
-    // init framebuffers
 }
 
 PlatformVulkanWin32::~PlatformVulkanWin32() {
