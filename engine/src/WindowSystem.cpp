@@ -7,3 +7,7 @@ WindowSystem::WindowSystem(const WindowSystemOptions& windowSystemOptions) : mWi
 void WindowSystem::doEvents() {
 
 }
+
+WindowSystem::Extent WindowSystem::getExtent() const {
+    return mWindowSystemOptions.extent;
+}

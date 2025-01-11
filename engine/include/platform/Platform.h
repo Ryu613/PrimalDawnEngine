@@ -5,6 +5,8 @@
 #include "platform/PlatformEnums.h"
 
 namespace pd {
+    class WindowSystem;
+    class SwapChain;
 
     struct PlatformConfig {
         Backend backend = Backend::VULKAN;
@@ -23,6 +25,11 @@ namespace pd {
         Platform(PlatformConfig& config) :
             mPlatformConfig(config) {
         }
+
+        /**
+        * @brief 为指定平台创建交换链
+        */
+        virtual std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) = 0;
 
         virtual ~Platform() noexcept = default;
     protected:

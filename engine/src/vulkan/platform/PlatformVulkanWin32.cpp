@@ -1,5 +1,8 @@
 #include <vector>
 #include "platform/PlatformVulkanWin32.h"
+#include "platformVulkanSwapChain.h"
+#include "platform/WindowSystem.h"
+#include "VulkanContext.h"
 #include "core/util/Logging.h"
 
 using namespace pd;
@@ -43,7 +46,6 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
     // device create
     mDevice = mPhysicalDevice.createDevice(deviceInfo);
     mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
-    // init swapchain
     // create render pass
     // create pipeline
     // init framebuffers
@@ -51,6 +53,18 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
 
 PlatformVulkanWin32::~PlatformVulkanWin32() {
 
+}
+
+std::unique_ptr<SwapChain> PlatformVulkanWin32::createSwapChain(WindowSystem* windowSystem) {
+    // create surface
+    void* nativeWindow = windowSystem->getNativeWindow();
+    const vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo({}, GetModuleHandle(nullptr), (HWND)nativeWindow, {});
+    mSurface = mInstance.createWin32SurfaceKHR(surfaceCreateInfo);
+    vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
+    // create swapchain
+    VulkanContext ctx(&mPhysicalDevice, &mDevice, &mSurface, &extent);
+    return std::make_unique<PlatformVulkanSwapChain>(&ctx);
+    
 }
 
 bool pd::validateExtensions(const std::vector<const char*>& required,

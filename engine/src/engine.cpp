@@ -42,3 +42,7 @@ void Engine::setBackend(Backend backend) {
     mBackend = backend;
 }
 
+std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) {
+    return mPlatform->createSwapChain(windowSystem);
+}
+

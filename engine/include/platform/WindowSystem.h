@@ -48,6 +48,13 @@ namespace pd {
         * @brief 关闭窗口
         */
         virtual void close() = 0;
+
+        /**
+        *   @brif 根据窗口系统获得操作系统原生窗口的指针
+        */
+        virtual void* getNativeWindow() const = 0;
+
+        Extent getExtent() const;
     protected:
         WindowSystemOptions mWindowSystemOptions;
         bool mClosed = false;

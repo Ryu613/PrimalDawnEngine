@@ -35,6 +35,9 @@ if(SUPPORT_VULKAN)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
+	list(APPEND HEADER_DIR
+		src/vulkan
+	)
    list(APPEND LIBS
 	 ${Vulkan_LIBRARIES}
    )
@@ -43,11 +46,13 @@ if(SUPPORT_VULKAN)
    )
    list(APPEND HEADERS
      include/platform/PlatformVulkanWin32.h
+     src/vulkan/platform/PlatformVulkanSwapChain.h
+     src/vulkan/VulkanContext.h
    )
    list(APPEND SRCS
 		src/vulkan/platform/PlatformVulkanWin32.cpp
-		src/vulkan/VulkanInstance.h
-		src/vulkan/VulkanInstance.cpp
+		src/vulkan/platform/PlatformVulkanSwapChain.cpp
+		src/vulkan/VulkanContext.cpp
    )
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
 endif()

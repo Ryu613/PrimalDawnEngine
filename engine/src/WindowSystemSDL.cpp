@@ -1,4 +1,6 @@
 #include "platform/WindowSystemSDL.h"
+#include <SDL_syswm.h>
+#include "core/util/Logging.h"
 
 using namespace pd;
 
@@ -16,7 +18,6 @@ WindowSystemSDL::WindowSystemSDL(const WindowSystem::WindowSystemOptions& window
         (int)mWindowSystemOptions.extent.width,
         (int)mWindowSystemOptions.extent.height,
         windowFlags);
-
 }
 
 bool WindowSystemSDL::shouldClose() {
@@ -24,9 +25,19 @@ bool WindowSystemSDL::shouldClose() {
 }
 
 void WindowSystemSDL::doEvents() {
-
 }
 
 void WindowSystemSDL::close() {
 
+}
+
+void* WindowSystemSDL::getNativeWindow() const {
+    SDL_SysWMinfo wmi;
+    SDL_VERSION(&wmi.version);
+    if (!SDL_GetWindowWMInfo(mSDLWindow, &wmi)) {
+        LOG_ERROR("SDL获取原生窗口系统信息失败!");
+        throw std::runtime_error("SDLWindow get native Window info error!");
+    }
+    HWND win = (HWND)wmi.info.win.window;
+    return (void*)win;
 }
