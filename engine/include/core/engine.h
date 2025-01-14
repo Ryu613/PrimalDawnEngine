@@ -9,6 +9,7 @@
 
 namespace pd {
     class WindowSystem;
+    class Renderer;
     /**
     * @brief 引擎主类
     */
@@ -49,9 +50,20 @@ namespace pd {
         */
         static void destroy(Engine* engine);
 
+        /**
+        * @brief 创建引擎
+        */
         static std::unique_ptr<Engine> create(const Builder& builder);
 
-        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem);
+        /**
+        * @brief 创建交换链
+        */
+        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) noexcept;
+
+        /**
+        * @brief 创建渲染器
+        */
+        std::unique_ptr<Renderer> createRenderer() noexcept;
     private:
         /**
         * @brief 初始化引擎，在create时执行

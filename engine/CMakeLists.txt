@@ -9,6 +9,12 @@ set(HEADER_DIR include)
 # 头文件
 set(HEADERS 
 	include/core/Engine.h
+	include/core/SwapChain.h
+	include/core/Renderer.h
+	include/core/View.h
+	include/core/Camera.h
+	include/core/Scene.h
+	include/core/Viewport.h
 	include/core/util/Logging.h
 	include/platform/WindowSystem.h
 	include/platform/WindowSystemSDL.h
@@ -23,6 +29,8 @@ set(SRCS
 	src/PlatformFactory.cpp
 	src/WindowSystem.cpp
 	src/WindowSystemSDL.cpp
+	src/Renderer.cpp
+	src/SwapChain.cpp
 )
 
 set(LIBS
