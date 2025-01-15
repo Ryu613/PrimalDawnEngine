@@ -2,6 +2,7 @@
 #include "core/util/Logging.h"
 #include "platform/PlatformFactory.h"
 #include "core/Renderer.h"
+#include "core/View.h"
 
 using namespace pd;
 
@@ -43,11 +44,15 @@ void Engine::setBackend(Backend backend) {
     mBackend = backend;
 }
 
-std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) {
+std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) noexcept {
     return mPlatform->createSwapChain(windowSystem);
 }
 
 std::unique_ptr<Renderer> Engine::createRenderer() noexcept {
     return std::make_unique<Renderer>(*this);
+}
+
+std::unique_ptr<View> Engine::createView() noexcept {
+    return std::make_unique<View>(*this);
 }
 

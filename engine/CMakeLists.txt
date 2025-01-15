@@ -54,6 +54,7 @@ if(SUPPORT_VULKAN)
    )
    list(APPEND HEADERS
      include/platform/PlatformVulkanWin32.h
+     include/platform/VulkanCommon.h
      src/vulkan/platform/PlatformVulkanSwapChain.h
      src/vulkan/VulkanContext.h
    )

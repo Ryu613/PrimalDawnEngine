@@ -9,6 +9,9 @@ using namespace pd;
 
 PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
     Platform(platformConfig) {
+    // init dynamic loader
+    static vk::DynamicLoader dl;
+    VULKAN_HPP_DEFAULT_DISPATCHER.init(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
     // create instance
     std::vector<vk::ExtensionProperties> availableInstanceextensions = vk::enumerateInstanceExtensionProperties();
     std::vector<const char*> activeInstanceExtensions({ VK_KHR_SURFACE_EXTENSION_NAME });
@@ -23,6 +26,10 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
     vk::InstanceCreateInfo instanceInfo({}, &app, {}, activeInstanceExtensions);
     // instance create
     mInstance = vk::createInstance(instanceInfo);
+    if (!mInstance) {
+        throw std::runtime_error("failed to create vulkan instance");
+    }
+    VULKAN_HPP_DEFAULT_DISPATCHER.init(mInstance);
     // select physical device
     std::vector<vk::PhysicalDevice> gpus = mInstance.enumeratePhysicalDevices();
     bool foundGraphicsQueueIndex = false;
@@ -45,6 +52,9 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
     vk::DeviceCreateInfo deviceInfo({}, queueInfo, {}, requiredDeviceExtensions);
     // device create
     mDevice = mPhysicalDevice.createDevice(deviceInfo);
+    if (!mDevice) {
+        throw std::runtime_error("failed to create vulkan device");
+    }
     mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
 }
 
@@ -57,6 +67,9 @@ std::unique_ptr<SwapChain> PlatformVulkanWin32::createSwapChain(WindowSystem* wi
     void* nativeWindow = windowSystem->getNativeWindow();
     const vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo({}, GetModuleHandle(nullptr), (HWND)nativeWindow, {});
     mSurface = mInstance.createWin32SurfaceKHR(surfaceCreateInfo);
+    if (!mSurface) {
+        throw std::runtime_error("faield to create window surface");
+    }
     vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
     // create swapchain
     VulkanContext ctx(&mPhysicalDevice, &mDevice, &mSurface, &extent);

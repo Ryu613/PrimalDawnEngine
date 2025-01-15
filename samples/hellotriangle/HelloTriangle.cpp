@@ -27,7 +27,7 @@ void HelloTriangle::runOneFrame(float ms) {
 }
 
 void HelloTriangle::finish() {
-    
+    // TODO engine destroy resources
 }
 
 void HelloTriangle::run() {
@@ -49,6 +49,8 @@ void HelloTriangle::initEngine() {
     mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
     LOG_INFO("creating renderer...")
     mRenderer = mEngine->createRenderer();
+    LOG_INFO("creating view...")
+    mView = mEngine->createView();
 }
 
 

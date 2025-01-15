@@ -1,7 +1,8 @@
 #include "core/SwapChain.h"
 
 namespace pd {
-    SwapChain::SwapChain(Engine& engine, void* nativeWindow) {
+    SwapChain::SwapChain(Engine& engine, void* nativeWindow) :
+        mEngine(engine) {
 
     }
 }

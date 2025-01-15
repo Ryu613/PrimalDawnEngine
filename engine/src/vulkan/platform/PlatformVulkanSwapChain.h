@@ -1,7 +1,7 @@
 #pragma once
 
+#include "platform/VulkanCommon.h"
 #include "core/SwapChain.h"
-#include <vulkan/vulkan.hpp>
 
 namespace pd {
     class VulkanContext;

@@ -39,6 +39,9 @@ namespace pd {
         swapchainCreateInfo.oldSwapchain = mSwapchain;
         // create swapchain
         mSwapchain = ctx->mDevice->createSwapchainKHR(swapchainCreateInfo);
+        if (!mSwapchain) {
+            throw std::runtime_error("failed to create vulkan swapchain!");
+        }
         //TODO old_swapchain
         // swapchain images
     }
