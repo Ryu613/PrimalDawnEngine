@@ -11,6 +11,7 @@ namespace pd {
     class WindowSystem;
     class Renderer;
     class View;
+    class Scene;
     /**
     * @brief 引擎主类
     */
@@ -65,6 +66,11 @@ namespace pd {
         * @brief 创建渲染器
         */
         std::unique_ptr<Renderer> createRenderer() noexcept;
+
+        /**
+        * @brief 创建场景
+        */
+        std::unique_ptr<Scene> createScene() noexcept;
         /**
         * @brief 创建视图
         */

@@ -31,6 +31,7 @@ void HelloTriangle::finish() {
 }
 
 void HelloTriangle::run() {
+    // TODO 初始化imgui
     while (!mClosed && !mWindowSystem->shouldClose()) {
         runOneFrame(1);
     }
@@ -49,8 +50,13 @@ void HelloTriangle::initEngine() {
     mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
     LOG_INFO("creating renderer...")
     mRenderer = mEngine->createRenderer();
+    auto scene = mEngine->createScene();
     LOG_INFO("creating view...")
     mView = mEngine->createView();
+    mView->setScene(scene.get());
+    LOG_INFO("setup scene...")
+    // 设置相机
+    // 设置场景
 }
 
 

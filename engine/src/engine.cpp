@@ -3,6 +3,7 @@
 #include "platform/PlatformFactory.h"
 #include "core/Renderer.h"
 #include "core/View.h"
+#include "core/Scene.h"
 
 using namespace pd;
 
@@ -50,6 +51,10 @@ std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) n
 
 std::unique_ptr<Renderer> Engine::createRenderer() noexcept {
     return std::make_unique<Renderer>(*this);
+}
+
+std::unique_ptr<Scene> Engine::createScene() noexcept {
+    return std::make_unique<Scene>(*this);
 }
 
 std::unique_ptr<View> Engine::createView() noexcept {

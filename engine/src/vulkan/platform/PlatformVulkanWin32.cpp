@@ -55,6 +55,7 @@ PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
     if (!mDevice) {
         throw std::runtime_error("failed to create vulkan device");
     }
+    VULKAN_HPP_DEFAULT_DISPATCHER.init(mDevice);
     mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
 }
 
