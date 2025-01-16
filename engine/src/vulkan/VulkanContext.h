@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vulkan/vulkan.hpp>
+#include "platform/VulkanCommon.h"
 
 namespace pd {
     class VulkanContext {

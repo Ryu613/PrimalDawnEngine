@@ -14,13 +14,19 @@
 
 ## 环境
 
-Windows + Visual Studio 2022(MSVC)
+Windows 10 + Visual Studio 2022(MSVC) + 支持Vulkan的显卡
 
 ## 设置
 
 克隆项目
 
 ```git
-git clone --recurse-submodules 
+git clone --recurse-submodules
 ```
 
+## TODO
+
+1. PBR
+2. ECS
+3. Job System
+4. FrameGraph

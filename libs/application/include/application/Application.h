@@ -8,8 +8,12 @@
 
 namespace pd {
 
+    class SwapChain;
+    class Renderer;
+    class View;
+
     struct AppConfig {
-        std::string appName{"default"};
+        std::string appName{ "default" };
         WindowSystem* window{ nullptr };
     };
     /**
@@ -23,7 +27,7 @@ namespace pd {
         * @brief 应用执行前的准备工作
         */
         virtual bool prepare(const AppConfig& options);
-        
+
         /**
         * @brief 运行一次
         * @param ms 距离上次经过的毫秒数
@@ -52,6 +56,9 @@ namespace pd {
         std::unique_ptr<WindowSystem> mWindowSystem{ nullptr };
         std::unique_ptr<Engine> mEngine{ nullptr };
         std::unique_ptr<SwapChain> mSwapChain = nullptr;
+        std::unique_ptr<Renderer> mRenderer = nullptr;
+        std::unique_ptr<View> mView = nullptr;
+        std::unique_ptr<View> mScene = nullptr;
         std::string mName{};
         bool mClosed{ false };
     };

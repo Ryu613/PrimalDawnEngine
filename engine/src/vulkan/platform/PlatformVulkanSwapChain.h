@@ -1,7 +1,7 @@
 #pragma once
 
+#include "platform/VulkanCommon.h"
 #include "core/SwapChain.h"
-#include <vulkan/vulkan.hpp>
 
 namespace pd {
     class VulkanContext;
@@ -11,7 +11,7 @@ namespace pd {
     */
     class PlatformVulkanSwapChain : public SwapChain {
     public:
-        PlatformVulkanSwapChain(VulkanContext* ctx);
+        PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx);
         ~PlatformVulkanSwapChain();
     private:
         vk::Extent2D mExtent;

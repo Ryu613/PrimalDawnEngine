@@ -1,12 +1,13 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 #include "platform/PlatformEnums.h"
+#include "core/SwapChain.h"
 
 namespace pd {
     class WindowSystem;
-    class SwapChain;
 
     struct PlatformConfig {
         Backend backend = Backend::VULKAN;
@@ -29,7 +30,7 @@ namespace pd {
         /**
         * @brief 为指定平台创建交换链
         */
-        virtual std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) = 0;
+        virtual std::unique_ptr<SwapChain> createSwapChain(Engine& engine, WindowSystem* windowSystem) = 0;
 
         virtual ~Platform() noexcept = default;
     protected:

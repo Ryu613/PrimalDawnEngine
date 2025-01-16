@@ -2,7 +2,8 @@
 #include "VulkanContext.h"
 
 namespace pd {
-    PlatformVulkanSwapChain::PlatformVulkanSwapChain(VulkanContext* ctx) :
+    PlatformVulkanSwapChain::PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx) :
+        SwapChain(engine),
         mExtent(*(ctx->mExtent2D)),
         mFormat(vk::Format::eR8G8B8A8Unorm){
         vk::PhysicalDevice& phyDevice = *ctx->mPhysicalDevice;
@@ -39,6 +40,9 @@ namespace pd {
         swapchainCreateInfo.oldSwapchain = mSwapchain;
         // create swapchain
         mSwapchain = ctx->mDevice->createSwapchainKHR(swapchainCreateInfo);
+        if (!mSwapchain) {
+            throw std::runtime_error("failed to create vulkan swapchain!");
+        }
         //TODO old_swapchain
         // swapchain images
     }

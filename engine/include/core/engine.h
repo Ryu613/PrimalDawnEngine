@@ -6,6 +6,9 @@
 
 #include "platform/PlatformEnums.h"
 #include "platform/Platform.h"
+#include "core/Scene.h"
+#include "core/View.h"
+#include "core/Renderer.h"
 
 namespace pd {
     class WindowSystem;
@@ -49,9 +52,29 @@ namespace pd {
         */
         static void destroy(Engine* engine);
 
+        /**
+        * @brief 创建引擎
+        */
         static std::unique_ptr<Engine> create(const Builder& builder);
 
-        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem);
+        /**
+        * @brief 创建交换链
+        */
+        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) noexcept;
+
+        /**
+        * @brief 创建渲染器
+        */
+        std::unique_ptr<Renderer> createRenderer() noexcept;
+
+        /**
+        * @brief 创建场景
+        */
+        std::unique_ptr<Scene> createScene() noexcept;
+        /**
+        * @brief 创建视图
+        */
+        std::unique_ptr<View> createView() noexcept;
     private:
         /**
         * @brief 初始化引擎，在create时执行
