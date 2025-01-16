@@ -7,7 +7,7 @@ namespace pd {
     */
     class SwapChain {
     public:
-        SwapChain(Engine& engine, void* nativeWindow);
+        SwapChain(Engine& engine);
         virtual ~SwapChain() = default;
     private:
         Engine& mEngine;

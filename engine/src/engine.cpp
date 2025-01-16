@@ -46,7 +46,7 @@ void Engine::setBackend(Backend backend) {
 }
 
 std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) noexcept {
-    return mPlatform->createSwapChain(windowSystem);
+    return mPlatform->createSwapChain(*this, windowSystem);
 }
 
 std::unique_ptr<Renderer> Engine::createRenderer() noexcept {

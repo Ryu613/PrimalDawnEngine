@@ -1,6 +1,7 @@
 #pragma once
 #include "platform/Platform.h"
 #include "VulkanCommon.h"
+#include "core/SwapChain.h"
 
 namespace pd {
 
@@ -8,7 +9,7 @@ namespace pd {
     public:
         PlatformVulkanWin32(PlatformConfig &platformConfig);
         ~PlatformVulkanWin32();
-        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) override;
+        std::unique_ptr<SwapChain> createSwapChain(Engine& engine, WindowSystem* windowSystem) override;
     private:
         vk::Instance mInstance = VK_NULL_HANDLE;
         vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;

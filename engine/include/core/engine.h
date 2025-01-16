@@ -6,12 +6,12 @@
 
 #include "platform/PlatformEnums.h"
 #include "platform/Platform.h"
+#include "core/Scene.h"
+#include "core/View.h"
+#include "core/Renderer.h"
 
 namespace pd {
     class WindowSystem;
-    class Renderer;
-    class View;
-    class Scene;
     /**
     * @brief 引擎主类
     */

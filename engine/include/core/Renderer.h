@@ -37,6 +37,6 @@ namespace pd {
         void endFrame();
     private:
         Engine& mEngine;
-        Swapchain* mSwapChain = nullptr;
+        SwapChain* mSwapChain = nullptr;
     };
 }

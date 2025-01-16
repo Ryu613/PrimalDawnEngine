@@ -32,6 +32,7 @@ set(SRCS
 	src/Renderer.cpp
 	src/SwapChain.cpp
 	src/Scene.cpp
+	src/View.cpp
 )
 
 set(LIBS

@@ -6,7 +6,6 @@
 #define VK_USE_PLATFORM_WIN32_KHR
 #define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC 1
 #include <vulkan/vulkan.hpp>
-VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 // 可以把Vulkan的枚举名称转成字符串，方便打印日志
 #include <vulkan/vk_enum_string_helper.h>
 

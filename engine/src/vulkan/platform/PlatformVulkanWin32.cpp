@@ -5,6 +5,8 @@
 #include "VulkanContext.h"
 #include "core/util/Logging.h"
 
+VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
+
 using namespace pd;
 
 PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
@@ -63,7 +65,7 @@ PlatformVulkanWin32::~PlatformVulkanWin32() {
 
 }
 
-std::unique_ptr<SwapChain> PlatformVulkanWin32::createSwapChain(WindowSystem* windowSystem) {
+std::unique_ptr<SwapChain> PlatformVulkanWin32::createSwapChain(Engine& engine, WindowSystem* windowSystem) {
     // create surface
     void* nativeWindow = windowSystem->getNativeWindow();
     const vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo({}, GetModuleHandle(nullptr), (HWND)nativeWindow, {});
@@ -74,7 +76,7 @@ std::unique_ptr<SwapChain> PlatformVulkanWin32::createSwapChain(WindowSystem* wi
     vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
     // create swapchain
     VulkanContext ctx(&mPhysicalDevice, &mDevice, &mSurface, &extent);
-    return std::make_unique<PlatformVulkanSwapChain>(&ctx);
+    return std::make_unique<PlatformVulkanSwapChain>(engine, &ctx);
     
 }
 

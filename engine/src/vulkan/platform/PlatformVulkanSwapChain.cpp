@@ -2,7 +2,8 @@
 #include "VulkanContext.h"
 
 namespace pd {
-    PlatformVulkanSwapChain::PlatformVulkanSwapChain(VulkanContext* ctx) :
+    PlatformVulkanSwapChain::PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx) :
+        SwapChain(engine),
         mExtent(*(ctx->mExtent2D)),
         mFormat(vk::Format::eR8G8B8A8Unorm){
         vk::PhysicalDevice& phyDevice = *ctx->mPhysicalDevice;
