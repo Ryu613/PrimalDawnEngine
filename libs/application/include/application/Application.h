@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_PDAPP_APPLICATION_H
-#define DAWN_PRIMALDAWN_PDAPP_APPLICATION_H
+#pragma once
 
 #include <string>
 #include <memory>
@@ -63,5 +62,3 @@ namespace pd {
         bool mClosed{ false };
     };
 } // namespace pd
-
-#endif
