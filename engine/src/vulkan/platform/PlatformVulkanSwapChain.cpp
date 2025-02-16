@@ -45,6 +45,7 @@ namespace pd {
         }
         //TODO old_swapchain
         // swapchain images
+        // semaphre & fence
     }
 
     PlatformVulkanSwapChain::~PlatformVulkanSwapChain() {

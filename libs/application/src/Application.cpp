@@ -1,5 +1,4 @@
 #include "application/Application.h"
-#include "platform/WindowSystem.h"
 #include "core/util/Logging.h"
 
 using namespace pd;

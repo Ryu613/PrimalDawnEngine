@@ -35,10 +35,10 @@ void Engine::init() {
     logging::init();
     LOG_INFO("logger initialized")
     // 初始化平台层
-    LOG_INFO("initializing {}", "Win32 Vulkan")
+    LOG_INFO("initializing platform")
     PlatformConfig pConfig;
     mPlatform = PlatformFactory::create(pConfig);
-    LOG_INFO("Win32 Vulkan initialized")
+    LOG_INFO("platform initialized")
 }
 
 void Engine::setBackend(Backend backend) {
