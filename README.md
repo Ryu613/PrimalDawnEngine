@@ -2,6 +2,8 @@
 
 原初黎明引擎，一款实时PBR引擎
 
+**all handcrafted from scratch, no copy paste**
+
 ## 项目结构
 
 - `docs`: 项目文档
