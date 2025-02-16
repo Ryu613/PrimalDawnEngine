@@ -14,7 +14,7 @@ namespace pd {
             surfaceProp.minImageCount,
             surfaceProp.maxImageCount
         );
-        // 界面变换方式
+        // determines the transformation for device display orientation
         vk::SurfaceTransformFlagBitsKHR preTrans =
             (surfaceProp.supportedTransforms & vk::SurfaceTransformFlagBitsKHR::eIdentity) ?
                 vk::SurfaceTransformFlagBitsKHR::eIdentity : surfaceProp.currentTransform;
@@ -43,8 +43,15 @@ namespace pd {
         if (!mSwapchain) {
             throw std::runtime_error("failed to create vulkan swapchain!");
         }
-        //TODO old_swapchain
+        // TODO: deal with old_swapchain
         // swapchain images
+        if (surfaceProp.currentExtent.width == 0xFFFFFFFF || surfaceProp.currentExtent.height == 0xFFFFFFFF) {
+            mExtent.width = std::clamp(mExtent.width, surfaceProp.minImageExtent.width, surfaceProp.maxImageExtent.width);
+            mExtent.height = std::clamp(mExtent.height, surfaceProp.minImageExtent.height, surfaceProp.maxImageExtent.height);
+        }
+        else {
+            mExtent = surfaceProp.currentExtent;
+        }
         // semaphre & fence
     }
 

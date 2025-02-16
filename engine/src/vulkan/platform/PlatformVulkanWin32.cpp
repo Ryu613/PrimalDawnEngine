@@ -96,6 +96,7 @@ namespace pd {
             throw std::runtime_error("faield to create window surface");
         }
         vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
+
         // create swapchain
         VulkanContext ctx(&mPhysicalDevice, &mDevice, &mSurface, &extent);
         return std::make_unique<PlatformVulkanSwapChain>(engine, &ctx);
