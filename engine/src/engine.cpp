@@ -33,9 +33,9 @@ namespace pd {
         // 初始化日志
         logging::init();
         LOG_INFO("logger initialized")
-            // 初始化平台层
-            LOG_INFO("initializing platform")
-            PlatformConfig pConfig;
+        // 初始化平台层
+        LOG_INFO("initializing platform")
+        PlatformConfig pConfig;
         mPlatform = PlatformFactory::create(pConfig);
         LOG_INFO("platform initialized")
     }

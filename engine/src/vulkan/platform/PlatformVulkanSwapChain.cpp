@@ -52,7 +52,7 @@ namespace pd {
         else {
             mExtent = surfaceProp.currentExtent;
         }
-        // semaphre & fence
+        // semaphore & fence
     }
 
     PlatformVulkanSwapChain::~PlatformVulkanSwapChain() {
