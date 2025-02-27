@@ -1,5 +1,4 @@
-#ifndef DAWN_PRIMALDAWN_LOGGING_H
-#define DAWN_PRIMALDAWN_LOGGING_H
+#pragma once
 
 
 #include "spdlog/fmt/fmt.h"

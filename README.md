@@ -2,7 +2,7 @@
 
 real-time PBR rendering engine
 
-now just for personal study
+now just for personal study, not finished yet
 
 **all handcrafted from scratch, no copy paste**
 
