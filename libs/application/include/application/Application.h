@@ -57,7 +57,7 @@ namespace pd {
         std::unique_ptr<SwapChain> mSwapChain = nullptr;
         std::unique_ptr<Renderer> mRenderer = nullptr;
         std::unique_ptr<View> mView = nullptr;
-        std::unique_ptr<View> mScene = nullptr;
+        std::unique_ptr<Scene> mScene = nullptr;
         std::string mName{};
         bool mClosed{ false };
     };

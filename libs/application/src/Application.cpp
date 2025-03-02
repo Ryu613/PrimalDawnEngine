@@ -5,6 +5,8 @@ using namespace pd;
 
 bool Application::prepare(const AppConfig& options) {
     LOG_INFO("Application {} initializing", options.appName)
+        mName = options.appName;
+
     return true;
 }
 

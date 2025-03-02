@@ -2,7 +2,7 @@
 
 real-time PBR rendering engine
 
-now just for personal study
+now just for personal study, not finished yet
 
 **all handcrafted from scratch, no copy paste**
 
@@ -19,7 +19,7 @@ now just for personal study
 ## dev env
 
 - `OS`: Windows
-- `GPU`: should support Vulkan other graphics APIs not support temporarily
+- `GPU`: must support Vulkan, other graphics APIs not supported for now
 
 ## TODO
 

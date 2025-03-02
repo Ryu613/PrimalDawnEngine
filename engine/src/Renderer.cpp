@@ -14,13 +14,15 @@ namespace pd {
 
     }
 
+    /**
+    * @grief whether to skip frame, or do something before rendering
+    */
     bool Renderer::beginFrame(SwapChain* swapChain) {
-        //TODO
         return true;
     }
 
-    void Renderer::render(const View* view) {
 
+    void Renderer::render(const View* view) {
     }
 
     void Renderer::endFrame() {

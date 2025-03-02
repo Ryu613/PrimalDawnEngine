@@ -5,7 +5,7 @@ namespace pd {
     PlatformVulkanSwapChain::PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx) :
         SwapChain(engine),
         mExtent(*(ctx->mExtent2D)),
-        mFormat(vk::Format::eR8G8B8A8Unorm){
+        mFormat(vk::Format::eR8G8B8A8Unorm) {
         vk::PhysicalDevice& phyDevice = *ctx->mPhysicalDevice;
         vk::SurfaceKHR& surface = *ctx->mSurface;
         vk::SurfaceCapabilitiesKHR surfaceProp = phyDevice.getSurfaceCapabilitiesKHR(surface);
@@ -17,11 +17,11 @@ namespace pd {
         // determines the transformation for device display orientation
         vk::SurfaceTransformFlagBitsKHR preTrans =
             (surfaceProp.supportedTransforms & vk::SurfaceTransformFlagBitsKHR::eIdentity) ?
-                vk::SurfaceTransformFlagBitsKHR::eIdentity : surfaceProp.currentTransform;
+            vk::SurfaceTransformFlagBitsKHR::eIdentity : surfaceProp.currentTransform;
         // CompositeAlpha
         vk::CompositeAlphaFlagBitsKHR compositeAlpha =
             (surfaceProp.supportedCompositeAlpha & vk::CompositeAlphaFlagBitsKHR::eInherit) ?
-                vk::CompositeAlphaFlagBitsKHR::eInherit : vk::CompositeAlphaFlagBitsKHR::eOpaque;
+            vk::CompositeAlphaFlagBitsKHR::eInherit : vk::CompositeAlphaFlagBitsKHR::eOpaque;
         // swapchain create
         vk::SwapchainCreateInfoKHR swapchainCreateInfo;
         swapchainCreateInfo.surface = surface;
@@ -52,8 +52,16 @@ namespace pd {
         else {
             mExtent = surfaceProp.currentExtent;
         }
-        // semaphre & fence
+        // semaphore & fence
+        vk::SemaphoreCreateInfo semaphoreCreateInfo;
+        for (uint32_t i = 0; i < IMAGE_READY_SEMAPHORE_COUNT; ++i) {
+            mImageReady[i] = ctx->mDevice->createSemaphore(semaphoreCreateInfo);
+            if (!mImageReady[i]) {
+                throw std::runtime_error("failed to create semaphore");
+            }
+        }
     }
+      
 
     PlatformVulkanSwapChain::~PlatformVulkanSwapChain() {
 
