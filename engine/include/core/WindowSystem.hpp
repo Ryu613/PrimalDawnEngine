@@ -4,7 +4,7 @@
 
 namespace pd {
     /**
-    * @brief 窗口系统的封装
+    * @brief 窗口系统
     */
     class WindowSystem {
     public:

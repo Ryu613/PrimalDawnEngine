@@ -56,4 +56,4 @@ add_library(${TARGET} STATIC ${engine_core_srcs})
 
 target_link_libraries(${TARGET} PRIVATE ${EXTERNALS})
 
-target_include_directories(${TARGET} PUBLIC include ${sdl2_SOURCE_DIR}/include)
+target_include_directories(${TARGET} PUBLIC include src ${sdl2_SOURCE_DIR}/include)

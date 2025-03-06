@@ -2,17 +2,16 @@
 
 #include <string>
 #include <memory>
+#include <stdexcept>
 
 #include "platform/PlatformEnums.hpp"
 #include "core/SwapChain.hpp"
 
 namespace pd {
-    class GraphicsCore;
+    class RenderSystem;
 
     struct PlatformConfig {
         Backend backend = Backend::VULKAN;
-        std::string appName{"default"};
-        std::string engineName{"Primal Dawn"};
         bool enableDebug = false;
     };
     /**
@@ -20,14 +19,27 @@ namespace pd {
     */
     class Platform {
     public:
-        Platform(const PlatformConfig& config)
-            : mPlatformConfig(config) {
-        }
+        /**
+        * 根据操作系统和配置创建平台实例
+        */
+        static std::unique_ptr<Platform> create(PlatformConfig& platformConfig);
 
-        virtual ~Platform() noexcept = default;
-    
     protected:
-        PlatformConfig mPlatformConfig;
-        GraphicsCore* mGraphicsCore{nullptr};
+        Platform(PlatformConfig& platformConfig);
+        ~Platform() noexcept = default;
+
+    private:
+        /**
+        * @brief 初始化平台层里面的各种系统，包括渲染系统等
+        */
+        void init();
+
+        /**
+        * 创建渲染系统
+        */
+        void createRenderSystem();
+
+        PlatformConfig& mPlatformConfig;
+        std::unique_ptr<RenderSystem> mRenderSystem{nullptr};
     };
 }

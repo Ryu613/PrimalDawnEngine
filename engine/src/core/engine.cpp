@@ -1,32 +1,20 @@
 #include "core/Engine.hpp"
 #include "core/Logging.hpp"
+#include "core/RenderSystem.hpp"
 #include "core/Renderer.hpp"
 #include "core/View.hpp"
 #include "core/Scene.hpp"
 #include "platform/PlatformFactory.hpp"
 
 namespace pd {
-    Engine::Builder::Builder() noexcept = default;
-    Engine::Builder::~Builder() noexcept = default;
-    Engine::Builder::Builder(Engine::Builder const& rhs) noexcept = default;
-    Engine::Builder::Builder(Engine::Builder&& rhs) noexcept = default;
-    Engine::Builder& Engine::Builder::operator=(Engine::Builder const& rhs) noexcept = default;
-    Engine::Builder& Engine::Builder::operator=(Engine::Builder&& rhs) noexcept = default;
 
-    Engine::Builder& Engine::Builder::backend(Backend backend) noexcept {
-        mBackend = backend;
-        return *this;
+    std::unique_ptr<Engine> Engine::create(EngineConfig& config) {
+        return std::make_unique<Engine>(config);
     }
 
-    std::unique_ptr<Engine> Engine::Builder::build() const {
-        return Engine::create(*this);
-    }
-
-    std::unique_ptr<Engine> Engine::create(const Engine::Builder& builder) {
-        auto instance = std::make_unique<Engine>();
-        instance->setBackend(builder.mBackend);
-        instance->init();
-        return std::move(instance);
+    Engine::Engine(EngineConfig& engineConfig)
+        : mEngineConfig(engineConfig) {
+        init();
     }
 
     void Engine::init() {
@@ -36,12 +24,12 @@ namespace pd {
         // 初始化平台层
         LOG_INFO("initializing platform")
         PlatformConfig pConfig;
-        mPlatform = PlatformFactory::create(pConfig);
+        pConfig.backend = mEngineConfig.backend;
+        pConfig.enableDebug = mEngineConfig.enableDebug;
+        mPlatform = PlatformFactory::createPlatform(pConfig);
+        RenderSystemConfig rsConfig;
+        rsConfig.enableDebug = mEngineConfig.enableDebug;
         LOG_INFO("platform initialized")
-    }
-
-    void Engine::setBackend(Backend backend) {
-        mBackend = backend;
     }
 
     std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) noexcept {

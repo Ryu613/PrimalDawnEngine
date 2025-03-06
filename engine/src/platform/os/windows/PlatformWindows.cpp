@@ -1,22 +1,21 @@
 #include <vector>
-#include "platform/PlatformWindows.hpp"
-#include "platformVulkanSwapChain.hpp"
-#include "platform/WindowSystem.hpp"
-#include "VulkanContext.hpp"
+#include "platform/os/windows/PlatformWindows.hpp"
+//#include "platformVulkanSwapChain.hpp"
+//#include "platform/WindowSystem.hpp"
+//#include "VulkanContext.hpp"
 #include "core/Logging.hpp"
 
-#include "core/GraphicsCore.hpp"
+//#include "core/GraphicsCore.hpp"
 
-VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
+//VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
 namespace pd {
     namespace {
         constexpr uint32_t const INVALID_VK_INDEX = 0xFFFFFFFF;
     }
 
-    PlatformWindows::PlatformWindows(PlatformConfig& platformConfig) {
-
-        createGraphicsCore()
+    PlatformWindows::PlatformWindows(PlatformConfig& platformConfig)
+        : Platform(platformConfig) {
     }
 
     PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :

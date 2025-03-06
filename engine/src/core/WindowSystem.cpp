@@ -2,7 +2,8 @@
 
 using namespace pd;
 
-WindowSystem::WindowSystem(const WindowSystemOptions& windowSystemOptions) : mWindowSystemOptions{ windowSystemOptions } {}
+WindowSystem::WindowSystem(const WindowSystemOptions& windowSystemOptions)
+    : mWindowSystemOptions{ windowSystemOptions } {}
 
 void WindowSystem::doEvents() {
 

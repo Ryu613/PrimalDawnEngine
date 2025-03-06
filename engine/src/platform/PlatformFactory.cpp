@@ -1,28 +1,18 @@
-#include "platform/PlatformFactory.h"
-#include "core/util/Logging.h"
+#include "platform/PlatformFactory.hpp"
 
 #if defined(WIN32)
-#if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
-#include "platform/PlatformWindows.h"
-#endif
+#include "platform/os/windows/PlatformWindows.hpp"
 #endif
 
-using namespace pd;
-
-std::unique_ptr<Platform> PlatformFactory::create(PlatformConfig &PlatformConfig) noexcept {
-    if (PlatformConfig.backend == Backend::VULKAN) {
-#if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
+namespace pd {
+    std::unique_ptr<Platform> PlatformFactory::createPlatform(OS os) {
     #if defined(WIN32)
-        LOG_INFO("Platform is {}", "Vulkan - Win32")
-        return std::make_unique<PlatformVulkanWin32>(PlatformConfig);
+        LOG_INFO("Platform is {}", "Windows")
+        return std::make_unique<PlatformWindows>(PlatformConfig);
     #else
         LOG_INFO("Platform is {}", "Vulkan - Unknown OS")
         return nullptr;
     #endif
-#else
-        LOG_INFO("Platform is {}", "Unknown Graphic API - Unknown OS")
-        return nullptr;
-#endif
     }
-}
 
+}
