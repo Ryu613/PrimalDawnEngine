@@ -5,11 +5,11 @@
 #endif
 
 namespace pd {
-    std::unique_ptr<RenderSystem> createRenderSystem(OS os, Backend backend) {
+    std::unique_ptr<RenderSystem> createRenderSystem(RenderSystemConfig& rsConfig) {
     #if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
         LOG_INFO("Render System - Vulkan")
         VulkanConfig vkConfig;
-        vkConfig.os = os;
+        vkConfig.os = rsConfig.os;
         vkConfig.enableDebug = rsConfig.enableDebug;
         return std::make_unique<RenderSystemVulkan>(vkConfig);
     #else

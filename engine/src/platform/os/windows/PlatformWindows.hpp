@@ -6,21 +6,28 @@ namespace pd {
     struct RenderSystemConfig;
     class RenderSystem;
 
+    /**
+    * 负责windows平台的相关事务，包括:
+    * 1. 具体渲染系统的管理
+    */
     class PlatformWindows : public Platform {
     friend class PlatformFactory;
     public:
     private:
         PlatformWindows(PlatformConfig& platformConfig);
         ~PlatformWindows();
-        std::unique_ptr<RenderSystem> mRenderSystem{nullptr};
-        //vk::Instance mInstance = VK_NULL_HANDLE;
-        //vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
-        //uint32_t mGraphicsQueueIndex = 0xFFFFFFFF;
-        //vk::SurfaceKHR mSurface = VK_NULL_HANDLE;
-        //vk::Device mDevice = VK_NULL_HANDLE;
-        //vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
 
-        //void createGraphicsCore(GraphicsCoreConfig& gConfig);
+        /**
+        * @brief 初始化平台层里面的各种系统，包括渲染系统等
+        */
+        void init();
+
+        /**
+        * 创建渲染系统
+        */
+        void createRenderSystem();
+
+        std::unique_ptr<RenderSystem> mRenderSystem{nullptr};
     };
 
     //bool validateExtensions(const std::vector<const char*>& required,

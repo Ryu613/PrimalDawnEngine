@@ -20,26 +20,15 @@ namespace pd {
     class Platform {
     public:
         /**
-        * 根据操作系统和配置创建平台实例
+        * 获取平台配置项
         */
-        static std::unique_ptr<Platform> create(PlatformConfig& platformConfig);
+        PlatformConfig getPlatformConfig() const;
 
-    protected:
+    private:
+
         Platform(PlatformConfig& platformConfig);
         ~Platform() noexcept = default;
 
-    private:
-        /**
-        * @brief 初始化平台层里面的各种系统，包括渲染系统等
-        */
-        void init();
-
-        /**
-        * 创建渲染系统
-        */
-        void createRenderSystem();
-
         PlatformConfig& mPlatformConfig;
-        std::unique_ptr<RenderSystem> mRenderSystem{nullptr};
     };
 }
