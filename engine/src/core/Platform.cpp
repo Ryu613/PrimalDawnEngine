@@ -1,5 +1,4 @@
 #include "platform/Platform.hpp"
-#include "core/RenderSystemFactory.hpp"
 
 namespace pd {
 
@@ -16,8 +15,5 @@ namespace pd {
     }
 
     void Platform::createRenderSystem() {
-        RenderSystemConfig rsConfig;
-        rsConfig.enableDebug = mPlatformConfig.enableDebug;
-        mRenderSystem = RenderSystem::create(rsConfig);
     }
 }

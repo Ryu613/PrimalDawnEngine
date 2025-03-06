@@ -27,9 +27,9 @@ namespace pd {
         pConfig.backend = mEngineConfig.backend;
         pConfig.enableDebug = mEngineConfig.enableDebug;
         mPlatform = PlatformFactory::createPlatform(pConfig);
+        LOG_INFO("platform initialized")
         RenderSystemConfig rsConfig;
         rsConfig.enableDebug = mEngineConfig.enableDebug;
-        LOG_INFO("platform initialized")
     }
 
     std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) noexcept {

@@ -8,6 +8,8 @@ namespace pd {
     class Swapchain;
 
     struct RenderSystemConfig {
+        OS os = OS::UNKNOWN;
+        Backend backend = Backend::UNKWONN;
         bool enableDebug = false;
     };
     /**
