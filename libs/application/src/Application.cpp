@@ -1,5 +1,5 @@
-#include "application/Application.h"
-#include "core/util/Logging.h"
+#include "application/Application.hpp"
+#include "core/Logging.hpp"
 
 using namespace pd;
 

@@ -2,8 +2,8 @@
 
 #include <string>
 #include <memory>
-#include "core/Engine.h"
-#include "platform/WindowSystem.h"
+#include "core/Engine.hpp"
+#include "platform/WindowSystem.hpp"
 
 namespace pd {
 

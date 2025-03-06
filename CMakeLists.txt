@@ -14,9 +14,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 预定义变量
-set(LIBRARIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 set(PRIMALDAWN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(EXTERNALS_DIR ${PRIMALDAWN}/externals)
+set(LIBRARIES_DIR ${PRIMALDAWN_DIR}/libs)
+set(EXTERNALS_DIR ${PRIMALDAWN_DIR}/externals)
 
 # 目前只支持Windows + Vulkan
 if(WIN32) 
@@ -26,5 +26,5 @@ endif()
 
 # 添加子目录
 add_subdirectory(${PRIMALDAWN_DIR}/engine)
+add_subdirectory(${LIBRARIES_DIR}/application)
 #add_subdirectory(${PRIMALDAWN_DIR}/samples)
-#add_subdirectory(${LIBRARIES_DIR}/application)

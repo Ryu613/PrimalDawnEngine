@@ -1,5 +1,5 @@
-#include "PlatformVulkanSwapChain.h"
-#include "VulkanContext.h"
+#include "PlatformVulkanSwapChain.hpp"
+#include "VulkanContext.hpp"
 
 namespace pd {
     PlatformVulkanSwapChain::PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx) :

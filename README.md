@@ -7,9 +7,9 @@ now just for personal study, not finished yet
 ## feature
 
 1. cross-platform ready
-1. multi graphics APIs support ready
+1. Vulkan/OpenGL/... support ready
 1. flexible to extend
-1. easy to read and use
+1. easy to use
 
 ## self-discipline
 
@@ -27,11 +27,12 @@ now just for personal study, not finished yet
 - `samples`: executable samples
 - `shaders`: shaders
 - `cmake`: cmake scripts
+- `editor`: for content creation(TBD)
 
 ## dev env
 
 - `OS`: Windows
-- `GPU`: must support Vulkan, other graphics APIs not supported for now
+- `GPU`: VULKAN
 
 ## TODOs
 

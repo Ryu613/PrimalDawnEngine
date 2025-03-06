@@ -8,7 +8,7 @@ set(HEADER_DIR include)
 
 # 头文件
 set(HEADERS 
-	include/application/Application.h
+	include/application/Application.hpp
 )
 # 源代码
 set(SRCS
@@ -18,7 +18,6 @@ set(SRCS
 # 库依赖
 set(LIBS
 	engine
-	sdl2
 )
 include_directories(${HEADER_DIR})
 
