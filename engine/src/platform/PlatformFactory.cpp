@@ -3,7 +3,7 @@
 
 #if defined(WIN32)
 #if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
-#include "platform/PlatformVulkanWin32.h"
+#include "platform/PlatformWindows.h"
 #endif
 #endif
 

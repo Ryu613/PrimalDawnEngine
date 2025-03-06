@@ -1,9 +1,9 @@
-#include "core/Engine.h"
-#include "core/util/Logging.h"
-#include "platform/PlatformFactory.h"
-#include "core/Renderer.h"
-#include "core/View.h"
-#include "core/Scene.h"
+#include "core/Engine.hpp"
+#include "core/Logging.hpp"
+#include "core/Renderer.hpp"
+#include "core/View.hpp"
+#include "core/Scene.hpp"
+#include "platform/PlatformFactory.hpp"
 
 namespace pd {
     Engine::Builder::Builder() noexcept = default;

@@ -1,15 +1,22 @@
 #include <vector>
-#include "platform/PlatformVulkanWin32.h"
-#include "platformVulkanSwapChain.h"
-#include "platform/WindowSystem.h"
-#include "VulkanContext.h"
-#include "core/util/Logging.h"
+#include "platform/PlatformWindows.hpp"
+#include "platformVulkanSwapChain.hpp"
+#include "platform/WindowSystem.hpp"
+#include "VulkanContext.hpp"
+#include "core/Logging.hpp"
+
+#include "core/GraphicsCore.hpp"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
 namespace pd {
     namespace {
         constexpr uint32_t const INVALID_VK_INDEX = 0xFFFFFFFF;
+    }
+
+    PlatformWindows::PlatformWindows(PlatformConfig& platformConfig) {
+
+        createGraphicsCore()
     }
 
     PlatformVulkanWin32::PlatformVulkanWin32(PlatformConfig& platformConfig) :
@@ -74,7 +81,7 @@ namespace pd {
         vk::DeviceCreateInfo deviceInfo({}, queueInfo, {}, requiredDeviceExtensions);
         // device create
         LOG_INFO("creating Vulkan logical device...")
-            mDevice = mPhysicalDevice.createDevice(deviceInfo);
+        mDevice = mPhysicalDevice.createDevice(deviceInfo);
         if (!mDevice) {
             throw std::runtime_error("failed to create vulkan device");
         }
@@ -95,7 +102,7 @@ namespace pd {
         if (!mSurface) {
             throw std::runtime_error("faield to create window surface");
         }
-        vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
+        vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().hppeight);
 
         // create swapchain
         VulkanContext ctx(&mPhysicalDevice, &mDevice, &mSurface, &extent);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "platform/Platform.h"
+#include "platform/Platform.hpp"
 
 namespace pd {
 

@@ -3,75 +3,57 @@ cmake_minimum_required(VERSION 3.27)
 project(engine LANGUAGES CXX)
 
 set(TARGET engine)
-# 头文件目录
-set(HEADER_DIR include)
 
-# 头文件
-set(HEADERS 
-	include/core/Engine.h
-	include/core/SwapChain.h
-	include/core/Renderer.h
-	include/core/View.h
-	include/core/Camera.h
-	include/core/Scene.h
-	include/core/Viewport.h
-	include/core/util/Logging.h
-	include/platform/WindowSystem.h
-	include/platform/WindowSystemSDL.h
-	include/platform/PlatformEnums.h
-	include/platform/PlatformFactory.h
+# 第三方库依赖
+include(${PRIMALDAWN_DIR}/cmake/externals-core.cmake)
 
-)
-# 源代码
-set(SRCS
-	src/Engine.cpp
-	src/Logging.cpp
-	src/PlatformFactory.cpp
-	src/WindowSystem.cpp
-	src/WindowSystemSDL.cpp
-	src/Renderer.cpp
-	src/SwapChain.cpp
-	src/Scene.cpp
-	src/View.cpp
+set(ENGINE_HEADERS
+	include/core/*.hpp
+	include/platform/*.hpp
 )
 
-set(LIBS
+set(EXTERNALS
 	spdlog::spdlog
-	sdl2
+	glm::glm
 )
 
-if(SUPPORT_VULKAN)
+set(PLATFORM_SRCS)
+
+if(WIN32)
+	list(APPEND PLATFORM_SRCS
+		src/platform/os/windows/*.hpp
+		src/platform/os/windows/*.cpp
+	)
+endif()
+
+if(USE_SDL2)
+	FetchContent_MakeAvailable(sdl2)
+	list(APPEND EXTERNALS
+		SDL2::SDL2main
+		SDL2::SDL2-static
+	)
+	list(APPEND PLATFORM_SRCS
+		src/platform/ws/sdl2/*.hpp
+		src/platform/ws/sdl2/*.cpp
+	)
+endif()
+
+if(USE_VULKAN)
 	find_package(Vulkan REQUIRED)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
-	list(APPEND HEADER_DIR
-		src/vulkan
-	)
-   list(APPEND LIBS
-	 ${Vulkan_LIBRARIES}
-   )
-   list(APPEND HEADER_DIR
-	 ${Vulkan_INCLUDE_DIR}
-   )
-   list(APPEND HEADERS
-     include/platform/PlatformVulkanWin32.h
-     include/platform/VulkanCommon.h
-     src/vulkan/platform/PlatformVulkanSwapChain.h
-     src/vulkan/VulkanContext.h
-   )
-   list(APPEND SRCS
-		src/vulkan/platform/PlatformVulkanWin32.cpp
-		src/vulkan/platform/PlatformVulkanSwapChain.cpp
-		src/vulkan/VulkanContext.cpp
-   )
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
+   	list(APPEND PLATFORM_SRCS
+		src/platform/gc/vulkan/*.hpp
+		src/platform/gc/vulkan/*.cpp
+	)
 endif()
 
-include_directories(${HEADER_DIR})
+file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/*.cpp)
 
-add_library(${TARGET} STATIC ${HEADERS} ${SRCS})
+add_library(${TARGET} STATIC ${engine_core_srcs})
 
-target_link_libraries(${TARGET} PUBLIC ${LIBS})
+target_link_libraries(${TARGET} PRIVATE ${EXTERNALS})
 
-target_include_directories(${TARGET} PUBLIC ${HEADER_DIR})
+target_include_directories(${TARGET} PUBLIC include ${sdl2_SOURCE_DIR}/include)

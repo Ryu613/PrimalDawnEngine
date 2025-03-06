@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include "core/SwapChain.h"
+#include "core/SwapChain.hpp"
+#include "core/Scene.hpp"
+#include "core/View.hpp"
+#include "core/Renderer.hpp"
 
-#include "platform/PlatformEnums.h"
-#include "platform/Platform.h"
-#include "core/Scene.h"
-#include "core/View.h"
-#include "core/Renderer.h"
+#include "platform/PlatformEnums.hpp"
+#include "platform/Platform.hpp"
 
 namespace pd {
     class WindowSystem;

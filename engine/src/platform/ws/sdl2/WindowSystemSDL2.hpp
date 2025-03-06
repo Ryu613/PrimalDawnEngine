@@ -1,7 +1,7 @@
 #pragma once
 
-#include "platform/WindowSystem.h"
 #include "SDL.h"
+#include "platform/WindowSystem.hpp"
 
 namespace pd {
     /**

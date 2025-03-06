@@ -1,7 +1,7 @@
-#include "core/Renderer.h"
-#include "core/SwapChain.h"
-#include "core/engine.h"
-#include "core/View.h"
+#include "core/Renderer.hpp"
+#include "core/SwapChain.hpp"
+#include "core/engine.hpp"
+#include "core/View.hpp"
 
 namespace pd {
 

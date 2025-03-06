@@ -1,40 +1,30 @@
 cmake_minimum_required(VERSION 3.27)
 
-project(DAWN)
-
-# compiler设置
-set(CXX_STANDARD "-std=c++20")
-if(WIN32)
-    set(CXX_STANDARD "/std:c++20")
-    # 数学预定义常量
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_USE_MATH_DEFINES=1")
-endif()
-
-if(MSVC)
-    set(CXX_STANDARD "/std:c++latest")
-    # 禁止编译器警告，并更新标识为C++最新版
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} /W0 /Zc:__cplusplus")
-endif()
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(
     PrimalDawnEngine 
     LANGUAGES CXX
     DESCRIPTION "☀PRIMAL DAWN ENGINE"
-    VERSION 1.0.0
+    VERSION 1.1.0
 )
 
-# 库地址
-set(LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/libs)
-set(PRIMALDAWN ${CMAKE_CURRENT_SOURCE_DIR})
-set(THIRD_PARTY ${PRIMALDAWN}/3rd_party)
+# compiler设置
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# current only support windows vulkan
+# 预定义变量
+set(LIBRARIES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+set(PRIMALDAWN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(EXTERNALS_DIR ${PRIMALDAWN}/externals)
+
+# 目前只支持Windows + Vulkan
 if(WIN32) 
-    option(SUPPORT_VULKAN "OS: windows; GRAPHICS API: Vulkan" ON)
+    option(USE_VULKAN "OS: windows; GRAPHICS API: Vulkan" ON)
+    option(USE_SDL2 "Window System: SDL2" ON)
 endif()
 
 # 添加子目录
-add_subdirectory(${PRIMALDAWN}/engine)
-add_subdirectory(${PRIMALDAWN}/samples)
-add_subdirectory(${LIBRARIES}/application)
-add_subdirectory(3rd_party)
+add_subdirectory(${PRIMALDAWN_DIR}/engine)
+#add_subdirectory(${PRIMALDAWN_DIR}/samples)
+#add_subdirectory(${LIBRARIES_DIR}/application)

@@ -1,6 +1,6 @@
-#include "platform/WindowSystemSDL.h"
 #include <SDL_syswm.h>
-#include "core/util/Logging.h"
+#include "WindowSystemSDL2.hpp"
+#include "core/Logging.hpp"
 
 using namespace pd;
 

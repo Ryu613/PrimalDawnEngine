@@ -1,15 +1,16 @@
 #pragma once
-#include "platform/Platform.h"
-#include "VulkanCommon.h"
-#include "core/SwapChain.h"
+#include "platform/Platform.hpp"
+#include "VulkanCommon.hpp"
+#include "core/SwapChain.hpp"
 
 namespace pd {
+    struct GraphicsCoreConfig;
+    class GraphicsCore;
 
-    class PlatformVulkanWin32 : public Platform {
+    class PlatformWindows final : public Platform {
     public:
-        PlatformVulkanWin32(PlatformConfig &platformConfig);
-        ~PlatformVulkanWin32();
-        std::unique_ptr<SwapChain> createSwapChain(Engine& engine, WindowSystem* windowSystem) override;
+        PlatformWindows(PlatformConfig &platformConfig);
+        ~PlatformWindows();
     private:
         vk::Instance mInstance = VK_NULL_HANDLE;
         vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
@@ -17,6 +18,8 @@ namespace pd {
         vk::SurfaceKHR mSurface = VK_NULL_HANDLE;
         vk::Device mDevice = VK_NULL_HANDLE;
         vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
+
+        void createGraphicsCore(GraphicsCoreConfig& gConfig);
     };
 
     bool validateExtensions(const std::vector<const char*>& required,
