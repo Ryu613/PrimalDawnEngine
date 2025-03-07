@@ -4,11 +4,13 @@
 #include "platform/os/windows/PlatformWindows.hpp"
 #endif
 
+#include "core/Logging.hpp"
+
 namespace pd {
-    std::unique_ptr<Platform> PlatformFactory::createPlatform(OS os) {
+    std::unique_ptr<Platform> PlatformFactory::createPlatform(PlatformConfig& patformConfig) {
     #if defined(WIN32)
         LOG_INFO("Platform is {}", "Windows")
-        return std::make_unique<PlatformWindows>(PlatformConfig);
+        return std::make_unique<PlatformWindows>(patformConfig);
     #else
         LOG_INFO("Platform is {}", "Vulkan - Unknown OS")
         return nullptr;

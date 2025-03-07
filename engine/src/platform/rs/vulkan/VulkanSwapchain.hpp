@@ -1,6 +1,6 @@
 #pragma once
 
-#include "platform/VulkanCommon.hpp"
+#include "VulkanCommon.hpp"
 #include "core/SwapChain.hpp"
 
 namespace pd {

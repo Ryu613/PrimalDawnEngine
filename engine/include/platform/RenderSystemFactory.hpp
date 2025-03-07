@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "core/RenderSystem.hpp"
 
 namespace pd {
 	class RenderSystem;

@@ -1,24 +1,25 @@
 #pragma once
-
 #include "VulkanCommon.hpp"
 #include "platform/PlatformEnums.hpp"
 #include "core/RenderSystem.hpp"
 
 namespace pd {
 	struct VulkanConfig {
-		OS os;
+		std::string appName{ "default" };
+		std::string engineName{ "Primal Dawn" };
+		OS os = OS::WINDOWS;
 		bool enableDebug = false;
 	};
 	/**
 	*  Vulkan渲染系统
 	*/
 	class RenderSystemVulkan : public RenderSystem {
-		friend class RenderSystemFactory;
-	private:
+	public:
 		RenderSystemVulkan(VulkanConfig& vulkanConfig);
-		~RenderSystemVulkan();
+		~RenderSystemVulkan() = default;
+	private:
 
-		initVulkanInstance();
+		void initVulkanInstance();
 
 		VulkanConfig& mVulkanConfig;
 
@@ -29,4 +30,8 @@ namespace pd {
 		vk::Device mDevice = VK_NULL_HANDLE;
 		vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
 	};
+
+
+	bool validateExtensions(const std::vector<const char*>& required,
+	    const std::vector<vk::ExtensionProperties>& available);
 }

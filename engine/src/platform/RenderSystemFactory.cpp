@@ -5,13 +5,14 @@
 #endif
 
 namespace pd {
-    std::unique_ptr<RenderSystem> createRenderSystem(RenderSystemConfig& rsConfig) {
+    std::unique_ptr<RenderSystem> RenderSystemFactory::createRenderSystem(RenderSystemConfig& rsConfig) {
     #if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
         LOG_INFO("Render System - Vulkan")
         VulkanConfig vkConfig;
         vkConfig.os = rsConfig.os;
         vkConfig.enableDebug = rsConfig.enableDebug;
-        return std::make_unique<RenderSystemVulkan>(vkConfig);
+        vkConfig.appName = rsConfig.appName;
+        return std::unique_ptr<RenderSystemVulkan>(new RenderSystemVulkan(vkConfig));
     #else
         LOG_INFO("RenderSystem - Unknown")
         throw std::runtime_error("init Platform failed, Unknown RenderSystem");

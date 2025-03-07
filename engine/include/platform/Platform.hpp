@@ -1,16 +1,12 @@
 #pragma once
 
 #include <string>
-#include <memory>
-#include <stdexcept>
-
 #include "platform/PlatformEnums.hpp"
-#include "core/SwapChain.hpp"
 
 namespace pd {
-    class RenderSystem;
 
     struct PlatformConfig {
+        std::string appName{ "default" };
         Backend backend = Backend::VULKAN;
         bool enableDebug = false;
     };
@@ -19,16 +15,17 @@ namespace pd {
     */
     class Platform {
     public:
+
+        Platform(PlatformConfig& platformConfig);
+        ~Platform() noexcept = default;
         /**
         * 获取平台配置项
         */
         PlatformConfig getPlatformConfig() const;
 
+    protected:
+
     private:
-
-        Platform(PlatformConfig& platformConfig);
-        ~Platform() noexcept = default;
-
         PlatformConfig& mPlatformConfig;
     };
 }

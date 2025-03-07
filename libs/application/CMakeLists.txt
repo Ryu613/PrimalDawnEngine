@@ -19,7 +19,6 @@ set(SRCS
 set(LIBS
 	engine
 )
-include_directories(${HEADER_DIR})
 
 add_library(${TARGET} STATIC ${HEADERS} ${SRCS})
 

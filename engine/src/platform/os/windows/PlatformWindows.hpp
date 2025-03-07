@@ -1,6 +1,8 @@
 #pragma once
 
+#include <memory>
 #include "platform/Platform.hpp"
+#include "core/RenderSystem.hpp"
 
 namespace pd {
     struct RenderSystemConfig;
@@ -13,9 +15,9 @@ namespace pd {
     class PlatformWindows : public Platform {
     friend class PlatformFactory;
     public:
-    private:
         PlatformWindows(PlatformConfig& platformConfig);
-        ~PlatformWindows();
+        ~PlatformWindows() = default;
+    private:
 
         /**
         * @brief 初始化平台层里面的各种系统，包括渲染系统等
@@ -27,9 +29,7 @@ namespace pd {
         */
         void createRenderSystem();
 
-        std::unique_ptr<RenderSystem> mRenderSystem{nullptr};
+    private:
+        std::unique_ptr<RenderSystem> mRenderSystem{ nullptr };
     };
-
-    //bool validateExtensions(const std::vector<const char*>& required,
-    //    const std::vector<vk::ExtensionProperties>& available);
 }

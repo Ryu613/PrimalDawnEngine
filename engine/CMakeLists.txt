@@ -13,8 +13,13 @@ set(ENGINE_HEADERS
 )
 
 set(EXTERNALS
+	fmt
 	spdlog::spdlog
-	glm::glm
+	glm
+)
+
+set(EXT_HEADERS_DIR
+	${spdlog_SOURCE_DIR}/include
 )
 
 set(PLATFORM_SRCS)
@@ -32,6 +37,9 @@ if(USE_SDL2)
 		SDL2::SDL2main
 		SDL2::SDL2-static
 	)
+	list(APPEND EXT_HEADERS_DIR
+		${sdl2_SOURCE_DIR}/include
+	)
 	list(APPEND PLATFORM_SRCS
 		src/platform/ws/sdl2/*.hpp
 		src/platform/ws/sdl2/*.cpp
@@ -43,17 +51,23 @@ if(USE_VULKAN)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
+	list(APPEND EXTERNALS
+		${Vulkan_LIBRARIES}
+	)
+	list(APPEND EXT_HEADERS_DIR
+		${Vulkan_INCLUDE_DIR}
+	)
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
    	list(APPEND PLATFORM_SRCS
-		src/platform/gc/vulkan/*.hpp
-		src/platform/gc/vulkan/*.cpp
+		src/platform/rs/vulkan/*.hpp
+		src/platform/rs/vulkan/*.cpp
 	)
 endif()
 
-file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/*.cpp)
+file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp)
 
 add_library(${TARGET} STATIC ${engine_core_srcs})
 
-target_link_libraries(${TARGET} PRIVATE ${EXTERNALS})
+target_link_libraries(${TARGET} PUBLIC ${EXTERNALS})
 
-target_include_directories(${TARGET} PUBLIC include src ${sdl2_SOURCE_DIR}/include)
+target_include_directories(${TARGET} PUBLIC include src ${EXT_HEADERS_DIR})

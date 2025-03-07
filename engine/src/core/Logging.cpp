@@ -1,5 +1,5 @@
 #include "core/Logging.hpp"
-#include "spdlog/sinks/stdout_color_sinks.hpp"
+#include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace pd {
     namespace logging {

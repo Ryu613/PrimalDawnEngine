@@ -2,10 +2,11 @@
 
 namespace pd {
     class Engine;
+
     class Scene {
     public:
         Scene(Engine& engine);
-        ~Scene() noexcept;
+        ~Scene() noexcept = default;
     private:
         Engine& mEngine;
     };

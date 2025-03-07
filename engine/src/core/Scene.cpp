@@ -5,6 +5,4 @@ namespace pd {
         mEngine(engine) {
 
     }
-
-    Scene::~Scene() noexcept = default;
 }

@@ -10,7 +10,7 @@
 #include <vulkan/vk_enum_string_helper.h>
 
 // 日志
-#include <core/Logging.h>
+#include "core/Logging.hpp"
 
 // 其他公共头
 #include <iostream>
@@ -26,3 +26,9 @@
       assert(false);                                                                   \
     }                                                                                  \
   }
+
+// 常量
+
+namespace {
+    constexpr uint32_t const INVALID_VK_INDEX = 0xFFFFFFFF;
+}
