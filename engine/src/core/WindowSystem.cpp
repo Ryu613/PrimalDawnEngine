@@ -1,4 +1,4 @@
-#include "platform/WindowSystem.h"
+#include "platform/WindowSystem.hpp"
 
 using namespace pd;
 

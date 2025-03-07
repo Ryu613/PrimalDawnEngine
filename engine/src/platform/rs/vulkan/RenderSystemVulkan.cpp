@@ -1,4 +1,5 @@
 #include "platform/rs/vulkan/RenderSystemVulkan.hpp"
+#include "core/Logging.hpp"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
@@ -16,7 +17,7 @@ namespace pd {
         // create instance
         std::vector<vk::ExtensionProperties> availableInstanceextensions = vk::enumerateInstanceExtensionProperties();
         std::vector<const char*> activeInstanceExtensions({ VK_KHR_SURFACE_EXTENSION_NAME });
-        if (mPlatformConfig.enableDebug) {
+        if (mVulkanConfig.enableDebug) {
             activeInstanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
             // more debug infos
             activeInstanceExtensions.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
@@ -25,7 +26,7 @@ namespace pd {
         if (!validateExtensions(activeInstanceExtensions, availableInstanceextensions)) {
             throw std::runtime_error("Required instance extensions are missing");
         }
-        vk::ApplicationInfo app(mPlatformConfig.appName.c_str(), {}, mPlatformConfig.engineName.c_str(), {}, VK_MAKE_VERSION(1, 0, 0));
+        vk::ApplicationInfo app(mVulkanConfig.appName.c_str(), {}, mVulkanConfig.engineName.c_str(), {}, VK_MAKE_VERSION(1, 0, 0));
         vk::InstanceCreateInfo instanceInfo({}, &app, {}, activeInstanceExtensions);
         // instance create
         LOG_INFO("creating Vulkan instance...")
@@ -37,8 +38,8 @@ namespace pd {
         // select physical device
         std::vector<vk::PhysicalDevice> gpus = mInstance.enumeratePhysicalDevices();
         std::vector<const char*> requiredDeviceExtensions({ VK_KHR_SWAPCHAIN_EXTENSION_NAME });
-        if (mPlatformConfig.enableDebug) {
-            requiredDeviceExtensions.push_back(VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
+        if (mVulkanConfig.enableDebug) {
+            //requiredDeviceExtensions.push_back(VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
         }
         for (auto i = 0; i < gpus.size(); ++i) {
             mPhysicalDevice = gpus[i];
@@ -53,7 +54,7 @@ namespace pd {
             }
             for (uint32_t j = 0; j < queueFamilyProperties.size(); ++j) {
                 vk::QueueFamilyProperties props = queueFamilyProperties[j];
-                if (props.queueCount != 0 && props.queueFlags & vk::QueueFlagBits::eGraphics) {
+                if (props.queueCount != 0 && (props.queueFlags & vk::QueueFlagBits::eGraphics)) {
                     mGraphicsQueueIndex = j;
                     break;
                 }
@@ -76,5 +77,18 @@ namespace pd {
         VULKAN_HPP_DEFAULT_DISPATCHER.init(mDevice);
         mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
         // TODO: create allocator
+    }
+
+    bool pd::validateExtensions(const std::vector<const char*>& required,
+        const std::vector<vk::ExtensionProperties>& available) {
+        return std::find_if(required.begin(),
+            required.end(),
+            [&available](auto extension) {
+                return std::find_if(available.begin(),
+                    available.end(),
+                    [&extension](auto const& ep) {
+                        return strcmp(ep.extensionName, extension) == 0;
+                    }) == available.end();
+                }) == required.end();
     }
 }

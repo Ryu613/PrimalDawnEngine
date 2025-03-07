@@ -1,4 +1,4 @@
-#include "PlatformVulkanSwapChain.hpp"
+#include "VulkanSwapChain.hpp"
 #include "VulkanContext.hpp"
 
 namespace pd {

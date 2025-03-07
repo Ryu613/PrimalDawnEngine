@@ -1,4 +1,4 @@
-#include "HelloTriangle.h"
+#include "HelloTriangle.hpp"
 
 using namespace pd;
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#define SPDLOG_FMT_EXTERNAL
 
 #include "spdlog/fmt/fmt.h"
 #include "spdlog/spdlog.h"
@@ -17,5 +18,3 @@ namespace pd {
         void init();
     }
 }
-
-#endif

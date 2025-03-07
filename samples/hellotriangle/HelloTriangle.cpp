@@ -1,8 +1,8 @@
-#include "HelloTriangle.h"
-#include "platform/WindowSystemSDL.h"
-#include "core/util/Logging.h"
-#include "core/Renderer.h"
-#include "core/View.h"
+#include "HelloTriangle.hpp"
+#include "platform/ws/sdl2/WindowSystemSDL2.hpp"
+#include "core/Logging.hpp"
+#include "core/Renderer.hpp"
+#include "core/View.hpp"
 
 using namespace pd;
 
@@ -20,8 +20,8 @@ bool HelloTriangle::prepare(const AppConfig& options) {
 }
 
 void HelloTriangle::runOneFrame(float ms) {
-    if (mRenderer->beginFrame(mSwapChain.get())) {
-        mRenderer->render(mView.get());
+    if (mRenderer->beginFrame(mSwapChain)) {
+        mRenderer->render(mView);
         mRenderer->endFrame();
     }
 }
@@ -38,23 +38,28 @@ void HelloTriangle::run() {
 }
 
 void HelloTriangle::initWindow() {
-    WindowSystemSDL::WindowSystemOptions winOpt{
+    WindowSystemSDL2::WindowSystemOptions winOpt{
         "Hello-Triangle"
     };
-    mWindowSystem = std::make_unique<WindowSystemSDL>(winOpt);
+    mWindowSystem = new WindowSystemSDL2(winOpt); 
 }
 
 void HelloTriangle::initEngine() {
-    mEngine = Engine::Builder().build();
+    EngineConfig engineConfig{
+        .appName = "Hello Triangle",
+        .backend = Backend::VULKAN,
+        .enableDebug = true
+    };
+    mEngine = Engine::create(engineConfig);
     LOG_INFO("creating swapchain...")
-    mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
+    mSwapChain = mEngine->createSwapChain(mWindowSystem);
     LOG_INFO("creating renderer...")
-    mRenderer = mEngine->createRenderer();
-    auto scene = mEngine->createScene();
-    LOG_INFO("creating view...")
-    mView = mEngine->createView();
-    mView->setScene(scene.get());
-    LOG_INFO("setup scene...")
+    //mRenderer = mEngine->createRenderer();
+    //auto scene = mEngine->createScene();
+    //LOG_INFO("creating view...")
+    //mView = mEngine->createView();
+    //mView->setScene(scene);
+    //LOG_INFO("setup scene...")
     // 设置相机
     // 设置场景
 }

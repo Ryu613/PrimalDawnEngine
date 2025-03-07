@@ -1,7 +1,6 @@
-#ifndef DAWN_PRIMALDAWN_SAMPLES_HELLOTRIANGLE_H
-#define DAWN_PRIMALDAWN_SAMPLES_HELLOTRIANGLE_H
+#pragma once
 
-#include "application/Application.h"
+#include "application/Application.hpp"
 
 /**
 * @brief vulkan最简样例，旨在确认项目是否能正常运行
@@ -30,5 +29,3 @@ private:
 
     AppContext context;
 };
-
-#endif

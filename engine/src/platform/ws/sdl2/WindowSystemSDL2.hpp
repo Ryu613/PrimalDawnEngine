@@ -7,10 +7,10 @@ namespace pd {
     /**
     * @brief SDL2窗口的封装
     */
-    class WindowSystemSDL : public WindowSystem {
+    class WindowSystemSDL2 : public WindowSystem {
     public:
-        WindowSystemSDL(const WindowSystem::WindowSystemOptions& windowOptions);
-        virtual ~WindowSystemSDL() = default;
+        WindowSystemSDL2(const WindowSystem::WindowSystemOptions& windowOptions);
+        virtual ~WindowSystemSDL2() = default;
 
         /**
         * @brief 用于检查窗口是否应该被关闭

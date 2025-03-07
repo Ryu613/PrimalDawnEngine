@@ -5,16 +5,14 @@
 #include "core/Logging.hpp"
 
 namespace pd {
-    namespace {
-        constexpr uint32_t const INVALID_VK_INDEX = 0xFFFFFFFF;
-    }
 
     PlatformWindows::PlatformWindows(PlatformConfig& platformConfig)
         : Platform(platformConfig) {
         // 创建渲染系统
         LOG_INFO("Platform is creating render system...")
         RenderSystemConfig rsConfig;
-        rsConfig.enableDebug = getPlatformConfig().enableDebug;
+        rsConfig.appName = platformConfig.appName;
+        rsConfig.enableDebug = platformConfig.enableDebug;
         rsConfig.os = OS::WINDOWS;
         mRenderSystem = RenderSystemFactory::createRenderSystem(rsConfig);
     }
@@ -35,17 +33,5 @@ namespace pd {
 
     //}
 
-    //bool pd::validateExtensions(const std::vector<const char*>& required,
-    //    const std::vector<vk::ExtensionProperties>& available) {
-    //    return std::find_if(required.begin(),
-    //        required.end(),
-    //        [&available](auto extension) {
-    //            return std::find_if(available.begin(),
-    //                available.end(),
-    //                [&extension](auto const& ep) {
-    //                    return strcmp(ep.extensionName, extension) == 0;
-    //                }) == available.end();
-    //        }) == required.end();
-    //}
 }
 

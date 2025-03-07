@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "platform/PlatformEnums.hpp"
+#include "platform/Platform.hpp"
 
 namespace pd {
 	class Platform;
@@ -10,8 +11,6 @@ namespace pd {
 
 	class PlatformFactory {
 	public:
-		static std::unique_ptr<Platform> createPlatform(OS os);
-
-		static std::unique_ptr<RenderSystem> createRenderSystem(Backend backend);
+		static std::unique_ptr<Platform> createPlatform(PlatformConfig& platformConfig);
 	};
 }

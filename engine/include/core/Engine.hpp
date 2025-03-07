@@ -26,7 +26,7 @@ namespace pd {
         /**
         * @brief 创建引擎
         */
-        static std::unique_ptr<Engine> create(EngineConfig& config);
+        static Engine* create(EngineConfig& config);
         
         /**
         * @brief 销毁引擎和相关资源
@@ -38,21 +38,21 @@ namespace pd {
         /**
         * @brief 创建交换链
         */
-        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) noexcept;
+        SwapChain* createSwapChain(WindowSystem* windowSystem) noexcept;
 
         /**
         * @brief 创建渲染器
         */
-        std::unique_ptr<Renderer> createRenderer() noexcept;
+        Renderer* createRenderer() noexcept;
 
         /**
         * @brief 创建场景
         */
-        std::unique_ptr<Scene> createScene() noexcept;
+        Scene* createScene() noexcept;
         /**
         * @brief 创建视图
         */
-        std::unique_ptr<View> createView() noexcept;
+        View* createView() noexcept;
 
         /**
         * 获取所用的图形API
