@@ -1,9 +1,12 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include "platform/PlatformEnums.hpp"
+#include "core/RenderSystem.hpp"
 
 namespace pd {
+    class SwapChain;
 
     struct PlatformConfig {
         std::string appName{ "default" };
@@ -23,9 +26,10 @@ namespace pd {
         */
         PlatformConfig getPlatformConfig() const;
 
-    protected:
+        RenderSystem* getRenderSystem() const;
 
-    private:
+    protected:
         PlatformConfig& mPlatformConfig;
+        std::unique_ptr<RenderSystem> mRenderSystem = nullptr;
     };
 }

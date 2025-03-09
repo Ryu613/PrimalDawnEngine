@@ -54,12 +54,12 @@ void HelloTriangle::initEngine() {
     LOG_INFO("creating swapchain...")
     mSwapChain = mEngine->createSwapChain(mWindowSystem);
     LOG_INFO("creating renderer...")
-    //mRenderer = mEngine->createRenderer();
-    //auto scene = mEngine->createScene();
-    //LOG_INFO("creating view...")
-    //mView = mEngine->createView();
-    //mView->setScene(scene);
-    //LOG_INFO("setup scene...")
+    mRenderer = mEngine->createRenderer();
+    auto scene = mEngine->createScene();
+    LOG_INFO("creating view...")
+    mView = mEngine->createView();
+    mView->setScene(scene);
+    LOG_INFO("setup scene...")
     // 设置相机
     // 设置场景
 }

@@ -1,5 +1,9 @@
 #include "platform/rs/vulkan/RenderSystemVulkan.hpp"
 #include "core/Logging.hpp"
+#include "platform/WindowSystem.hpp"
+#include "core/SwapChain.hpp"
+#include "VulkanContext.hpp"
+#include "VulkanSwapchain.hpp"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
@@ -90,5 +94,21 @@ namespace pd {
                         return strcmp(ep.extensionName, extension) == 0;
                     }) == available.end();
                 }) == required.end();
+    }
+
+
+    SwapChain* RenderSystemVulkan::createSwapChain(Engine& engine, WindowSystem* windowSystem) {
+        // create surface
+        void* nativeWindow = windowSystem->getNativeWindow();
+        const vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo({}, GetModuleHandle(nullptr), (HWND)nativeWindow, {});
+        mSurface = mInstance.createWin32SurfaceKHR(surfaceCreateInfo);
+        if (!mSurface) {
+            throw std::runtime_error("faield to create window surface");
+        }
+        vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
+
+        // create swapchain
+        VulkanContext ctx(&mPhysicalDevice, &mDevice, &mSurface, &extent);
+        return new VulkanSwapChain(engine, &ctx);
     }
 }

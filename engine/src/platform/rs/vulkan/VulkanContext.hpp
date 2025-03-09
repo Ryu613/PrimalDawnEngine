@@ -4,6 +4,7 @@
 
 namespace pd {
     class VulkanContext {
+        friend class VulkanSwapChain;
     public:
         VulkanContext(vk::PhysicalDevice* phyDevicePtr,
             vk::Device* devicePtr,
@@ -14,8 +15,6 @@ namespace pd {
         vk::Device* mDevice = nullptr;
         vk::SurfaceKHR* mSurface = nullptr;
         vk::Extent2D* mExtent2D = nullptr;
-        friend class PlatformVulkanWin32;
-        friend class PlatformVulkanSwapChain;
 
     };
 }

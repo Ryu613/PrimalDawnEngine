@@ -7,7 +7,6 @@ namespace pd {
 
     Renderer::Renderer(Engine& engine) :
         mEngine(engine) {
-
     }
 
     Renderer::~Renderer() noexcept {

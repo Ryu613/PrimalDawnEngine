@@ -2,7 +2,7 @@
 #include "VulkanContext.hpp"
 
 namespace pd {
-    PlatformVulkanSwapChain::PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx) :
+    VulkanSwapChain::VulkanSwapChain(Engine& engine, VulkanContext* ctx) :
         SwapChain(engine),
         mExtent(*(ctx->mExtent2D)),
         mFormat(vk::Format::eR8G8B8A8Unorm) {
@@ -63,7 +63,7 @@ namespace pd {
     }
       
 
-    PlatformVulkanSwapChain::~PlatformVulkanSwapChain() {
+    VulkanSwapChain::~VulkanSwapChain() {
 
     }
 }
