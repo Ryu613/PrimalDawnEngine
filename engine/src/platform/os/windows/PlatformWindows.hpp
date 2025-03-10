@@ -28,8 +28,5 @@ namespace pd {
         * 创建渲染系统
         */
         void createRenderSystem();
-
-    private:
-        std::unique_ptr<RenderSystem> mRenderSystem{ nullptr };
     };
 }

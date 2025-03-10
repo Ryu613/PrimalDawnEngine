@@ -6,7 +6,7 @@
 namespace pd {
     class Engine;
     class WindowSystem;
-    class Swapchain;
+    class SwapChain;
 
     struct RenderSystemConfig {
         std::string appName{"default"};
@@ -22,7 +22,7 @@ namespace pd {
         /**
         * @brief 为指定平台创建交换链
         */
-        //Swapchain* createSwapChain(Engine& engine, WindowSystem* windowSystem);
+        virtual SwapChain* createSwapChain(Engine& engine, WindowSystem* windowSystem) = 0;
 
     };
 }

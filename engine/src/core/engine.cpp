@@ -1,6 +1,9 @@
 #include "core/Engine.hpp"
 #include "core/Logging.hpp"
 #include "platform/PlatformFactory.hpp"
+#include "core/Renderer.hpp"
+#include "core/Scene.hpp"
+#include "core/View.hpp"
 
 namespace pd {
 
@@ -28,19 +31,19 @@ namespace pd {
     }
 
     SwapChain* Engine::createSwapChain(WindowSystem* windowSystem) noexcept {
-        return nullptr;
+        return mPlatform->getRenderSystem()->createSwapChain(*this, windowSystem);
     }
 
     Renderer* Engine::createRenderer() noexcept {
-        return nullptr;
+        return new Renderer(*this);
     }
 
     Scene* Engine::createScene() noexcept {
-        return nullptr;
+        return new Scene(*this);
     }
 
     View* Engine::createView() noexcept {
-        return nullptr;
+        return new View(*this);
     }
 }
 

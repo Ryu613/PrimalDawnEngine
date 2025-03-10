@@ -17,6 +17,8 @@ namespace pd {
 	public:
 		RenderSystemVulkan(VulkanConfig& vulkanConfig);
 		~RenderSystemVulkan() = default;
+
+		SwapChain* createSwapChain(Engine& engine, WindowSystem* windowSystem) override;
 	private:
 
 		void initVulkanInstance();

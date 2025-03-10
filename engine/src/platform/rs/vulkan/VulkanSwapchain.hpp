@@ -9,10 +9,10 @@ namespace pd {
     /**
     * @brief vulkan交换链的操作封装
     */
-    class PlatformVulkanSwapChain : public SwapChain {
+    class VulkanSwapChain : public SwapChain {
     public:
-        PlatformVulkanSwapChain(Engine& engine, VulkanContext* ctx);
-        ~PlatformVulkanSwapChain();
+        VulkanSwapChain(Engine& engine, VulkanContext* ctx);
+        ~VulkanSwapChain();
     private:
         // 用于image的信号量数量： 三重缓冲的话为3乘以最大渲染通道数量(15)
         static constexpr int IMAGE_READY_SEMAPHORE_COUNT = 3 * 15;
