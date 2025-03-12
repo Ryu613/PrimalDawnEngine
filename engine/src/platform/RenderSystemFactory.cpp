@@ -12,6 +12,8 @@ namespace pd {
         vkConfig.os = rsConfig.os;
         vkConfig.enableDebug = rsConfig.enableDebug;
         vkConfig.appName = rsConfig.appName;
+        // debug pipeline
+        vkConfig.createDebugPipeline = true;
         return std::unique_ptr<RenderSystemVulkan>(new RenderSystemVulkan(vkConfig));
     #else
         LOG_INFO("RenderSystem - Unknown")

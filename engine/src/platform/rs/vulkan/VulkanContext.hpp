@@ -5,6 +5,7 @@
 namespace pd {
     class VulkanContext {
         friend class VulkanSwapChain;
+        friend class VulkanShaderModule;
     public:
         VulkanContext(vk::PhysicalDevice* phyDevicePtr,
             vk::Device* devicePtr,

@@ -4,6 +4,7 @@
 #include "core/SwapChain.hpp"
 #include "VulkanContext.hpp"
 #include "VulkanSwapchain.hpp"
+#include "util/util.hpp"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
@@ -81,6 +82,43 @@ namespace pd {
         VULKAN_HPP_DEFAULT_DISPATCHER.init(mDevice);
         mGraphicsQueue = mDevice.getQueue(mGraphicsQueueIndex, 0);
         // TODO: create allocator
+        if (mVulkanConfig.createDebugPipeline) {
+            createDebugPipeline();
+        }
+    }
+
+    void RenderSystemVulkan::createDebugPipeline() {
+        // create renderpass
+        vk::AttachmentDescription att(
+            {},
+            vk::Format::eUndefined,
+            vk::SampleCountFlagBits::e1,
+            vk::AttachmentLoadOp::eClear,
+            vk::AttachmentStoreOp::eStore,
+            vk::AttachmentLoadOp::eDontCare,
+            vk::ImageLayout::eUndefined,
+            vk::ImageLayout::ePresentSrcKHR
+        );
+        vk::AttachmentReference colorRef(0, vk::ImageLayout::eColorAttachmentOptimal);
+        vk::SubpassDescription subpass({}, vk::PipelineBindPoint::eGraphics, {}, colorRef);
+        vk::SubpassDependency dependency(
+            VK_SUBPASS_EXTERNAL,
+            0,
+            vk::PipelineStageFlagBits::eColorAttachmentOutput,
+            vk::PipelineStageFlagBits::eColorAttachmentOutput,
+            {},
+            vk::AccessFlagBits::eColorAttachmentRead | vk::AccessFlagBits::eColorAttachmentWrite
+        );
+        vk::RenderPassCreateInfo rpInfo({}, att, subpass, dependency);
+        mDebugRenderpass = mDevice.createRenderPass(rpInfo);
+        // create pipeline layout
+        mDebugPipelineLayout = mDevice.createPipelineLayout({});
+        // create pipeline
+        const auto shaderPath = std::filesystem::current_path() / "shaders";
+        const auto vertexShaderPath = shadersPath / "triangle.vert";
+        const auto fragShaderPath = shadersPath / "triangle.frag";
+        auto vertexShaderFile = util::readFile(vertexShaderPath);
+        auto fragShaderFile = util::readFile(fragShaderPath);
     }
 
     bool pd::validateExtensions(const std::vector<const char*>& required,

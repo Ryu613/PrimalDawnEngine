@@ -47,7 +47,7 @@ if(USE_SDL2)
 endif()
 
 if(USE_VULKAN)
-	find_package(Vulkan REQUIRED)
+	find_package(Vulkan REQUIRED glslang)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
