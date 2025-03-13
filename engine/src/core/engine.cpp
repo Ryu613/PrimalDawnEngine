@@ -45,6 +45,14 @@ namespace pd {
     View* Engine::createView() noexcept {
         return new View(*this);
     }
+
+    Backend Engine::getBackend() const noexcept {
+        return mEngineConfig.backend;
+    }
+
+    Platform* Engine::getPlatform() const noexcept {
+        return mPlatform.get();
+    }
 }
 
 

@@ -4,10 +4,10 @@
 namespace pd {
     VulkanSwapChain::VulkanSwapChain(Engine& engine, VulkanContext* ctx) :
         SwapChain(engine),
-        mExtent(*(ctx->mExtent2D)),
+        mExtent(ctx->mExtent2D),
         mFormat(vk::Format::eR8G8B8A8Unorm) {
-        vk::PhysicalDevice& phyDevice = *ctx->mPhysicalDevice;
-        vk::SurfaceKHR& surface = *ctx->mSurface;
+        vk::PhysicalDevice& phyDevice = ctx->mPhysicalDevice;
+        vk::SurfaceKHR& surface = ctx->mSurface;
         vk::SurfaceCapabilitiesKHR surfaceProp = phyDevice.getSurfaceCapabilitiesKHR(surface);
         const unsigned int numImages = std::clamp(
             surfaceProp.minImageCount + 1,
@@ -39,7 +39,7 @@ namespace pd {
         swapchainCreateInfo.clipped = true;
         swapchainCreateInfo.oldSwapchain = mSwapchain;
         // create swapchain
-        mSwapchain = ctx->mDevice->createSwapchainKHR(swapchainCreateInfo);
+        mSwapchain = ctx->mDevice.createSwapchainKHR(swapchainCreateInfo);
         if (!mSwapchain) {
             throw std::runtime_error("failed to create vulkan swapchain!");
         }
@@ -55,7 +55,7 @@ namespace pd {
         // semaphore & fence
         vk::SemaphoreCreateInfo semaphoreCreateInfo;
         for (uint32_t i = 0; i < IMAGE_READY_SEMAPHORE_COUNT; ++i) {
-            mImageReady[i] = ctx->mDevice->createSemaphore(semaphoreCreateInfo);
+            mImageReady[i] = ctx->mDevice.createSemaphore(semaphoreCreateInfo);
             if (!mImageReady[i]) {
                 throw std::runtime_error("failed to create semaphore");
             }

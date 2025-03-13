@@ -4,10 +4,13 @@
 #include "core/RenderSystem.hpp"
 
 namespace pd {
+	class VulkanContext;
+
 	struct VulkanConfig {
 		std::string appName{ "default" };
 		std::string engineName{ "Primal Dawn" };
 		OS os = OS::WINDOWS;
+		// TODO: vulkan layers & extensions can be set here
 		bool enableDebug = false;
 		bool createDebugPipeline = false;
 	};
@@ -24,20 +27,28 @@ namespace pd {
 
 		void initVulkanInstance();
 
+		void createVmaAllocator();
+
 		void createDebugPipeline();
 
 		VulkanConfig& mVulkanConfig;
 
-		vk::Instance mInstance = VK_NULL_HANDLE;
-		vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
-		uint32_t mGraphicsQueueIndex = INVALID_VK_INDEX;
-		vk::SurfaceKHR mSurface = VK_NULL_HANDLE;
-		vk::Device mDevice = VK_NULL_HANDLE;
-		vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
-		// debug
-		vk::RenderPass mDebugRenderpass = VK_NULL_HANDLE;
-		vk::PipelineLayout mDebugPipelineLayout = VK_NULL_HANDLE;
-		vk::Pipeline mDebugPipeline = VK_NULL_HANDLE;
+		VulkanContext* mVulkanContext = nullptr;
+
+		vk::RenderPass mCurrentRenderpass = nullptr;
+		vk::Pipeline mPipeline = nullptr;
+		vk::PipelineLayout mPipelineLayout = nullptr;
+
+		//vk::Instance mInstance = VK_NULL_HANDLE;
+		//vk::PhysicalDevice mPhysicalDevice = VK_NULL_HANDLE;
+		//uint32_t mGraphicsQueueIndex = INVALID_VK_INDEX;
+		//vk::SurfaceKHR mSurface = VK_NULL_HANDLE;
+		//vk::Device mDevice = VK_NULL_HANDLE;
+		//vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
+		//// debug
+		//vk::RenderPass mDebugRenderpass = VK_NULL_HANDLE;
+		//vk::PipelineLayout mDebugPipelineLayout = VK_NULL_HANDLE;
+		//vk::Pipeline mDebugPipeline = VK_NULL_HANDLE;
 
 	};
 
