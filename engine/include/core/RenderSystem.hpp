@@ -15,7 +15,7 @@ namespace pd {
         bool enableDebug = false;
     };
     /**
-    * @brief 渲染系统，不同图形API的总类
+    * @brief 渲染系统接口，不同图形API的总类
     */
     class RenderSystem {
     public:

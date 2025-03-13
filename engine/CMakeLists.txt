@@ -47,15 +47,21 @@ if(USE_SDL2)
 endif()
 
 if(USE_VULKAN)
-	find_package(Vulkan REQUIRED)
+	find_package(Vulkan REQUIRED SPIRV-Tools)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
+	FetchContent_MakeAvailable(glslang)
 	list(APPEND EXTERNALS
 		${Vulkan_LIBRARIES}
+		glslang
+		glslang-default-resource-limits
+		SPIRV
+		Vulkan::SPIRV-Tools
 	)
 	list(APPEND EXT_HEADERS_DIR
 		${Vulkan_INCLUDE_DIR}
+		${SPIRV-Tools_INCLUDE_DIRS}
 	)
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
    	list(APPEND PLATFORM_SRCS

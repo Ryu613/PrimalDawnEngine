@@ -4,17 +4,25 @@
 
 namespace pd {
     class VulkanContext {
+        friend class RenderSystemVulkan;
         friend class VulkanSwapChain;
     public:
-        VulkanContext(vk::PhysicalDevice* phyDevicePtr,
-            vk::Device* devicePtr,
-            vk::SurfaceKHR* surfacePtr,
-            vk::Extent2D* extentPtr);
+
+        MOVABLE_ONLY(VulkanContext);
+
+        VulkanContext() = default;
+
+        vk::ShaderModule createShaderModule(const char* filepath);
     private:
-        vk::PhysicalDevice* mPhysicalDevice = nullptr;
-        vk::Device* mDevice = nullptr;
-        vk::SurfaceKHR* mSurface = nullptr;
-        vk::Extent2D* mExtent2D = nullptr;
+        vk::Instance mInstance = nullptr;
+        vk::PhysicalDevice mPhysicalDevice = nullptr;
+        vk::Device mDevice = nullptr;
+        VmaAllocator mVmaAllocator = nullptr;
+        vk::SurfaceKHR mSurface = nullptr;
+        vk::Extent2D mExtent2D;
+
+        uint32_t mGraphicsQueueIndex = INVALID_VK_INDEX;
+        vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
 
     };
 }

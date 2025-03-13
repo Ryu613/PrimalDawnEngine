@@ -1,7 +1,8 @@
 #include "core/Renderer.hpp"
 #include "core/SwapChain.hpp"
-#include "core/engine.hpp"
+#include "core/Engine.hpp"
 #include "core/View.hpp"
+#include "platform/Platform.hpp"
 
 namespace pd {
 
@@ -22,6 +23,8 @@ namespace pd {
 
 
     void Renderer::render(const View* view) {
+        // TODO build framegraph
+        auto renderSystem = mEngine.getPlatform()->getRenderSystem();
     }
 
     void Renderer::endFrame() {
