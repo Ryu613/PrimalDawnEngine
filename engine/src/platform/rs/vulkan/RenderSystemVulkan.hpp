@@ -6,12 +6,8 @@
 namespace pd {
 	class VulkanContext;
 
-	struct VulkanConfig {
-		std::string appName{ "default" };
-		std::string engineName{ "Primal Dawn" };
-		OS os = OS::WINDOWS;
+	struct VulkanConfig : public RenderSystemConfig {
 		// TODO: vulkan layers & extensions can be set here
-		bool enableDebug = false;
 		bool createDebugPipeline = false;
 	};
 	/**
@@ -20,9 +16,9 @@ namespace pd {
 	class RenderSystemVulkan : public RenderSystem {
 	public:
 		RenderSystemVulkan(VulkanConfig& vulkanConfig);
-		~RenderSystemVulkan() = default;
+		~RenderSystemVulkan();
 
-		SwapChain* createSwapChain(Engine& engine, WindowSystem* windowSystem) override;
+		std::unique_ptr<SwapChain> createSwapChain(Engine& engine, WindowSystem* windowSystem) override;
 	private:
 
 		void initVulkanInstance();
@@ -33,7 +29,7 @@ namespace pd {
 
 		VulkanConfig& mVulkanConfig;
 
-		VulkanContext* mVulkanContext = nullptr;
+		std::unique_ptr<VulkanContext> mVulkanContext = nullptr;
 
 		vk::RenderPass mCurrentRenderpass = nullptr;
 		vk::Pipeline mPipeline = nullptr;

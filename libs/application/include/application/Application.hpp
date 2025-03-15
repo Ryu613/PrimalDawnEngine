@@ -2,13 +2,13 @@
 
 #include <string>
 #include <memory>
-#include "core/Engine.hpp"
-#include "platform/WindowSystem.hpp"
 
 namespace pd {
-
+    class Engine;
+    class WindowSystem;
     class SwapChain;
     class Renderer;
+    class Scene;
     class View;
 
     struct AppConfig {
@@ -21,7 +21,7 @@ namespace pd {
     class Application {
     public:
         Application();
-        virtual ~Application() = default;
+        virtual ~Application();
         /**
         * @brief 应用执行前的准备工作
         */
@@ -52,12 +52,12 @@ namespace pd {
     protected:
         float mFps{ 0.f };
         float mFrameTime{ 0.f };
-        WindowSystem* mWindowSystem{ nullptr };
-        Engine* mEngine{ nullptr };
-        SwapChain* mSwapChain = nullptr;
-        Renderer* mRenderer = nullptr;
-        View* mView = nullptr;
-        Scene* mScene = nullptr;
+        std::unique_ptr<WindowSystem> mWindowSystem{ nullptr };
+        std::unique_ptr<Engine> mEngine{ nullptr };
+        std::unique_ptr<SwapChain> mSwapChain = nullptr;
+        std::unique_ptr<Renderer> mRenderer = nullptr;
+        std::unique_ptr<View> mView = nullptr;
+        std::unique_ptr<Scene> mScene = nullptr;
         std::string mName{};
         bool mClosed{ false };
     };

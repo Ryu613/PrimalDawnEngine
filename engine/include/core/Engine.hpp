@@ -26,7 +26,7 @@ namespace pd {
         /**
         * @brief 创建引擎
         */
-        static Engine* create(EngineConfig& config);
+        static std::unique_ptr<Engine> create(EngineConfig& config);
         
         /**
         * @brief 销毁引擎和相关资源
@@ -38,21 +38,21 @@ namespace pd {
         /**
         * @brief 创建交换链
         */
-        SwapChain* createSwapChain(WindowSystem* windowSystem) noexcept;
+        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) noexcept;
 
         /**
         * @brief 创建渲染器
         */
-        Renderer* createRenderer() noexcept;
+        std::unique_ptr<Renderer> createRenderer() noexcept;
 
         /**
         * @brief 创建场景
         */
-        Scene* createScene() noexcept;
+        std::unique_ptr<Scene> createScene() noexcept;
         /**
         * @brief 创建视图
         */
-        View* createView() noexcept;
+        std::unique_ptr<View> createView() noexcept;
 
         /**
         * 获取所用的图形API
@@ -73,11 +73,10 @@ namespace pd {
         // 不可直接实例化和销毁
         Engine() noexcept = default;
         Engine(EngineConfig& engineConfig);
-        ~Engine() = default;
-
         std::unique_ptr<Platform> mPlatform{ nullptr };
         EngineConfig& mEngineConfig;
     public:
+        ~Engine();
         // 不可拷贝赋值
         Engine(Engine const&) = delete;
         Engine(Engine&) = delete;

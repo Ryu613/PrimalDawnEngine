@@ -1,9 +1,11 @@
 #pragma once
+// 防止vulkan的全局函数定义产生冲突
+#ifdef _WIN32
 // 防止与windows.h里的min/max冲突
 #define NOMINMAX
-// 防止vulkan的全局函数定义产生冲突
-#define VK_NO_PROTOTYPES
 #define VK_USE_PLATFORM_WIN32_KHR
+#endif
+#define VK_NO_PROTOTYPES
 #define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC 1
 #include <vulkan/vulkan.hpp>
 // vulkan memory allocator
@@ -20,7 +22,7 @@
 #include <string>
 #include <vector>
 
-// 删除拷贝，赋值构造函数
+// 智能移动构造函数
 #define MOVABLE_ONLY(CLASS_NAME)                     \
   CLASS_NAME(const CLASS_NAME&) = delete;            \
   CLASS_NAME& operator=(const CLASS_NAME&) = delete; \

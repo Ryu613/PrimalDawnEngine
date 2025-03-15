@@ -1,19 +1,24 @@
 #include "core/Engine.hpp"
+
 #include "core/Logging.hpp"
 #include "platform/PlatformFactory.hpp"
 #include "core/Renderer.hpp"
 #include "core/Scene.hpp"
 #include "core/View.hpp"
+#include "core/SwapChain.hpp"
 
 namespace pd {
 
-    Engine* Engine::create(EngineConfig& config) {
-        return new Engine(config);
+    std::unique_ptr<Engine> Engine::create(EngineConfig& config) {
+        return std::unique_ptr<Engine>(new Engine(config));
     }
 
     Engine::Engine(EngineConfig& engineConfig)
         : mEngineConfig(engineConfig) {
         init();
+    }
+
+    Engine::~Engine() {
     }
 
     void Engine::init() {
@@ -30,20 +35,20 @@ namespace pd {
         LOG_INFO("platform initialized")
     }
 
-    SwapChain* Engine::createSwapChain(WindowSystem* windowSystem) noexcept {
+    std::unique_ptr<SwapChain> Engine::createSwapChain(WindowSystem* windowSystem) noexcept {
         return mPlatform->getRenderSystem()->createSwapChain(*this, windowSystem);
     }
 
-    Renderer* Engine::createRenderer() noexcept {
-        return new Renderer(*this);
+    std::unique_ptr<Renderer> Engine::createRenderer() noexcept {
+        return std::make_unique<Renderer>(*this);
     }
 
-    Scene* Engine::createScene() noexcept {
-        return new Scene(*this);
+    std::unique_ptr<Scene> Engine::createScene() noexcept {
+        return std::make_unique<Scene>(*this);
     }
 
-    View* Engine::createView() noexcept {
-        return new View(*this);
+    std::unique_ptr<View> Engine::createView() noexcept {
+        return std::make_unique<View>(*this);
     }
 
     Backend Engine::getBackend() const noexcept {

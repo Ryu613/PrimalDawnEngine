@@ -21,6 +21,8 @@ namespace pd {
         vk::SurfaceKHR mSurface = nullptr;
         vk::Extent2D mExtent2D;
 
+        vk::DebugUtilsMessengerEXT mDebugUtilsMsgr;
+
         uint32_t mGraphicsQueueIndex = INVALID_VK_INDEX;
         vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
 

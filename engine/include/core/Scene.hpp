@@ -5,9 +5,9 @@ namespace pd {
 
     class Scene {
     public:
-        Scene(Engine& engine);
-        ~Scene() noexcept = default;
+        Scene(const Engine& engine);
+        ~Scene();
     private:
-        Engine& mEngine;
+        const Engine& mEngine;
     };
 }
