@@ -1,6 +1,6 @@
 # PrimalDawnEngine（WIP）
 
-real-time PBR rendering engine
+real-time PBR graphics engine
 
 now just for personal study, not finished yet
 
