@@ -9,10 +9,32 @@
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 
 namespace pd {
+
+    VKAPI_ATTR VkBool32 VKAPI_CALL debugUtilsMsgrCallback(VkDebugUtilsMessageSeverityFlagBitsEXT message_severity, VkDebugUtilsMessageTypeFlagsEXT message_type,
+        const VkDebugUtilsMessengerCallbackDataEXT* callback_data,
+        void* user_data)
+    {
+        // Log debug message
+        if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+        {
+            LOG_ERROR("{} - {}: {}", callback_data->messageIdNumber, callback_data->pMessageIdName, callback_data->pMessage);
+        }
+        else if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
+        {
+            LOG_ERROR("{} - {}: {}", callback_data->messageIdNumber, callback_data->pMessageIdName, callback_data->pMessage);
+        }
+        return VK_FALSE;
+    }
+
     RenderSystemVulkan::RenderSystemVulkan(VulkanConfig& vulkanConfig)
-        : mVulkanConfig(vulkanConfig){
+        : RenderSystem(vulkanConfig),
+          mVulkanConfig(vulkanConfig) {
         initVulkanInstance();
     }
+
+    RenderSystemVulkan::~RenderSystemVulkan() {
+        //TODO destroy vulkan things
+    };
 
     void RenderSystemVulkan::createVmaAllocator() {
         // TODO
@@ -24,16 +46,21 @@ namespace pd {
             static vk::DynamicLoader dl;
         VULKAN_HPP_DEFAULT_DISPATCHER.init(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));
         // craete VulkanContext
-        VulkanContext vkContext{};
+        mVulkanContext = std::make_unique<VulkanContext>();
         // create instance
         std::vector<vk::ExtensionProperties> availableInstanceextensions = vk::enumerateInstanceExtensionProperties();
         std::vector<const char*> activeInstanceExtensions({ VK_KHR_SURFACE_EXTENSION_NAME });
         if (mVulkanConfig.enableDebug) {
             activeInstanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
             // more debug infos
-            activeInstanceExtensions.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+            //activeInstanceExtensions.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
         }
-        activeInstanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
+        if (mVulkanConfig.os == OS::WINDOWS) {
+            activeInstanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
+        }
+        else {
+            throw std::runtime_error("Unknown OS not supported !");
+        }
         if (!validateExtensions(activeInstanceExtensions, availableInstanceextensions)) {
             throw std::runtime_error("Required instance extensions are missing");
         }
@@ -41,48 +68,55 @@ namespace pd {
         vk::InstanceCreateInfo instanceInfo({}, &app, {}, activeInstanceExtensions);
         // instance create
         LOG_INFO("creating Vulkan instance...")
-        vkContext.mInstance = vk::createInstance(instanceInfo);
-        VULKAN_HPP_DEFAULT_DISPATCHER.init(vkContext.mInstance);
+        mVulkanContext->mInstance = vk::createInstance(instanceInfo);
+        VULKAN_HPP_DEFAULT_DISPATCHER.init(mVulkanContext->mInstance);
+        // debug messenger
+        if (mVulkanConfig.enableDebug) {
+            vk::DebugUtilsMessengerCreateInfoEXT debugUtilCreateInfo = vk::DebugUtilsMessengerCreateInfoEXT({},
+                vk::DebugUtilsMessageSeverityFlagBitsEXT::eError | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning,
+                vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
+                debugUtilsMsgrCallback);
+            mVulkanContext->mDebugUtilsMsgr = mVulkanContext->mInstance.createDebugUtilsMessengerEXT(debugUtilCreateInfo);
+        }
         // select physical device
-        std::vector<vk::PhysicalDevice> gpus = vkContext.mInstance.enumeratePhysicalDevices();
+        std::vector<vk::PhysicalDevice> gpus = mVulkanContext->mInstance.enumeratePhysicalDevices();
         std::vector<const char*> requiredDeviceExtensions({ VK_KHR_SWAPCHAIN_EXTENSION_NAME });
         if (mVulkanConfig.enableDebug) {
             // TODO : add validation Layers
             // requiredDeviceExtensions.push_back(VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
         }
         for (auto i = 0; i < gpus.size(); ++i) {
-            vkContext.mPhysicalDevice = gpus[i];
+            mVulkanContext->mPhysicalDevice = gpus[i];
             // check device extensions support
-            std::vector<vk::ExtensionProperties> deviceExtensions = vkContext.mPhysicalDevice.enumerateDeviceExtensionProperties();
+            std::vector<vk::ExtensionProperties> deviceExtensions = mVulkanContext->mPhysicalDevice.enumerateDeviceExtensionProperties();
             if (!validateExtensions(requiredDeviceExtensions, deviceExtensions)) {
                 continue;
             }
-            std::vector<vk::QueueFamilyProperties> queueFamilyProperties = vkContext.mPhysicalDevice.getQueueFamilyProperties();
+            std::vector<vk::QueueFamilyProperties> queueFamilyProperties = mVulkanContext->mPhysicalDevice.getQueueFamilyProperties();
             if (queueFamilyProperties.empty()) {
                 throw std::runtime_error("no queue family found");
             }
             for (uint32_t j = 0; j < queueFamilyProperties.size(); ++j) {
                 vk::QueueFamilyProperties props = queueFamilyProperties[j];
                 if (props.queueCount != 0 && (props.queueFlags & vk::QueueFlagBits::eGraphics)) {
-                    vkContext.mGraphicsQueueIndex = j;
+                    mVulkanContext->mGraphicsQueueIndex = j;
                     break;
                 }
             }
         }
-        if (vkContext.mGraphicsQueueIndex == INVALID_VK_INDEX) {
+        if (mVulkanContext->mGraphicsQueueIndex == INVALID_VK_INDEX) {
             LOG_ERROR("GPU not support necessary queue family props! Vulkan initial failed")
             throw std::runtime_error("failed to select available physical device");
         }
         // create logical device
         float queuePriority = 1.f;
-        vk::DeviceQueueCreateInfo queueInfo({}, vkContext.mGraphicsQueueIndex, 1, &queuePriority);
+        vk::DeviceQueueCreateInfo queueInfo({}, mVulkanContext->mGraphicsQueueIndex, 1, &queuePriority);
         vk::DeviceCreateInfo deviceInfo({}, queueInfo, {}, requiredDeviceExtensions);
         // device create
         LOG_INFO("creating Vulkan logical device...")
-        vkContext.mDevice = vkContext.mPhysicalDevice.createDevice(deviceInfo);
-        VULKAN_HPP_DEFAULT_DISPATCHER.init(vkContext.mDevice);
-        vkContext.mGraphicsQueue = vkContext.mDevice.getQueue(vkContext.mGraphicsQueueIndex, 0);
-        mVulkanContext = &vkContext;
+        mVulkanContext->mDevice = mVulkanContext->mPhysicalDevice.createDevice(deviceInfo);
+        VULKAN_HPP_DEFAULT_DISPATCHER.init(mVulkanContext->mDevice);
+        mVulkanContext->mGraphicsQueue = mVulkanContext->mDevice.getQueue(mVulkanContext->mGraphicsQueueIndex, 0);
         // create allocator
         createVmaAllocator();
         if (mVulkanConfig.createDebugPipeline) {
@@ -192,13 +226,16 @@ namespace pd {
     }
 
 
-    SwapChain* RenderSystemVulkan::createSwapChain(Engine& engine, WindowSystem* windowSystem) {
+    std::unique_ptr<SwapChain> RenderSystemVulkan::createSwapChain(Engine& engine, WindowSystem* windowSystem) {
         // create surface
         void* nativeWindow = windowSystem->getNativeWindow();
-        const vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo({}, GetModuleHandle(nullptr), (HWND)nativeWindow, {});
+        vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo;
+        surfaceCreateInfo.hinstance = GetModuleHandle(nullptr);
+        surfaceCreateInfo.hwnd = (HWND)nativeWindow;
+        vk::Result result;
         mVulkanContext->mSurface = mVulkanContext->mInstance.createWin32SurfaceKHR(surfaceCreateInfo);
         vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
 
-        return new VulkanSwapChain(engine, mVulkanContext);
+        return std::make_unique<VulkanSwapChain>(engine, mVulkanContext.get());
     }
 }

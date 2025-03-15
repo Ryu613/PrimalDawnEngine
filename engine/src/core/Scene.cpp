@@ -1,8 +1,12 @@
 #include "core/Scene.hpp"
 
 namespace pd {
-    Scene::Scene(Engine& engine) :
+    Scene::Scene(const Engine& engine) :
         mEngine(engine) {
+
+    }
+
+    Scene::~Scene() {
 
     }
 }
