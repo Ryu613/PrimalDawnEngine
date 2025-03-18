@@ -55,13 +55,11 @@ if(USE_VULKAN)
 	list(APPEND EXTERNALS
 		${Vulkan_LIBRARIES}
 		glslang
-		glslang-default-resource-limits
-		SPIRV
-		Vulkan::SPIRV-Tools
+		${Vulkan_SPIRV-Tools_LIBRARY}
 	)
 	list(APPEND EXT_HEADERS_DIR
-		${Vulkan_INCLUDE_DIR}
-		${SPIRV-Tools_INCLUDE_DIRS}
+		${Vulkan_INCLUDE_DIRS}
+		${glslang_SOURCE_DIR}
 	)
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
    	list(APPEND PLATFORM_SRCS
@@ -70,6 +68,7 @@ if(USE_VULKAN)
 	)
 endif()
 
+# note: not GLOB_RECURSE
 file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp)
 
 add_library(${TARGET} STATIC ${engine_core_srcs})

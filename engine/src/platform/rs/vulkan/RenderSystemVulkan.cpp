@@ -30,14 +30,28 @@ namespace pd {
         : RenderSystem(vulkanConfig),
           mVulkanConfig(vulkanConfig) {
         initVulkanInstance();
+        createVmaAllocator();
+        if (mVulkanConfig.createDebugPipeline) {
+            createDebugPipeline();
+        }
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
-        //TODO destroy vulkan things
+        //TODO destroy vulkan stuffs
     };
 
     void RenderSystemVulkan::createVmaAllocator() {
-        // TODO
+        VmaVulkanFunctions const funcs{
+            .vkGetInstanceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetInstanceProcAddr,
+            .vkGetDeviceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetDeviceProcAddr,
+        };
+        const VmaAllocatorCreateInfo vmaCreateInfo{
+            .physicalDevice = mVulkanContext->mPhysicalDevice,
+            .device = mVulkanContext->mDevice,
+            .pVulkanFunctions = &funcs,
+            .instance = mVulkanContext->mInstance,
+        };
+        VK_CHK(vmaCreateAllocator(&vmaCreateInfo, &mVulkanContext->mVmaAllocator));
     }
 
     void RenderSystemVulkan::initVulkanInstance() {
@@ -117,11 +131,6 @@ namespace pd {
         mVulkanContext->mDevice = mVulkanContext->mPhysicalDevice.createDevice(deviceInfo);
         VULKAN_HPP_DEFAULT_DISPATCHER.init(mVulkanContext->mDevice);
         mVulkanContext->mGraphicsQueue = mVulkanContext->mDevice.getQueue(mVulkanContext->mGraphicsQueueIndex, 0);
-        // create allocator
-        createVmaAllocator();
-        if (mVulkanConfig.createDebugPipeline) {
-            createDebugPipeline();
-        }
     }
 
     void RenderSystemVulkan::createDebugPipeline() {
