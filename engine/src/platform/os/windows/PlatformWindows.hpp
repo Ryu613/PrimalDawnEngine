@@ -18,12 +18,6 @@ namespace pd {
         PlatformWindows(PlatformConfig& platformConfig);
         ~PlatformWindows() = default;
     private:
-
-        /**
-        * @brief 初始化平台层里面的各种系统，包括渲染系统等
-        */
-        void init();
-
         /**
         * 创建渲染系统
         */
