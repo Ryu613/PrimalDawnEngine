@@ -19,9 +19,17 @@ namespace pd {
         void* user_data)
     {
         // Log debug message
-        if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+        if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT)
         {
-            LOG_ERROR("{} - {}: {}", callback_data->messageIdNumber, callback_data->pMessageIdName, callback_data->pMessage);
+            LOG_DEBUG("{} - {}: {}", callback_data->messageIdNumber, callback_data->pMessageIdName, callback_data->pMessage);
+        }
+        if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT)
+        {
+            LOG_INFO("{} - {}: {}", callback_data->messageIdNumber, callback_data->pMessageIdName, callback_data->pMessage);
+        }
+        else if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+        {
+            LOG_WARN("{} - {}: {}", callback_data->messageIdNumber, callback_data->pMessageIdName, callback_data->pMessage);
         }
         else if (message_severity & VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
         {
@@ -69,10 +77,9 @@ namespace pd {
         // create instance
         std::vector<vk::ExtensionProperties> availableInstanceextensions = vk::enumerateInstanceExtensionProperties();
         std::vector<const char*> activeInstanceExtensions({ VK_KHR_SURFACE_EXTENSION_NAME });
+        vk::DebugUtilsMessengerCreateInfoEXT debugUtilCreateInfo;
         if (mVulkanConfig.enableDebug) {
             activeInstanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-            // more debug infos
-            //activeInstanceExtensions.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
         }
         if (mVulkanConfig.os == OS::WINDOWS) {
             activeInstanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
@@ -85,16 +92,19 @@ namespace pd {
         }
         vk::ApplicationInfo app(mVulkanConfig.appName.c_str(), {}, mVulkanConfig.engineName.c_str(), {}, VK_MAKE_VERSION(1, 0, 0));
         vk::InstanceCreateInfo instanceInfo({}, &app, {}, activeInstanceExtensions);
+        if (mVulkanConfig.enableDebug) {
+            debugUtilCreateInfo = vk::DebugUtilsMessengerCreateInfoEXT({},
+                vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | vk::DebugUtilsMessageSeverityFlagBitsEXT::eError,
+                vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance | vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral,
+                debugUtilsMsgrCallback);
+            instanceInfo.pNext = &debugUtilCreateInfo;
+        }
         // instance create
         LOG_INFO("creating Vulkan instance...")
         mVulkanContext->mInstance = vk::createInstance(instanceInfo);
         VULKAN_HPP_DEFAULT_DISPATCHER.init(mVulkanContext->mInstance);
         // debug messenger
         if (mVulkanConfig.enableDebug) {
-            vk::DebugUtilsMessengerCreateInfoEXT debugUtilCreateInfo = vk::DebugUtilsMessengerCreateInfoEXT({},
-                vk::DebugUtilsMessageSeverityFlagBitsEXT::eError | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning,
-                vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
-                debugUtilsMsgrCallback);
             mVulkanContext->mDebugUtilsMsgr = mVulkanContext->mInstance.createDebugUtilsMessengerEXT(debugUtilCreateInfo);
         }
         // select physical device
@@ -263,6 +273,14 @@ namespace pd {
     void RenderSystemVulkan::draw(PipelineDesc state) {
         bindPipeline(state);
         
+    }
+
+    void RenderSystemVulkan::beginRenderPass() {
+
+    }
+
+    void RenderSystemVulkan::endRenderPass() {
+
     }
 
 }

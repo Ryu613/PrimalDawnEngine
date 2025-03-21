@@ -25,6 +25,11 @@ namespace pd {
     void Renderer::render(const View* view) {
         // TODO build framegraph
         auto renderSystem = mEngine.getPlatform()->getRenderSystem();
+        //uint32_t imageIndex = mSwapChain->acquire();
+        //renderSystem->beginRenderPass();
+        //renderSystem->draw(imageIndex);
+        //renderSystem->endRenderPass();
+
     }
 
     void Renderer::endFrame() {

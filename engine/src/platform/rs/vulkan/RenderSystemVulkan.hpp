@@ -24,6 +24,10 @@ namespace pd {
 
 		void draw(PipelineDesc state) override;
 
+		void beginRenderPass() override;
+
+		void endRenderPass() override;
+
 	private:
 
 		void initVulkanInstance();

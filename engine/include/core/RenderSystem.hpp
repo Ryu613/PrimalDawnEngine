@@ -39,6 +39,15 @@ namespace pd {
         */
         virtual void draw(PipelineDesc state) = 0;
 
+        /**
+        * 渲染通道开始
+        */
+        virtual void beginRenderPass() = 0;
+        /**
+        * 渲染通道结束
+        */
+        virtual void endRenderPass() = 0;
+
     protected:
         RenderSystem(RenderSystemConfig& cfg);
         RenderSystemConfig& mRenderSystemConfig;
