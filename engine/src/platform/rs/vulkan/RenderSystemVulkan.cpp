@@ -261,7 +261,7 @@ namespace pd {
         vk::Result result;
         mVulkanContext->mSurface = mVulkanContext->mInstance.createWin32SurfaceKHR(surfaceCreateInfo);
         vk::Extent2D extent(windowSystem->getExtent().width, windowSystem->getExtent().height);
-
+        mVulkanContext->mExtent2D = extent;
         return std::make_unique<VulkanSwapChain>(engine, mVulkanContext.get());
     }
 
@@ -272,9 +272,11 @@ namespace pd {
         }
     }
 
-    void RenderSystemVulkan::draw(PipelineDesc state) {
-        bindPipeline(state);
-        
+    void RenderSystemVulkan::draw(PipelineDesc desc) {
+        bindPipeline(desc);
+        beginRenderPass();
+        // draw
+        endRenderPass();
     }
 
     void RenderSystemVulkan::beginRenderPass() {
