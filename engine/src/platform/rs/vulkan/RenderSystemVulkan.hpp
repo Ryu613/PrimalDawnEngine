@@ -22,7 +22,7 @@ namespace pd {
 
 		void bindPipeline(const PipelineDesc& pipelineDesc) override;
 
-		void draw(PipelineDesc state) override;
+		void draw(PipelineDesc desc) override;
 
 		void beginRenderPass() override;
 
