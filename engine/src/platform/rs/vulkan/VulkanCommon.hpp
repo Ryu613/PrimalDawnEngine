@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 
-// 智能移动构造函数
+// 只能移动构造函数
 #define MOVABLE_ONLY(CLASS_NAME)                     \
   CLASS_NAME(const CLASS_NAME&) = delete;            \
   CLASS_NAME& operator=(const CLASS_NAME&) = delete; \

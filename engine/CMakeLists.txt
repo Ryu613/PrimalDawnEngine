@@ -70,8 +70,12 @@ if(USE_VULKAN)
 	)
 endif()
 
+if(USE_OPENGL)
+# TODO 
+endif()
+
 # note: not GLOB_RECURSE
-file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp ${Vulkan_INCLUDE_DIR}/include/vma/*.h)
+file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp)
 
 add_library(${TARGET} STATIC ${engine_core_srcs})
 
