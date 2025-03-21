@@ -77,9 +77,11 @@ namespace pd {
         // create instance
         std::vector<vk::ExtensionProperties> availableInstanceextensions = vk::enumerateInstanceExtensionProperties();
         std::vector<const char*> activeInstanceExtensions({ VK_KHR_SURFACE_EXTENSION_NAME });
+        std::vector<const char*> activeInstanceLayers;
         vk::DebugUtilsMessengerCreateInfoEXT debugUtilCreateInfo;
         if (mVulkanConfig.enableDebug) {
             activeInstanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+            activeInstanceLayers.push_back({ "VK_LAYER_KHRONOS_validation" });
         }
         if (mVulkanConfig.os == OS::WINDOWS) {
             activeInstanceExtensions.push_back(VK_KHR_WIN32_SURFACE_EXTENSION_NAME);
@@ -91,7 +93,7 @@ namespace pd {
             throw std::runtime_error("Required instance extensions are missing");
         }
         vk::ApplicationInfo app(mVulkanConfig.appName.c_str(), {}, mVulkanConfig.engineName.c_str(), {}, VK_MAKE_VERSION(1, 0, 0));
-        vk::InstanceCreateInfo instanceInfo({}, &app, {}, activeInstanceExtensions);
+        vk::InstanceCreateInfo instanceInfo({}, &app, activeInstanceLayers, activeInstanceExtensions);
         if (mVulkanConfig.enableDebug) {
             debugUtilCreateInfo = vk::DebugUtilsMessengerCreateInfoEXT({},
                 vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning | vk::DebugUtilsMessageSeverityFlagBitsEXT::eError,
