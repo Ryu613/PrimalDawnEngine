@@ -19,6 +19,11 @@ namespace pd {
 		~RenderSystemVulkan();
 
 		std::unique_ptr<SwapChain> createSwapChain(Engine& engine, WindowSystem* windowSystem) override;
+
+		void bindPipeline(const PipelineDesc& pipelineDesc) override;
+
+		void draw(PipelineDesc state) override;
+
 	private:
 
 		void initVulkanInstance();
@@ -26,6 +31,8 @@ namespace pd {
 		void createVmaAllocator();
 
 		void createDebugPipeline();
+
+		void initFrameBuffers();
 
 		VulkanConfig& mVulkanConfig;
 

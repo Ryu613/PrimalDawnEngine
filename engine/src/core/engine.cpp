@@ -13,6 +13,10 @@ namespace pd {
         return std::unique_ptr<Engine>(new Engine(config));
     }
 
+    void Engine::destroy(Engine* engine) {
+
+    }
+
     Engine::Engine(EngineConfig& engineConfig)
         : mEngineConfig(engineConfig) {
         init();

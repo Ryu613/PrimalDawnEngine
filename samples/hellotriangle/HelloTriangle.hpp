@@ -25,7 +25,7 @@ public:
 private:
 
     void initWindow();
-    void initEngine();
+    void initRenderSystem();
 
     AppContext context;
 };

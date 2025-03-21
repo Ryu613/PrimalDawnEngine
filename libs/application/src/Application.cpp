@@ -27,6 +27,13 @@ void Application::finish() {
 
 Application::Application()
     : mName{"default"} {
+    EngineConfig engineConfig{
+        .appName = "Hello Triangle",
+        .backend = Backend::VULKAN,
+        .enableDebug = true
+    };
+    LOG_INFO("creating engine...")
+    mEngine = Engine::create(engineConfig);
 }
 
 Application::~Application() {
