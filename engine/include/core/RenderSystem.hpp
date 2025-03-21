@@ -16,15 +16,29 @@ namespace pd {
         Backend backend = Backend::UNKWONN;
         bool enableDebug = false;
     };
+
+    struct PipelineDesc {
+
+    };
     /**
-    * @brief 渲染系统接口，不同图形API的总类
+    * @brief 渲染系统接口，对图形API做封装
     */
     class RenderSystem {
     public:
         /**
-        * @brief 为指定平台创建交换链
+        * @brief 
         */
         virtual std::unique_ptr<SwapChain> createSwapChain(Engine& engine, WindowSystem* windowSystem) = 0;
+        /**
+        * @ brief 绑定管线
+        */
+        virtual void bindPipeline(const PipelineDesc& pipelineDesc) = 0;
+
+        /**
+        * @brief 绘制图像
+        */
+        virtual void draw(PipelineDesc state) = 0;
+
     protected:
         RenderSystem(RenderSystemConfig& cfg);
         RenderSystemConfig& mRenderSystemConfig;

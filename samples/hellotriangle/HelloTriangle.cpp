@@ -7,6 +7,7 @@
 #include "core/Scene.hpp"
 #include "core/Renderer.hpp"
 #include "core/View.hpp"
+#include "platform/Platform.hpp"
 
 using namespace pd;
 
@@ -18,8 +19,18 @@ bool HelloTriangle::prepare(const AppConfig& options) {
         LOG_ERROR("app prepare failed!")
         return false;
     }
+    LOG_INFO("initializing window system...")
     initWindow();
-    initEngine();
+    LOG_INFO("initializing render system...")
+    initRenderSystem();
+    LOG_INFO("creating renderer...")
+    mRenderer = mEngine->createRenderer();
+    LOG_INFO("creating scene...")
+    mScene = mEngine->createScene();
+    LOG_INFO("creating view...")
+     mView = mEngine->createView();
+    mView->setScene(mScene.get());
+    LOG_INFO("setup scene...")
     return true;
 }
 
@@ -31,7 +42,7 @@ void HelloTriangle::runOneFrame(float ms) {
 }
 
 void HelloTriangle::finish() {
-    // TODO engine destroy resources
+    Engine::destroy(mEngine.get());
 }
 
 void HelloTriangle::run() {
@@ -48,23 +59,9 @@ void HelloTriangle::initWindow() {
     mWindowSystem = std::make_unique<WindowSystemSDL2>(winOpt); 
 }
 
-void HelloTriangle::initEngine() {
-    EngineConfig engineConfig{
-        .appName = "Hello Triangle",
-        .backend = Backend::VULKAN,
-        .enableDebug = true
-    };
-    mEngine = Engine::create(engineConfig);
+void HelloTriangle::initRenderSystem() {
     LOG_INFO("creating swapchain...")
     mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
-    LOG_INFO("creating renderer...")
-    mRenderer = mEngine->createRenderer();
-    LOG_INFO("creating scene...")
-    mScene = mEngine->createScene();
-    LOG_INFO("creating view...")
-    mView = mEngine->createView();
-    mView->setScene(mScene.get());
-    LOG_INFO("setup scene...")
 }
 
 

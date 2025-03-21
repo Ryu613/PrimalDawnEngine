@@ -35,14 +35,15 @@ namespace pd {
           mVulkanConfig(vulkanConfig) {
         initVulkanInstance();
         createVmaAllocator();
-        if (mVulkanConfig.createDebugPipeline) {
-            createDebugPipeline();
-        }
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
         //TODO destroy vulkan stuffs
     };
+
+    void RenderSystemVulkan::initFrameBuffers() {
+
+    }
 
     void RenderSystemVulkan::createVmaAllocator() {
         VmaVulkanFunctions const funcs{
@@ -251,4 +252,17 @@ namespace pd {
 
         return std::make_unique<VulkanSwapChain>(engine, mVulkanContext.get());
     }
+
+    void RenderSystemVulkan::bindPipeline(const PipelineDesc& pipelineDesc) {
+        // FIXME: simplified implementation, need update in the future
+        if (mPipeline = nullptr) {
+            createDebugPipeline();
+        }
+    }
+
+    void RenderSystemVulkan::draw(PipelineDesc state) {
+        bindPipeline(state);
+        
+    }
+
 }
