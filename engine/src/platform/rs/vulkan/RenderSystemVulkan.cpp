@@ -5,6 +5,10 @@
 #include "VulkanContext.hpp"
 #include "VulkanSwapchain.hpp"
 #include "util/util.hpp"
+#define VMA_IMPLEMENTATION
+#define VMA_STATIC_VULKAN_FUNCTIONS 0
+#define VMA_DYNAMIC_VULKAN_FUNCTIONS 1
+#include "vma/vk_mem_alloc.h"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 

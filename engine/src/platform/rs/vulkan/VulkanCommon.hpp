@@ -10,9 +10,6 @@
 #include <vulkan/vulkan.hpp>
 // 可以把Vulkan的枚举名称转成字符串，方便打印日志
 #include <vulkan/vk_enum_string_helper.h>
-// vma dynamic
-#define VMA_STATIC_VULKAN_FUNCTIONS 0
-#define VMA_DYNAMIC_VULKAN_FUNCTIONS 1
 #include "vma/vk_mem_alloc.h"
 
 // 日志

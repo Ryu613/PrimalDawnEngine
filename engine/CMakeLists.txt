@@ -47,7 +47,7 @@ if(USE_SDL2)
 endif()
 
 if(USE_VULKAN)
-	find_package(Vulkan REQUIRED SPIRV-Tools)
+	find_package(Vulkan REQUIRED glslc glslangValidator glslang SPIRV-Tools)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
@@ -55,6 +55,8 @@ if(USE_VULKAN)
 	list(APPEND EXTERNALS
 		${Vulkan_LIBRARIES}
 		glslang
+		glslang-default-resource-limits
+		SPIRV
 		${Vulkan_SPIRV-Tools_LIBRARY}
 	)
 	list(APPEND EXT_HEADERS_DIR
@@ -69,7 +71,7 @@ if(USE_VULKAN)
 endif()
 
 # note: not GLOB_RECURSE
-file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp)
+file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp ${Vulkan_INCLUDE_DIR}/include/vma/*.h)
 
 add_library(${TARGET} STATIC ${engine_core_srcs})
 
