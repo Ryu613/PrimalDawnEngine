@@ -4,7 +4,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(
     PrimalDawnEngine 
-    LANGUAGES CXX
+    LANGUAGES CXX C
     DESCRIPTION "☀PRIMAL DAWN ENGINE"
     VERSION 1.1.0
 )
@@ -18,11 +18,11 @@ set(PRIMALDAWN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARIES_DIR ${PRIMALDAWN_DIR}/libs)
 set(EXTERNALS_DIR ${PRIMALDAWN_DIR}/externals)
 
-# 目前只支持Windows + Vulkan
-if(WIN32) 
-    option(USE_VULKAN "OS: windows; GRAPHICS API: Vulkan" ON)
-    option(USE_SDL2 "Window System: SDL2" ON)
-endif()
+# 目前只支持Windows + Vulkan + SDL2 或 Windows + OpenGL + GLFW, 别的组合尚未完成
+# VULKAN, OPENGL
+set(BACKEND_TYPE "OPENGL" CACHE STRING "specify backend type: VULKAN/OPENGL" FORCE)
+# SDL2, GLFW3
+set(WSI_TYPE "GLFW3" CACHE STRING "specify WSI type: SDL2/GLFW3" FORCE)
 
 # 添加子目录
 add_subdirectory(${PRIMALDAWN_DIR}/engine)

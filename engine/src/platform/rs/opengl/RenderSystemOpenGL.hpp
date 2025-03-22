@@ -1,7 +1,8 @@
 #pragma once
 
+#include <GLFW/glfw3.h>
 #include "core/RenderSystem.hpp"
-
+#include <glad/>
 namespace pd {
 	class RenderSystemOpenGL : public RenderSystem {
 	public:
