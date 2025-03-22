@@ -44,10 +44,11 @@ if(${WSI_TYPE} STREQUAL "SDL2")
 		src/platform/ws/sdl2/*.hpp
 		src/platform/ws/sdl2/*.cpp
 	)
+	add_definitions(-DPRIMALDAWN_WSI_TYPE_SDL2)
 elseif(${WSI_TYPE} STREQUAL "GLFW3")
 	FetchContent_MakeAvailable(glfw3)
 	list(APPEND EXTERNALS
-		glfw3
+		glfw
 	)
 	list(APPEND EXT_HEADERS_DIR
 		${glfw3_SOURCE_DIR}/include
@@ -56,6 +57,7 @@ elseif(${WSI_TYPE} STREQUAL "GLFW3")
 		src/platform/ws/glfw3/*.hpp
 		src/platform/ws/glfw3/*.cpp
 	)
+	add_definitions(-DPRIMALDAWN_WSI_TYPE_GLFW)
 endif()
 
 if(${BACKEND_TYPE} STREQUAL "VULKAN")
@@ -92,13 +94,15 @@ elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 		glad
 	)
 	list(APPEND EXT_HEADERS_DIR
-		${OPENGL_INCLUDE_DIR}
+		#${OPENGL_INCLUDE_DIR}
 		${glad_INCLUDE_DIR}
 	)
 	list(APPEND PLATFORM_SRCS
 		src/platform/rs/opengl/*.hpp
 		src/platform/rs/opengl/*.cpp
 	)
+	add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
+	
 endif()
 
 set(SRC_FILES
