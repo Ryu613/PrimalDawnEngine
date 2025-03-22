@@ -1,4 +1,5 @@
 #include <SDL_syswm.h>
+#include "SDL.h"
 #include "WindowSystemSDL2.hpp"
 #include "core/Logging.hpp"
 

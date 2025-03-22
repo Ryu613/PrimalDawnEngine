@@ -1,6 +1,6 @@
 #include "HelloTriangle.hpp"
 
-#include "platform/ws/sdl2/WindowSystemSDL2.hpp"
+#include "platform/WindowSystemFactory.hpp"
 #include "core/Logging.hpp"
 #include "core/Engine.hpp"
 #include "core/SwapChain.hpp"
@@ -53,10 +53,10 @@ void HelloTriangle::run() {
 }
 
 void HelloTriangle::initWindow() {
-    WindowSystemSDL2::WindowSystemOptions winOpt{
+    WindowSystem::WindowSystemOptions winOpt{
         "Hello-Triangle"
     };
-    mWindowSystem = std::make_unique<WindowSystemSDL2>(winOpt); 
+    mWindowSystem = WindowSystemFactory::createWindowSystem(winOpt);
 }
 
 void HelloTriangle::initRenderSystem() {

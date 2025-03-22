@@ -190,6 +190,7 @@ namespace pd {
         };
         vk::PipelineVertexInputStateCreateInfo vertex_input;
 
+        // FIXME: copied code for testing
         // Our attachment will write to all color channels, but no blending is enabled.
         std::vector<vk::PipelineColorBlendAttachmentState> blendAttachmentStateVec;
         vk::PipelineColorBlendAttachmentState blend_attachment;

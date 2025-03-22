@@ -31,7 +31,7 @@ if(WIN32)
 	)
 endif()
 
-if(USE_SDL2)
+if(${WSI_TYPE} STREQUAL "SDL2")
 	FetchContent_MakeAvailable(sdl2)
 	list(APPEND EXTERNALS
 		SDL2::SDL2main
@@ -44,9 +44,23 @@ if(USE_SDL2)
 		src/platform/ws/sdl2/*.hpp
 		src/platform/ws/sdl2/*.cpp
 	)
+	add_definitions(-DPRIMALDAWN_WSI_TYPE_SDL2)
+elseif(${WSI_TYPE} STREQUAL "GLFW3")
+	FetchContent_MakeAvailable(glfw3)
+	list(APPEND EXTERNALS
+		glfw
+	)
+	list(APPEND EXT_HEADERS_DIR
+		${glfw3_SOURCE_DIR}/include
+	)
+	list(APPEND PLATFORM_SRCS
+		src/platform/ws/glfw3/*.hpp
+		src/platform/ws/glfw3/*.cpp
+	)
+	add_definitions(-DPRIMALDAWN_WSI_TYPE_GLFW)
 endif()
 
-if(USE_VULKAN)
+if(${BACKEND_TYPE} STREQUAL "VULKAN")
 	find_package(Vulkan REQUIRED glslc glslangValidator glslang SPIRV-Tools)
 	if(NOT Vulkan_FOUND)
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
@@ -68,14 +82,38 @@ if(USE_VULKAN)
 		src/platform/rs/vulkan/*.hpp
 		src/platform/rs/vulkan/*.cpp
 	)
+elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
+	find_package(OpenGL REQUIRED OpenGL)
+	if(NOT OPENGL_FOUND)
+		message(FATAL_ERROR "OpenGL Not Found! Project build terminated")
+	endif()
+	# FIXME: cannot use fetchcontent to include library correctly
+	#FetchContent_MakeAvailable(glad)
+	list(APPEND EXTERNALS
+		${OPENGL_LIBRARIES}
+		glad
+	)
+	list(APPEND EXT_HEADERS_DIR
+		#${OPENGL_INCLUDE_DIR}
+		${glad_INCLUDE_DIR}
+	)
+	list(APPEND PLATFORM_SRCS
+		src/platform/rs/opengl/*.hpp
+		src/platform/rs/opengl/*.cpp
+	)
+	add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
+	
 endif()
 
-if(USE_OPENGL)
-# TODO 
-endif()
+set(SRC_FILES
+	${ENGINE_HEADERS}
+	${PLATFORM_SRCS}
+	src/core/*.cpp
+	src/platform/*.cpp
+)
 
 # note: not GLOB_RECURSE
-file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${ENGINE_HEADERS} ${PLATFORM_SRCS} src/core/*.cpp src/platform/*.cpp)
+file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${SRC_FILES})
 
 add_library(${TARGET} STATIC ${engine_core_srcs})
 
