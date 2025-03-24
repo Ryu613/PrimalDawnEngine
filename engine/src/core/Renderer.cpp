@@ -29,6 +29,7 @@ namespace pd {
         //renderSystem->beginRenderPass();
         //renderSystem->draw(imageIndex);
         //renderSystem->endRenderPass();
+        
 
     }
 

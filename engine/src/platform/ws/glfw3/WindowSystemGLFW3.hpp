@@ -15,6 +15,8 @@ namespace pd {
 
         virtual void close() override;
 
+        virtual void processInput() override;
+
         void* getNativeWindow() const override;
     private:
         GLFWwindow* mGLFWWindow{ nullptr };

@@ -23,5 +23,6 @@ namespace pd {
         Scene* mScene;
         Camera* mCamera;
         Viewport* mViewport;
+        WindowSystem* mWindowSystem;
     };
 }

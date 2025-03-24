@@ -54,6 +54,11 @@ namespace pd {
         */
         virtual void* getNativeWindow() const = 0;
 
+        /**
+        * @brief 处理输入事件
+        */
+        virtual void processInput() = 0;
+
         Extent getExtent() const;
     protected:
         WindowSystemOptions mWindowSystemOptions;

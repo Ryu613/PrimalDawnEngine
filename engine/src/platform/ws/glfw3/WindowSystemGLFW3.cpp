@@ -33,12 +33,6 @@ namespace pd {
         glViewport(0, 0, windowOptions.extent.width, windowOptions.extent.height);
 
         glfwSetFramebufferSizeCallback(mGLFWWindow, framebufferSizeCallback);
-
-        while (!glfwWindowShouldClose(mGLFWWindow))
-        {
-            glfwSwapBuffers(mGLFWWindow);
-            glfwPollEvents();
-        }
     }
 
     void WindowSystemGLFW3::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
@@ -46,15 +40,27 @@ namespace pd {
     }
 
     bool WindowSystemGLFW3::shouldClose() {
-        return mClosed;
+        return glfwWindowShouldClose(mGLFWWindow);
     }
 
     void WindowSystemGLFW3::doEvents() {
+        // FIXME: render command, place here for temporary
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glfwSwapBuffers(mGLFWWindow);
+        glfwPollEvents();
     }
 
     void WindowSystemGLFW3::close() {
+        glfwTerminate();
     }
     void* WindowSystemGLFW3::getNativeWindow() const {
         return nullptr;
+    }
+
+    void WindowSystemGLFW3::processInput() {
+        if (glfwGetKey(mGLFWWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            glfwSetWindowShouldClose(mGLFWWindow, true);
+        }
     }
 }
