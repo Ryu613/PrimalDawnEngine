@@ -42,12 +42,15 @@ void HelloTriangle::runOneFrame(float ms) {
 }
 
 void HelloTriangle::finish() {
+    mWindowSystem->close();
     Engine::destroy(mEngine.get());
 }
 
 void HelloTriangle::run() {
     // TODO 初始化imgui
-    while (!mClosed && !mWindowSystem->shouldClose()) {
+    while (!mWindowSystem->shouldClose()) {
+        mWindowSystem->processInput();
+        mWindowSystem->doEvents();
         runOneFrame(1);
     }
 }
