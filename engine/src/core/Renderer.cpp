@@ -15,7 +15,7 @@ namespace pd {
     }
 
     /**
-    * @grief whether to skip frame, or do something before rendering
+    * @brief whether to skip frame, or do something before rendering
     */
     bool Renderer::beginFrame(SwapChain* swapChain) {
         return true;
@@ -27,7 +27,8 @@ namespace pd {
         auto renderSystem = mEngine.getPlatform()->getRenderSystem();
         //uint32_t imageIndex = mSwapChain->acquire();
         //renderSystem->beginRenderPass();
-        //renderSystem->draw(imageIndex);
+        PipelineDesc desc;
+        renderSystem->draw(desc);
         //renderSystem->endRenderPass();
         
 

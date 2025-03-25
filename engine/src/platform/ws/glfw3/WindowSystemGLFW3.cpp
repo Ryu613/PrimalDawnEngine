@@ -44,9 +44,6 @@ namespace pd {
     }
 
     void WindowSystemGLFW3::doEvents() {
-        // FIXME: render command, place here for temporary
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(mGLFWWindow);
         glfwPollEvents();
     }

@@ -28,9 +28,10 @@ bool HelloTriangle::prepare(const AppConfig& options) {
     LOG_INFO("creating scene...")
     mScene = mEngine->createScene();
     LOG_INFO("creating view...")
-     mView = mEngine->createView();
+    mView = mEngine->createView();
     mView->setScene(mScene.get());
     LOG_INFO("setup scene...")
+    // TODO 初始化imgui
     return true;
 }
 
@@ -42,16 +43,17 @@ void HelloTriangle::runOneFrame(float ms) {
 }
 
 void HelloTriangle::finish() {
+    mEngine->getPlatform()->getRenderSystem()->endRenderPass();
     mWindowSystem->close();
     Engine::destroy(mEngine.get());
 }
 
 void HelloTriangle::run() {
-    // TODO 初始化imgui
+    mEngine->getPlatform()->getRenderSystem()->beginRenderPass();
     while (!mWindowSystem->shouldClose()) {
         mWindowSystem->processInput();
-        mWindowSystem->doEvents();
         runOneFrame(1);
+        mWindowSystem->doEvents();
     }
 }
 

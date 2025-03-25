@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include "core/RenderSystem.hpp"
 namespace pd {
 	class SwapChain;
@@ -19,5 +18,7 @@ namespace pd {
 		void endRenderPass() override;
 	private:
 		OpenGLConfig& mOpenGLConfig;
+		unsigned int mShaderProgram;
+		unsigned int mVAO, mVBO;
 	};
 }
