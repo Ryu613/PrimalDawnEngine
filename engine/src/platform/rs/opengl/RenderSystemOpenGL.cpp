@@ -107,8 +107,4 @@ namespace pd {
         glDeleteBuffers(1, &mVBO);
         glDeleteProgram(mShaderProgram);
     }
-
-    void RenderSystemOpenGL::prepare() {
-
-    }
 }
