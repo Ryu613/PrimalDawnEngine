@@ -20,6 +20,7 @@ set(EXTERNALS
 
 set(EXT_HEADERS_DIR
 	${spdlog_SOURCE_DIR}/include
+	${EXTERNALS_DIR}/stb/include
 )
 
 set(PLATFORM_SRCS)

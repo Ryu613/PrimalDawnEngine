@@ -1,7 +1,8 @@
 #pragma once
 
-#include <glad/glad.h>
+#include "GLCommon.hpp"
 #include "core/RenderSystem.hpp"
+#include "GLShader.hpp"
 namespace pd {
 	class SwapChain;
 
@@ -18,7 +19,9 @@ namespace pd {
 		void endRenderPass() override;
 	private:
 		OpenGLConfig& mOpenGLConfig;
-		unsigned int mShaderProgram;
-		unsigned int mVAO, mVBO;
+		GLShader mGLShader;
+		unsigned int mTexture1;
+		unsigned int mTexture2;
+		unsigned int mVAO, mVBO, mEBO;
 	};
 }
