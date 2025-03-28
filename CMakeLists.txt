@@ -20,11 +20,12 @@ set(EXTERNALS_DIR ${PRIMALDAWN_DIR}/externals)
 
 # 目前只支持Windows + Vulkan + SDL2 或 Windows + OpenGL + GLFW, 别的组合尚未完成
 # VULKAN, OPENGL
-set(BACKEND_TYPE "VULKAN" CACHE STRING "specify backend type: VULKAN/OPENGL" FORCE)
+set(BACKEND_TYPE "OPENGL" CACHE STRING "specify backend type: VULKAN/OPENGL")
 # SDL2, GLFW3
-set(WSI_TYPE "SDL2" CACHE STRING "specify WSI type: SDL2/GLFW3" FORCE)
+set(WSI_TYPE "GLFW3" CACHE STRING "specify WSI type: SDL2/GLFW3")
 
 # 添加子目录
 add_subdirectory(${PRIMALDAWN_DIR}/engine)
 add_subdirectory(${LIBRARIES_DIR}/application)
-add_subdirectory(${PRIMALDAWN_DIR}/samples)
+#add_subdirectory(${PRIMALDAWN_DIR}/samples)
+add_subdirectory(${PRIMALDAWN_DIR}/examples)
