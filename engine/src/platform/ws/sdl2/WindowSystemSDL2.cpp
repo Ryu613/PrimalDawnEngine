@@ -41,4 +41,8 @@ namespace pd {
         HWND win = (HWND)wmi.info.win.window;
         return (void*)win;
     }
+
+    void WindowSystemSDL2::processInput() {
+
+    }
 }

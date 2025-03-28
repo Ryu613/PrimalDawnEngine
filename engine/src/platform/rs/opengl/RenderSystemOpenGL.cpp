@@ -40,32 +40,60 @@ namespace pd {
         const auto vertexShaderPath = shaderPath / "triangle.vert";
         const auto fragShaderPath = shaderPath / "triangle.frag";
         mGLShader = GLShader(vertexShaderPath.string().c_str(), fragShaderPath.string().c_str());
+        // cube
         float vertices[] = {
-            // positions          // colors           // texture coords
-             0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-             0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
-        };
-        unsigned int indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
         };
         glGenBuffers(1, &mVBO);
-        glGenBuffers(1, &mEBO);
         glGenVertexArrays(1, &mVAO);
         glBindVertexArray(mVAO);
         glBindBuffer(GL_ARRAY_BUFFER, mVBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-        glEnableVertexAttribArray(2);
 
         // load texture
         glGenTextures(1, &mTexture1);
