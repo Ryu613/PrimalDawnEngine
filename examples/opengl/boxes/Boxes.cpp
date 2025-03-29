@@ -1,4 +1,4 @@
-#include #include "HelloTriangle.hpp"
+#include "Boxes.hpp"
 
 #include "platform/WindowSystemFactory.hpp"
 #include "core/Logging.hpp"
@@ -33,11 +33,7 @@ bool Boxes::prepare(const AppConfig& options) {
     mView->setScene(mScene.get());
     LOG_INFO("setup scene...")
         // TODO 初始化imgui
-        return true;
-}
-
-void Boxes::runOneFrame(float ms) {
-    BoxesRenderer::renderBoxes();
+    return true;
 }
 
 void Boxes::finish() {
@@ -47,12 +43,8 @@ void Boxes::finish() {
 }
 
 void Boxes::run() {
-    mEngine->getPlatform()->getRenderSystem()->beginRenderPass();
-    while (!mWindowSystem->shouldClose()) {
-        mWindowSystem->processInput();
-        runOneFrame(1);
-        mWindowSystem->doEvents();
-    }
+    BoxesRenderer renderer;
+    renderer.renderBoxes(mWindowSystem.get());
 }
 
 void Boxes::initWindow() {
@@ -64,7 +56,15 @@ void Boxes::initWindow() {
 
 void Boxes::initRenderSystem() {
     LOG_INFO("creating swapchain...")
-        mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
+    mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
+}
+
+int main() {
+    Boxes boxes;
+    AppConfig config;
+    boxes.prepare(config);
+    boxes.run();
+    return 0;
 }
 
 

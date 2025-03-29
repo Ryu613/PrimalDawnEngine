@@ -59,4 +59,8 @@ namespace pd {
     void GLShader::setFloat(const std::string& name, bool value) const {
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
     }
+
+    void GLShader::setMat4(const std::string& name,const glm::mat4& mat4) const {
+        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat4));
+    }
 }

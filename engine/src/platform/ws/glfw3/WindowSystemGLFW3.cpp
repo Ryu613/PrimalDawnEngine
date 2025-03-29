@@ -50,6 +50,7 @@ namespace pd {
 
     void WindowSystemGLFW3::close() {
         glfwTerminate();
+        mClosed = true;
     }
     void* WindowSystemGLFW3::getNativeWindow() const {
         return nullptr;

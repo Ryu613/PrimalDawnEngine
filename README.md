@@ -17,7 +17,8 @@ now just for personal study, not finished yet
 - `engine`: engine core
 - `libs`: local libs
 - `externals`: thrid party libs
-- `samples`: executable samples
-- `shaders`: shaders
+- `samples`: engine samples
+- `examples`: render system samples
+- `assets`: shaders, textures, meshes, etc.
 - `cmake`: cmake scripts
 - `editor`: visualizable & configurable content creation(TBD)
