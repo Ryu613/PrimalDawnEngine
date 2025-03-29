@@ -1,8 +1,8 @@
 #pragma once
 #include "platform/WindowSystem.hpp"
+#include "SDL.h"
 
 namespace pd {
-    class SDL_Window;
     /**
     * @brief SDL2窗口的封装
     */
@@ -16,6 +16,8 @@ namespace pd {
         virtual void doEvents() override;
 
         virtual void close() override;
+
+        virtual void processInput() override;
 
         void* getNativeWindow() const override;
     private:

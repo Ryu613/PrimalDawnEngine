@@ -27,4 +27,5 @@ set(WSI_TYPE "GLFW3" CACHE STRING "specify WSI type: SDL2/GLFW3")
 # 添加子目录
 add_subdirectory(${PRIMALDAWN_DIR}/engine)
 add_subdirectory(${LIBRARIES_DIR}/application)
-add_subdirectory(${PRIMALDAWN_DIR}/samples)
+#add_subdirectory(${PRIMALDAWN_DIR}/samples)
+add_subdirectory(${PRIMALDAWN_DIR}/examples)
