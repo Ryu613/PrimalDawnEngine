@@ -8,11 +8,11 @@ set(HEADER_DIR include)
 
 # 头文件
 set(HEADERS 
-	include/application/Application.hpp
+	include/app/App.hpp
 )
 # 源代码
 set(SRCS
-	src/Application.cpp
+	src/App.cpp
 )
 
 # 库依赖

@@ -3,6 +3,8 @@
 #include <string>
 #include <memory>
 
+
+
 #include "platform/PlatformEnums.hpp"
 
 namespace pd {
@@ -16,6 +18,7 @@ namespace pd {
     struct EngineConfig {
         std::string appName{ "default" };
         Backend backend = Backend::VULKAN;
+        WSI wsi = WSI::SDL2;
         bool enableDebug = false;
     };
     /**
@@ -73,8 +76,10 @@ namespace pd {
         // 不可直接实例化和销毁
         Engine() noexcept = default;
         Engine(EngineConfig& engineConfig);
-        std::unique_ptr<Platform> mPlatform{ nullptr };
+
         EngineConfig& mEngineConfig;
+        std::unique_ptr<Platform> mPlatform{ nullptr };
+        std::unique_ptr<WindowSystem> mWindowSystem{ nullptr };
     public:
         ~Engine();
         // 不可拷贝赋值
