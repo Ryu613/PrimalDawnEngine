@@ -10,6 +10,7 @@ include(${PRIMALDAWN_DIR}/cmake/externals-core.cmake)
 set(ENGINE_HEADERS
 	include/core/*.hpp
 	include/platform/*.hpp
+	include/tool/*.hpp
 )
 
 set(EXTERNALS
@@ -27,8 +28,8 @@ set(PLATFORM_SRCS)
 
 if(WIN32)
 	list(APPEND PLATFORM_SRCS
-		src/platform/os/windows/*.hpp
-		src/platform/os/windows/*.cpp
+		src/platform/os/platform_windows.hpp
+		src/platform/os/platform_windows.cpp
 	)
 endif()
 
@@ -42,8 +43,8 @@ if(${WSI_TYPE} STREQUAL "SDL2")
 		${sdl2_SOURCE_DIR}/include
 	)
 	list(APPEND PLATFORM_SRCS
-		src/platform/ws/sdl2/*.hpp
-		src/platform/ws/sdl2/*.cpp
+		src/platform/window_system/window_system_sdl2.hpp
+		src/platform/window_system/window_system_sdl2.cpp
 	)
 	add_definitions(-DPRIMALDAWN_WSI_TYPE_SDL2)
 elseif(${WSI_TYPE} STREQUAL "GLFW3")
@@ -55,8 +56,8 @@ elseif(${WSI_TYPE} STREQUAL "GLFW3")
 		${glfw3_SOURCE_DIR}/include
 	)
 	list(APPEND PLATFORM_SRCS
-		src/platform/ws/glfw3/*.hpp
-		src/platform/ws/glfw3/*.cpp
+		src/platform/window_system/window_system_glfw3.hpp
+		src/platform/window_system/window_system_glfw3.cpp
 	)
 	add_definitions(-DPRIMALDAWN_WSI_TYPE_GLFW)
 endif()
@@ -80,8 +81,8 @@ if(${BACKEND_TYPE} STREQUAL "VULKAN")
 	)
    add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
    	list(APPEND PLATFORM_SRCS
-		src/platform/rs/vulkan/*.hpp
-		src/platform/rs/vulkan/*.cpp
+		src/platform/render_system/render_system_vulkan.hpp
+		src/platform/render_system/render_system_vulkan.cpp
 	)
 elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 	find_package(OpenGL REQUIRED OpenGL)
@@ -99,8 +100,8 @@ elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 		${glad_INCLUDE_DIR}
 	)
 	list(APPEND PLATFORM_SRCS
-		src/platform/rs/opengl/*.hpp
-		src/platform/rs/opengl/*.cpp
+		src/platform/render_system/render_system_opengl.hpp
+		src/platform/render_system/render_system_opengl.cpp
 	)
 	add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
 	
@@ -109,7 +110,7 @@ endif()
 set(SRC_FILES
 	${ENGINE_HEADERS}
 	${PLATFORM_SRCS}
-	src/core/*.cpp
+	src/*.cpp
 	src/platform/*.cpp
 )
 

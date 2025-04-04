@@ -1,91 +1,65 @@
 #pragma once
 
-#include <string>
 #include <memory>
+#include <vector>
 
+#include "core/engine_config.hpp"
 
-
-#include "platform/PlatformEnums.hpp"
-
-namespace pd {
-    class SwapChain;
-    class Scene;
+namespace primaldawn {
     class View;
-    class Renderer;
     class Platform;
-    class WindowSystem;
-
-    struct EngineConfig {
-        std::string appName{ "default" };
-        Backend backend = Backend::VULKAN;
-        WSI wsi = WSI::SDL2;
-        bool enableDebug = false;
-    };
+    class RenderSystem;
+    class Renderer;
     /**
-    * @brief 引擎主类,一般由Application持有，不可直接实例化
+    * @brief 引擎主类,一般由Application持有
     */
-    class Engine {
-    public:
+	class Engine {
+	public:
+
         /**
-        * @brief 创建引擎
+        * @brief 创建Engine类
+        * 1. 强制使用智能指针，不能直接构造或析构，防止意外构造，拷贝，析构
+        * 2. 可在构造前做一些配置
         */
-        static std::unique_ptr<Engine> create(EngineConfig& config);
+        static std::unique_ptr<Engine> Create(EngineConfig config);
+
+        /**
+        * @brief 关闭引擎
+        */
+        void ShutDown();
+
+        /**
+        * @brief 开始运行
+        */
+        void Run();
+
+        /**
+        * @brief 添加视图
+        */
+        inline void AddView(std::unique_ptr<View> view);
         
         /**
-        * @brief 销毁引擎和相关资源
-        * 
-        * @param engine 引擎指针
+        * @brief 当前是否在运行
         */
-        static void destroy(Engine* engine);
+        inline bool IsRunning() const {
+            return is_running_;
+        }
 
-        /**
-        * @brief 创建交换链
-        */
-        std::unique_ptr<SwapChain> createSwapChain(WindowSystem* windowSystem) noexcept;
-
-        /**
-        * @brief 创建渲染器
-        */
-        std::unique_ptr<Renderer> createRenderer() noexcept;
-
-        /**
-        * @brief 创建场景
-        */
-        std::unique_ptr<Scene> createScene() noexcept;
-        /**
-        * @brief 创建视图
-        */
-        std::unique_ptr<View> createView() noexcept;
-
-        /**
-        * 获取所用的图形API
-        */
-        Backend getBackend() const noexcept;
-
-        /**
-        * 获取平台指针
-        */
-        Platform* getPlatform() const noexcept;
-
-    private:
-        /**
-        * @brief 初始化引擎，在engine实例化后执行
-        */
-        void init();
-
-        // 不可直接实例化和销毁
-        Engine() noexcept = default;
-        Engine(EngineConfig& engineConfig);
-
-        EngineConfig& mEngineConfig;
-        std::unique_ptr<Platform> mPlatform{ nullptr };
-        std::unique_ptr<WindowSystem> mWindowSystem{ nullptr };
-    public:
-        ~Engine();
-        // 不可拷贝赋值
-        Engine(Engine const&) = delete;
-        Engine(Engine&) = delete;
-        Engine& operator=(Engine const&) = delete;
+        // 不允许移动拷贝
+        Engine(const Engine& engine) = delete;
+        Engine& operator=(const Engine&) = delete;
+        Engine(Engine&&) = delete;
         Engine& operator=(Engine&&) = delete;
-    };
-}
+
+        ~Engine();
+    private:
+        explicit Engine(EngineConfig config);
+
+        EngineConfig& engine_config_;
+        std::unique_ptr<Platform> platform_{nullptr};
+        std::unique_ptr<RenderSystem> render_system_{ nullptr };
+        std::unique_ptr<Renderer> renderer_{ nullptr };
+        std::vector<std::unique_ptr<View>> views_;
+        bool is_running_ = false;
+	};
+} // namespace primaldawn

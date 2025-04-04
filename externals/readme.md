@@ -2,12 +2,14 @@
 
 externals are maintained by mixed style,
 
-if a library is hard to configure or compile locally, or very easy to use and no need to update,
-I prefer download compiled version,
+if a library is:
 
-otherwise, other libraries are managed by cmake
+1. hard to configure or compile locally, or cmake not supported well(or problematic)
+1. easy to download directly, and merely no update
 
-## manually maintained list
+then use compiled version
+
+## manually maintained libraries
 
 - `glad-api3_3_no_ext`
 - `stb`

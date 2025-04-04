@@ -1,7 +1,7 @@
 #pragma once
 
 namespace primaldawn {
-	class Camera {
+	struct WindowSystemConfig {
 
 	};
-} // namespace primaldawn
+}

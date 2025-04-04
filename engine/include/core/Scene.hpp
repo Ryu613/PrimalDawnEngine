@@ -1,13 +1,7 @@
 #pragma once
 
-namespace pd {
-    class Engine;
+namespace primaldawn {
+	class Scene {
 
-    class Scene {
-    public:
-        Scene(const Engine& engine);
-        ~Scene();
-    private:
-        const Engine& mEngine;
-    };
-}
+	};
+} // namespace primaldawn
