@@ -14,6 +14,10 @@ namespace primaldawn {
     * @brief 引擎主类,一般由Application持有
     */
 	class Engine {
+        // Engine不允许擅自delete
+        class EngineDeleter {
+            void operator()(Engine* p);
+        };
 	public:
 
         /**
@@ -21,7 +25,7 @@ namespace primaldawn {
         * 1. 强制使用智能指针，不能直接构造或析构，防止意外构造，拷贝，析构
         * 2. 可在构造前做一些配置
         */
-        static std::unique_ptr<Engine> Create(EngineConfig config);
+        static std::unique_ptr<Engine, EngineDeleter> Create(EngineConfig config);
 
         /**
         * @brief 关闭引擎
@@ -51,9 +55,10 @@ namespace primaldawn {
         Engine(Engine&&) = delete;
         Engine& operator=(Engine&&) = delete;
 
-        ~Engine();
     private:
         explicit Engine(EngineConfig config);
+        ~Engine();
+
 
         EngineConfig& engine_config_;
         std::unique_ptr<Platform> platform_{nullptr};
@@ -62,4 +67,5 @@ namespace primaldawn {
         std::vector<std::unique_ptr<View>> views_;
         bool is_running_ = false;
 	};
+
 } // namespace primaldawn

@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include "platform/platform_config.hpp"
+#include "platform/platform.hpp"
 
 namespace primaldawn {
-	class Platform;
 
 	class PlatformFactory {
 	public:
-		static std::unique_ptr<Platform> CreatePlatform(PlatformConfig platformConfig);
+		template <typename PlatformSub>
+		static std::unique_ptr<Platform<PlatformSub>> CreatePlatform(PlatformConfig platformConfig);
 	};
 } // namespace primaldawn

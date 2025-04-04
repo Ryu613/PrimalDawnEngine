@@ -29,9 +29,9 @@ namespace primaldawn {
         platform_.reset();
     }
 
-    std::unique_ptr<Engine> Engine::Create(EngineConfig config) {
+    std::unique_ptr<Engine, Engine::EngineDeleter> Engine::Create(EngineConfig config) {
         try {
-            return std::unique_ptr<Engine>(new Engine(std::move(config)));
+            return std::unique_ptr<Engine, Engine::EngineDeleter>(new Engine(std::move(config)));
         }
         catch (const std::exception& e) {
             LOGE("Engine creation failed: {}", e.what());
@@ -51,5 +51,11 @@ namespace primaldawn {
 
     void Engine::Run() {
         is_running_ = true;
+    }
+
+    void Engine::EngineDeleter::operator()(Engine* p) {
+        LOGI("Engine destroying...")
+        delete p;
+
     }
 } // namespace primaldawn

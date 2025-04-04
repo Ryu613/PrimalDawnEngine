@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "platform/platform_enum.hpp"
 #include "platform/platform_config.hpp"
 
 namespace primaldawn {

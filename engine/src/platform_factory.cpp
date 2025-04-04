@@ -8,7 +8,8 @@
 #include "core/logging.hpp"
 
 namespace primaldawn {
-    std::unique_ptr<Platform> PlatformFactory::CreatePlatform(PlatformConfig config) {
+    template <typename PlatformSub>
+    std::unique_ptr<Platform<PlatformSub>> PlatformFactory::CreatePlatform(PlatformConfig config) {
     #if defined(WIN32)
         LOGI("Platform is {}", "Windows")
         return std::make_unique<PlatformWindows>(std::move(config));
