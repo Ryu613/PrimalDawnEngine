@@ -1,7 +1,8 @@
 #pragma once
 
 namespace primaldawn {
-    enum class Backend {
+    enum class RenderSystemType {
+        NOOP = 0,
         OPENGL = 1,
         VULKAN = 2,
         METAL = 3,
@@ -16,7 +17,7 @@ namespace primaldawn {
         UNKNOWN = 99,
     };
 
-    enum class WSI {
+    enum class WindowSystemType {
         SDL2 = 1,
         GLFW3 = 2,
         UNKNOWN = 99,

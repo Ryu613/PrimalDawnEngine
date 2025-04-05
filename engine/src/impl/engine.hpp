@@ -1,31 +1,27 @@
 #pragma once
 
+#include "primaldawn/engine.hpp"
+
 #include <memory>
 #include <vector>
 
-#include "core/engine_config.hpp"
+#include "primaldawn/config.hpp"
+#include "downcast.hpp"
 
 namespace primaldawn {
-    class View;
     class Platform;
     class RenderSystem;
     class Renderer;
-    /**
-    * @brief 引擎主类,一般由Application持有
-    */
-	class Engine {
-        // Engine不允许擅自delete
-        class EngineDeleter {
-            void operator()(Engine* p);
-        };
-	public:
+    class View;
 
+	class PdEngine : public Engine {
+    public:
         /**
         * @brief 创建Engine类
         * 1. 强制使用智能指针，不能直接构造或析构，防止意外构造，拷贝，析构
         * 2. 可在构造前做一些配置
         */
-        static std::unique_ptr<Engine, EngineDeleter> Create(EngineConfig config);
+        static inline std::unique_ptr<Engine> Create(config::Engine config);
 
         /**
         * @brief 关闭引擎
@@ -41,31 +37,23 @@ namespace primaldawn {
         * @brief 添加视图
         */
         inline void AddView(std::unique_ptr<View> view);
-        
+
         /**
         * @brief 当前是否在运行
         */
-        inline bool IsRunning() const {
-            return is_running_;
-        }
+        inline bool IsRunning() const;
 
-        // 不允许移动拷贝
-        Engine(const Engine& engine) = delete;
-        Engine& operator=(const Engine&) = delete;
-        Engine(Engine&&) = delete;
-        Engine& operator=(Engine&&) = delete;
-
+        ~PdEngine();
     private:
-        explicit Engine(EngineConfig config);
-        ~Engine();
+        explicit PdEngine(config::Engine config);
 
-
-        EngineConfig& engine_config_;
-        std::unique_ptr<Platform> platform_{nullptr};
+        config::Engine config_;
+        std::unique_ptr<Platform> platform_{ nullptr };
         std::unique_ptr<RenderSystem> render_system_{ nullptr };
         std::unique_ptr<Renderer> renderer_{ nullptr };
         std::vector<std::unique_ptr<View>> views_;
         bool is_running_ = false;
 	};
 
-} // namespace primaldawn
+    DOWNCAST(Engine);
+}

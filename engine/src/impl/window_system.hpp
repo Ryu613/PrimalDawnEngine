@@ -6,7 +6,6 @@ namespace primaldawn {
 	/**
 	* 窗口系统（WSI）总抽象
 	*/
-	template <class WindowSystemSub>
 	class WindowSystem {
 	public:
 		inline WindowSystemConfig GetConfig() const {

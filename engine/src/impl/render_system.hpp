@@ -1,19 +1,15 @@
 #pragma once
 
-#include "core/render_system_config.hpp"
+#include "primaldawn/config.hpp"
 
 namespace primaldawn {
 	/**
 	* 渲染系统主类，对各种图形API做抽象
 	*/
-	template <class RenderSystemSub>
 	class RenderSystem {
 	public:
-		inline RenderSystemConfig GetConfig() const {
-			return render_system_config_;
-		}
 	protected:
-		explicit RenderSystem(RenderSystemConfig config);
+		explicit RenderSystem(config::RenderSystem config);
 		virtual ~RenderSystem() = default;
 		// 禁止拷贝
 		RenderSystem(const RenderSystem&) = delete;
@@ -22,7 +18,7 @@ namespace primaldawn {
 		RenderSystem(RenderSystem&&) = default;
 		RenderSystem& operator=(RenderSystem&&) = default;
 	private:
-		RenderSystemConfig render_system_config_;
+		config::RenderSystem config_;
 	};
 
 } // namespace primaldawn

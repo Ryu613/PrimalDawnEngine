@@ -1,15 +1,18 @@
-#include "tool/platform_factory.hpp"
+#include "impl/factory.hpp"
 
-#include "platform/platform_config.hpp"
+#include <memory>
+
+#include "primaldawn/platform.hpp"
+#include "primaldawn/config.hpp"
 #if defined(WIN32)
 #include "platform/os/platform_windows.hpp"
 #endif
 
-#include "core/logging.hpp"
+#include "logging.hpp"
 
-namespace primaldawn {
-    template <typename PlatformSub>
-    std::unique_ptr<Platform<PlatformSub>> PlatformFactory::CreatePlatform(PlatformConfig config) {
+namespace primaldawn::factory {
+
+    std::unique_ptr<Platform> CreatePlatform(config::Platform config) {
     #if defined(WIN32)
         LOGI("Platform is {}", "Windows")
         return std::make_unique<PlatformWindows>(std::move(config));
@@ -19,4 +22,4 @@ namespace primaldawn {
     #endif
     }
 
-} // namespace primaldawn
+} // namespace primaldawn::factory
