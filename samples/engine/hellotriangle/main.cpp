@@ -1,11 +1,9 @@
 #include "HelloTriangle.hpp"
 
-using namespace pd;
+using namespace primaldawn;
 
 int main() {
-    HelloTriangle app;
-    AppConfig config;
-    app.prepare(config);
-    app.run();
-    app.close();
+    ApplicationConfig config;
+    HelloTriangle app(config);
+    return 0;
 }

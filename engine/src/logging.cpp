@@ -1,4 +1,4 @@
-#include "core/logging.hpp"
+#include "primaldawn/logging.hpp"
 
 #include "spdlog/sinks/stdout_color_sinks.h"
 

@@ -1,72 +1,81 @@
 #include "HelloTriangle.hpp"
 
-#include "platform/WindowSystemFactory.hpp"
-#include "core/Logging.hpp"
-#include "core/Engine.hpp"
-#include "core/SwapChain.hpp"
-#include "core/Scene.hpp"
-#include "core/Renderer.hpp"
-#include "core/View.hpp"
-#include "platform/Platform.hpp"
+#include "primaldawn/logging.hpp"
 
-using namespace pd;
 
-HelloTriangle::HelloTriangle() {
-}
+namespace primaldawn {
 
-bool HelloTriangle::prepare(const AppConfig& options) {
-    if (!Application::prepare(options)) {
-        LOG_ERROR("app prepare failed!")
-        return false;
+    HelloTriangle::HelloTriangle(ApplicationConfig config)
+      : Application(std::move(config)) {
+
     }
-    LOG_INFO("initializing window system...")
-    initWindow();
-    LOG_INFO("initializing render system...")
-    initRenderSystem();
-    LOG_INFO("creating renderer...")
-    mRenderer = mEngine->createRenderer();
-    LOG_INFO("creating scene...")
-    mScene = mEngine->createScene();
-    LOG_INFO("creating view...")
-    mView = mEngine->createView();
-    mView->setScene(mScene.get());
-    LOG_INFO("setup scene...")
-    // TODO 初始化imgui
-    return true;
-}
+    HelloTriangle::~HelloTriangle() {
 
-void HelloTriangle::runOneFrame(float ms) {
-    if (mRenderer->beginFrame(mSwapChain.get())) {
-        mRenderer->render(mView.get());
-        mRenderer->endFrame();
     }
-}
-
-void HelloTriangle::finish() {
-    mEngine->getPlatform()->getRenderSystem()->endRenderPass();
-    mWindowSystem->close();
-    Engine::destroy(mEngine.get());
-}
-
-void HelloTriangle::run() {
-    mEngine->getPlatform()->getRenderSystem()->beginRenderPass();
-    while (!mWindowSystem->shouldClose()) {
-        mWindowSystem->processInput();
-        runOneFrame(1);
-        mWindowSystem->doEvents();
+    void HelloTriangle::Prepare() {
+        
     }
-}
+    void HelloTriangle::SetupScene() {}
+    void HelloTriangle::SetupWindow() {}
+    void HelloTriangle::SetupEngine() {}
+    void HelloTriangle::Run() {}
+    void HelloTriangle::Close() {}
 
-void HelloTriangle::initWindow() {
-    WindowSystem::WindowSystemOptions winOpt{
-        "Hello-Triangle"
-    };
-    mWindowSystem = WindowSystemFactory::createWindowSystem(winOpt);
-}
+    //bool HelloTriangle::prepare(const AppConfig& options) {
+    //    if (!Application::prepare(options)) {
+    //        LOG_ERROR("app prepare failed!")
+    //            return false;
+    //    }
+    //    LOGI("initializing window system...")
+    //    initWindow();
+    //    LOGI("initializing render system...")
+    //    initRenderSystem();
+    //    LOGI("creating renderer...")
+    //    mRenderer = mEngine->createRenderer();
+    //    LOGI("creating scene...")
+    //     mScene = mEngine->createScene();
+    //    LOGI("creating view...")
+    //    mView = mEngine->createView();
+    //    mView->setScene(mScene.get());
+    //    LOGI("setup scene...")
+    //    // TODO 初始化imgui
+    //    return true;
+    //}
 
-void HelloTriangle::initRenderSystem() {
-    LOG_INFO("creating swapchain...")
-    mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
-}
+    //void HelloTriangle::runOneFrame(float ms) {
+    //    if (mRenderer->beginFrame(mSwapChain.get())) {
+    //        mRenderer->render(mView.get());
+    //        mRenderer->endFrame();
+    //    }
+    //}
+
+    //void HelloTriangle::finish() {
+    //    mEngine->getPlatform()->getRenderSystem()->endRenderPass();
+    //    mWindowSystem->close();
+    //    Engine::destroy(mEngine.get());
+    //}
+
+    //void HelloTriangle::run() {
+    //    mEngine->getPlatform()->getRenderSystem()->beginRenderPass();
+    //    while (!mWindowSystem->shouldClose()) {
+    //        mWindowSystem->processInput();
+    //        runOneFrame(1);
+    //        mWindowSystem->doEvents();
+    //    }
+    //}
+
+    //void HelloTriangle::initWindow() {
+    //    WindowSystem::WindowSystemOptions winOpt{
+    //        "Hello-Triangle"
+    //    };
+    //    mWindowSystem = WindowSystemFactory::createWindowSystem(winOpt);
+    //}
+
+    //void HelloTriangle::initRenderSystem() {
+    //    LOGI("creating swapchain...")
+    //        mSwapChain = mEngine->createSwapChain(mWindowSystem.get());
+    //}
+} // namespace primaldawn
+
 
 

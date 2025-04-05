@@ -8,12 +8,13 @@
 namespace primaldawn {
 	class Engine;
 
+	struct ApplicationConfig {
+		std::string app_name{ "default" };
+		config::Engine engine_config;
+	};
+
 	class Application {
 	public:
-		struct ApplicationConfig {
-			std::string app_name{ "default" };
-			config::Engine engine_config;
-		};
 		virtual void Prepare() = 0;
 		virtual void SetupScene();
 		virtual void SetupWindow();
@@ -25,6 +26,7 @@ namespace primaldawn {
 		virtual ~Application();
 	private:
 		ApplicationConfig application_config_;
-		std::unique_ptr<Engine> engine_{ nullptr };
+		Engine* engine_{ nullptr };
+		bool close_ = true;
 	};
 } // namespace primaldawn

@@ -8,7 +8,7 @@
 #include "platform/os/platform_windows.hpp"
 #endif
 
-#include "logging.hpp"
+#include "primaldawn/logging.hpp"
 
 namespace primaldawn::factory {
 
@@ -20,6 +20,10 @@ namespace primaldawn::factory {
         LOG_INFO("Platform is {}", "Vulkan - Unknown OS")
         return nullptr;
     #endif
+    }
+
+    std::unique_ptr<RenderSystem> CreateRenderSystem(config::RenderSystem config) {
+        return nullptr;
     }
 
 } // namespace primaldawn::factory

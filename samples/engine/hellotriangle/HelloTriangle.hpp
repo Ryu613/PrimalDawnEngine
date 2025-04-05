@@ -5,27 +5,27 @@
 /**
 * @brief vulkan最简样例，旨在确认项目是否能正常运行
 */
-class HelloTriangle : public pd::Application {
-    struct AppContext {
+namespace primaldawn {
+	class HelloTriangle : public Application {
+		struct AppContext {
 
-    };
-public:
-    HelloTriangle();
+		};
+	public:
+		HelloTriangle(ApplicationConfig config);
+		~HelloTriangle();
+		void Prepare() override;
+		void SetupScene() override;
+		void SetupWindow() override;
+		void SetupEngine() override;
+		void Run() override;
+		void Close() override;
 
-    virtual ~HelloTriangle() = default;
+	private:
 
-    virtual bool prepare(const pd::AppConfig& options) override;
+		void initWindow();
+		void initRenderSystem();
 
-    virtual void runOneFrame(float ms) override;
+		AppContext context;
+	};
+} // namespace primaldawn
 
-    virtual void finish() override;
-
-    void run();
-
-private:
-
-    void initWindow();
-    void initRenderSystem();
-
-    AppContext context;
-};

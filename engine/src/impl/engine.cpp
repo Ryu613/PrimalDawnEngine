@@ -1,12 +1,12 @@
 #include "impl/engine.hpp"
 
-#include "primaldawn/view.hpp"
-#include "logging.hpp"
+#include "primaldawn/logging.hpp"
 
 #include "impl/factory.hpp"
 #include "impl/render_system.hpp"
 #include "impl/platform.hpp"
 #include "impl/view.hpp"
+#include "impl/renderer.hpp"
 
 namespace primaldawn {
     /**
@@ -31,12 +31,15 @@ namespace primaldawn {
         platform_.reset();
     }
 
-    std::unique_ptr<Engine> PdEngine::Create(config::Engine config) {
-        return std::unique_ptr<Engine>(new PdEngine(std::move(config)));
+    Engine* PdEngine::Create(config::Engine config) {
+        return new PdEngine(std::move(config));
     }
 
-    void PdEngine::ShutDown() {
-        is_running_ = false;
+    void PdEngine::ShutDown(PdEngine* engine) {
+        if (engine) {
+            engine->shutdown();
+            delete engine;
+        }
     }
 
     void PdEngine::AddView(std::unique_ptr<View> view) {
@@ -47,5 +50,9 @@ namespace primaldawn {
 
     void PdEngine::Run() {
         is_running_ = true;
+    }
+
+    void PdEngine::shutdown() {
+        LOGI("engine is shutting down")
     }
 } // namespace primaldawn

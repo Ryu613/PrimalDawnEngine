@@ -4,15 +4,15 @@
 
 namespace primaldawn {
 
-    std::unique_ptr<Engine> Engine::Create(config::Engine config) {
+    Engine* Engine::Create(config::Engine config) {
         return PdEngine::Create(config);
     }
 
     /**
     * @brief 关闭引擎
     */
-    void Engine::ShutDown() {
-        return downcast(this)->ShutDown();
+    void Engine::ShutDown(Engine* engine) {
+        return PdEngine::ShutDown(downcast(engine));
     }
 
     /**
