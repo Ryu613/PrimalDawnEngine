@@ -7,13 +7,10 @@ set(TARGET engine)
 # 第三方库依赖
 include(${PRIMALDAWN_DIR}/cmake/externals-core.cmake)
 
-set(ENGINE_PUBLIC_HEADERS
-	include/primaldawn/*.hpp
-)
-
-set(ENGINE_PRIVATE_HEADERS
-	src/*.hpp
-	src/impl/*.hpp
+set(ENGINE_HEADERS
+	include/core/*.hpp
+	include/platform/*.hpp
+	include/tool/*.hpp
 )
 
 set(EXTERNALS
@@ -111,22 +108,17 @@ elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 endif()
 
 set(SRC_FILES
-	${ENGINE_PUBLIC_HEADERS}
-	${ENGINE_PRIVATE_HEADERS}
+	${ENGINE_HEADERS}
 	${PLATFORM_SRCS}
 	src/*.cpp
-	src/impl/*.cpp
+	src/platform/*.cpp
 )
 
 # note: not GLOB_RECURSE
-file(GLOB engine_srcs CONFIGURE_DEPENDS ${SRC_FILES})
+file(GLOB engine_core_srcs CONFIGURE_DEPENDS ${SRC_FILES})
 
-add_library(${TARGET} STATIC ${engine_srcs})
-
-# here is local include
-include_directories(include src)
+add_library(${TARGET} STATIC ${engine_core_srcs})
 
 target_link_libraries(${TARGET} PUBLIC ${EXTERNALS})
 
-# here is library include
-target_include_directories(${TARGET} PUBLIC include ${EXT_HEADERS_DIR})
+target_include_directories(${TARGET} PUBLIC include src ${EXT_HEADERS_DIR})

@@ -9,10 +9,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(fmt)
 
-#set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Use external fmt library")
-add_compile_definitions(
-	SPDLOG_FMT_EXTERNAL=ON
-)
+set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Use external fmt library")
 FetchContent_Declare(
 	spdlog
 	GIT_REPOSITORY https://github.com/gabime/spdlog.git
