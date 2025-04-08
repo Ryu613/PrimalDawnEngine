@@ -13,6 +13,7 @@ namespace primaldawn {
     class Renderer;
     class Scene;
     class View;
+    class Camera;
 
 	class PdEngine : public Engine {
     public:
@@ -35,6 +36,8 @@ namespace primaldawn {
         * @brief 添加视图
         */
         Scene* CreateScene();
+
+        Camera* CreateCamera();
 
         /**
         * @brief 当前是否在运行

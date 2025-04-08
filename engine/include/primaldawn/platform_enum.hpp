@@ -29,4 +29,14 @@ namespace primaldawn {
         BORDERLESS,
         DEFAULT,
     };
+
+    enum class CameraProjectionType {
+        PERSPECTIVE,
+        ORTHO,
+    };
+
+    enum class CameraFovType {
+        VERTICAL,
+        HORIZONTAL,
+    };
 } // namespace primaldawn

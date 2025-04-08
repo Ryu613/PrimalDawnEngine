@@ -29,6 +29,10 @@ namespace primaldawn::config {
     struct Renderer {
 
     };
+    struct CameraConfig {
+        CameraProjectionType cam_proj_type = CameraProjectionType::PERSPECTIVE;
+        CameraFovType cam_fov_type = CameraFovType::HORIZONTAL;
+    };
 	struct Engine {
         std::string app_name{ "default" };
         bool enable_debug = false;

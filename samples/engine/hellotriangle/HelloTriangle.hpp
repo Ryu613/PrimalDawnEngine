@@ -15,8 +15,6 @@ namespace primaldawn {
 		~HelloTriangle();
 		void Prepare() override;
 		void SetupScene() override;
-		void SetupWindow() override;
-		void SetupEngine() override;
 		void Run() override;
 		void Close() override;
 

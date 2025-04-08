@@ -17,6 +17,8 @@ int main() {
         }
     };
     HelloTriangle app(config);
+    app.Prepare();
+    app.Run();
     app.Close();
     return 0;
 }

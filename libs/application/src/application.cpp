@@ -1,10 +1,12 @@
 #include "application/application.hpp"
 
 #include "primaldawn/engine.hpp"
+#include "primaldawn/logging.hpp"
 
 namespace primaldawn {
     Application::Application(ApplicationConfig config)
         : application_config_(std::move(config)) {
+        LOGI("init APP [{}]", application_config_.app_name)
         engine_ = Engine::Create(application_config_.engine_config);
         close_ = false;
     }
