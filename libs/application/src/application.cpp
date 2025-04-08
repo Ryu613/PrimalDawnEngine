@@ -10,7 +10,6 @@ namespace primaldawn {
     }
 
     Application::~Application() {
-        Engine::ShutDown(engine_);
     }
 
      void Application::SetupScene() {};
@@ -18,10 +17,10 @@ namespace primaldawn {
      void Application::SetupEngine() {};
      void Application::Run() {
          // 执行完要销毁
-         Engine::ShutDown(engine_);
-         engine_ = nullptr;
+         Close();
      };
      void Application::Close() {
+         Engine::Destroy(engine_);
          close_ = true;
      };
 } // namespace primaldawn

@@ -8,16 +8,16 @@
 #include "downcast.hpp"
 
 namespace primaldawn {
-	class WindowSystem;
-	class PdPlatform : public Platform {
+	class PdWindowSystem;
+
+	class PdPlatform {
 	public:
-		~PdPlatform();
-	protected:
 		explicit PdPlatform(config::Platform config);
+		virtual ~PdPlatform();
 	private:
-		config::Platform platform_config_;
-		std::unique_ptr<WindowSystem> window_system_;
+		config::Platform config_;
+		std::unique_ptr<PdWindowSystem> window_system_{nullptr};
 	};
 
-	DOWNCAST(Platform);
+	// DOWNCAST(Platform);
 } // namespace primaldawn

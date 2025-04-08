@@ -4,8 +4,23 @@
 #include "primaldawn/platform_enum.hpp"
 
 namespace primaldawn::config {
+
+    struct WindowSystemExtent {
+        unsigned int width = 1024;
+        unsigned int height = 768;
+    };
+
+    struct WindowSystem {
+        std::string title{};
+        WindowSystemMode windowSystemMode = WindowSystemMode::DEFAULT;
+        bool resizable = true;
+        WindowSystemExtent extent{ 1024, 768 };
+    };
+
     struct Platform {
-        WindowSystemType window_system = WindowSystemType::GLFW3;
+        WindowSystemType window_system_type = WindowSystemType::GLFW3;
+        WindowSystem window_system;
+
     };
     struct RenderSystem {
         std::string engine_name{ "Primal Dawn" };

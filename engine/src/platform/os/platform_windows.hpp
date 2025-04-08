@@ -7,7 +7,7 @@
 namespace primaldawn {
 	class PlatformWindows : public PdPlatform {
 	public:
-		PlatformWindows(config::Platform config);
+		explicit PlatformWindows(config::Platform config);
 		~PlatformWindows();
 	};
 } // namespace primaldawn

@@ -7,6 +7,7 @@
 #include "impl/platform.hpp"
 #include "impl/view.hpp"
 #include "impl/renderer.hpp"
+#include "impl/scene.hpp"
 
 namespace primaldawn {
     /**
@@ -25,27 +26,22 @@ namespace primaldawn {
     }
 
     PdEngine::~PdEngine() {
-        // 注意逆向于构造顺序
-        renderer_.reset();
-        render_system_.reset();
-        platform_.reset();
+        LOGI("destroying engine...")
     }
 
     Engine* PdEngine::Create(config::Engine config) {
         return new PdEngine(std::move(config));
     }
 
-    void PdEngine::ShutDown(PdEngine* engine) {
+    void PdEngine::Destroy(PdEngine* engine) {
         if (engine) {
             engine->shutdown();
             delete engine;
         }
     }
 
-    void PdEngine::AddView(std::unique_ptr<View> view) {
-        if (view) {
-            views_.push_back(std::move(view));
-        }
+    Scene* PdEngine::CreateScene() {
+        return nullptr;
     }
 
     void PdEngine::Run() {
@@ -54,5 +50,6 @@ namespace primaldawn {
 
     void PdEngine::shutdown() {
         LOGI("engine is shutting down")
+        is_running_ = false;
     }
 } // namespace primaldawn
