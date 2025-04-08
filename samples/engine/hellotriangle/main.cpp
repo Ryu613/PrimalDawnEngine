@@ -3,7 +3,20 @@
 using namespace primaldawn;
 
 int main() {
-    ApplicationConfig config;
+    ApplicationConfig config{
+        .app_name = "Hello-Triangle",
+        .engine_config {
+            .platform {
+                .window_system {
+                    .title = "Hello-Triangle"
+                }
+            },
+            .render_system {
+                .render_system_type = RenderSystemType::OPENGL
+            }
+        }
+    };
     HelloTriangle app(config);
+    app.Close();
     return 0;
 }

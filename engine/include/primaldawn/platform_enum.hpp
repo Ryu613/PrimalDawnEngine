@@ -23,4 +23,10 @@ namespace primaldawn {
         UNKNOWN = 99,
     };
 
+    enum class WindowSystemMode {
+        HEADLESS,
+        FULLSCREEN,
+        BORDERLESS,
+        DEFAULT,
+    };
 } // namespace primaldawn

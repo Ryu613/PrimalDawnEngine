@@ -5,24 +5,35 @@
 #include "primaldawn/config.hpp"
 
 namespace primaldawn {
-    class View;
+    class Scene;
     /**
-    * @brief 引擎主类,一般由Application持有
+    * @brief Engine类是整个系统的入口，负责全局管理各个子系统的功能,也负责创建和销毁各种相关资源
+    * 
+    * Engine本身通过Create,Destroy管理生命周期
+    * 
+    * 功能:
+    * 1. 资源管理
+    * 2. 全局配置
+    * 3. 常用功能
+    * 
+    * 优化点:
+    * 1. 非虚，纯接口类
+    * 2. 构造析构隐藏，访问控制
+    * 3. 公私分离，实际实现类在PdEngine
+    * 4. RAII, noexcept
     */
 	class Engine {
 	public:
 
         /**
         * @brief 创建Engine类
-        * 1. 强制使用智能指针，不能直接构造或析构，防止意外构造，拷贝，析构
-        * 2. 可在构造前做一些配置
         */
-        static Engine* Create(config::Engine config);
+        static Engine* Create(config::Engine config) noexcept;
 
         /**
-        * @brief 关闭引擎
+        * @brief 销毁引擎
         */
-        static void ShutDown(Engine* engine);
+        static void Destroy(Engine* engine);
 
         /**
         * @brief 开始运行
@@ -30,9 +41,9 @@ namespace primaldawn {
         void Run();
 
         /**
-        * @brief 添加视图
+        * @brief 创建场景
         */
-        inline void AddView(std::unique_ptr<View> view);
+        Scene* CreateScene() noexcept;
         
         /**
         * @brief 当前是否在运行

@@ -1,18 +1,18 @@
 #include "impl/engine.hpp"
 
-#include "primaldawn/view.hpp"
+#include "impl/scene.hpp"
 
 namespace primaldawn {
 
-    Engine* Engine::Create(config::Engine config) {
+    Engine* Engine::Create(config::Engine config) noexcept {
         return PdEngine::Create(config);
     }
 
     /**
     * @brief 关闭引擎
     */
-    void Engine::ShutDown(Engine* engine) {
-        return PdEngine::ShutDown(downcast(engine));
+    void Engine::Destroy(Engine* engine) {
+        return PdEngine::Destroy(downcast(engine));
     }
 
     /**
@@ -25,8 +25,8 @@ namespace primaldawn {
     /**
     * @brief 添加视图
     */
-    void Engine::AddView(std::unique_ptr<View> view) {
-        return downcast(this)->AddView(std::move(view));
+    Scene* Engine::CreateScene() noexcept {
+        return downcast(this)->CreateScene();
     }
 
     /**

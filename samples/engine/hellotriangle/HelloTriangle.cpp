@@ -19,7 +19,9 @@ namespace primaldawn {
     void HelloTriangle::SetupWindow() {}
     void HelloTriangle::SetupEngine() {}
     void HelloTriangle::Run() {}
-    void HelloTriangle::Close() {}
+    void HelloTriangle::Close() {
+        Application::Close();
+    }
 
     //bool HelloTriangle::prepare(const AppConfig& options) {
     //    if (!Application::prepare(options)) {

@@ -3,15 +3,15 @@
 #include "primaldawn/engine.hpp"
 
 #include <memory>
-#include <vector>
 
 #include "primaldawn/config.hpp"
 #include "downcast.hpp"
 
 namespace primaldawn {
-    class Platform;
-    class RenderSystem;
+    class PdPlatform;
+    class PdRenderSystem;
     class Renderer;
+    class Scene;
     class View;
 
 	class PdEngine : public Engine {
@@ -24,7 +24,7 @@ namespace primaldawn {
         /**
         * @brief 关闭引擎
         */
-        static void ShutDown(PdEngine* engine);
+        static void Destroy(PdEngine* engine);
 
         /**
         * @brief 开始运行
@@ -34,7 +34,7 @@ namespace primaldawn {
         /**
         * @brief 添加视图
         */
-        inline void AddView(std::unique_ptr<View> view);
+        Scene* CreateScene();
 
         /**
         * @brief 当前是否在运行
@@ -47,12 +47,14 @@ namespace primaldawn {
         
         void shutdown();
 
-        config::Engine config_;
-        std::unique_ptr<Platform> platform_{ nullptr };
-        std::unique_ptr<RenderSystem> render_system_{ nullptr };
-        std::unique_ptr<Renderer> renderer_{ nullptr };
-        std::vector<std::unique_ptr<View>> views_;
         bool is_running_ = false;
+        config::Engine config_;
+        // 注意声明顺序影响析构顺序！
+        std::unique_ptr<PdPlatform> platform_{ nullptr };
+        std::unique_ptr<PdRenderSystem> render_system_{ nullptr };
+        std::unique_ptr<Renderer> renderer_{ nullptr };
+        std::unique_ptr<Scene> scene_{ nullptr };
+        std::unique_ptr<View> view_{ nullptr };
 	};
 
     DOWNCAST(Engine);
