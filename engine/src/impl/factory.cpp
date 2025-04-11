@@ -32,19 +32,19 @@ namespace primaldawn::factory {
     std::unique_ptr<PdRenderSystem> CreateRenderSystem(config::RenderSystem config) {
         if (config.render_system_type == RenderSystemType::OPENGL) {
             LOGI("RenderSystem - OpenGL")
-        #if defined(PRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
+#if defined(PRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
             return std::make_unique<RenderSystemOpenGL>(config);
-        #else
-             throw std::runtime_error("init Platform failed, OpenGL not supported !");
-        #endif
+#else
+            throw std::runtime_error("init Platform failed, OpenGL not supported !");
+#endif
         }
         else if (config.render_system_type == RenderSystemType::VULKAN) {
             LOGI("Render System - Vulkan")
-        #if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
+#if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
             return std::make_unique<RenderSystemVulkan>(config);
-        #else
+#else
             throw std::runtime_error("init Platform failed, Vulkan not supported !");
-        #endif
+#endif
         }
         else {
             throw std::runtime_error("init Platform failed, render system not supported !");

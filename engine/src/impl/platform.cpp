@@ -5,7 +5,7 @@
 
 #include "primaldawn/logging.hpp"
 #if defined(PRIMALDAWN_WSI_TYPE_SDL2)
-#include "platform/window_system/WindowSystemSDL2.hpp"
+#include "platform/window_system/window_system_sdl2.hpp"
 #elif defined(PRIMALDAWN_WSI_TYPE_GLFW)
 #include "platform/window_system/window_system_glfw3.hpp"
 #else
@@ -21,7 +21,7 @@ namespace primaldawn {
     #if defined(PRIMALDAWN_WSI_TYPE_SDL2)
         LOGI("WindowSystem - SDL2")
         if (config_.window_system_type == WindowSystemType::SDL2) {
-            window_system_ = std::make_unique<WindowSystemSDL2>(config_.window_system);
+            window_system_ = std::make_unique<WindowSystemSdl2>(config_.window_system);
         }
         else {
             throw std::runtime_error("init Platform failed, Window System config error!");

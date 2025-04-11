@@ -1,24 +1,28 @@
 #include "HelloTriangle.hpp"
 
-#include "primaldawn/logging.hpp"
-
+#include "primaldawn/scene.hpp"
 
 namespace primaldawn {
 
     HelloTriangle::HelloTriangle(ApplicationConfig config)
       : Application(std::move(config)) {
-
     }
     HelloTriangle::~HelloTriangle() {
 
     }
     void HelloTriangle::Prepare() {
+        SetupScene();
+    }
+    void HelloTriangle::SetupScene() {
+        Scene* scene = engine_->CreateScene();
+        //Entity triangle = EntityManager.
+        //scene->addEntity()
+        //scene->CreateView()
+
+    }
+    void HelloTriangle::Run() {
         
     }
-    void HelloTriangle::SetupScene() {}
-    void HelloTriangle::SetupWindow() {}
-    void HelloTriangle::SetupEngine() {}
-    void HelloTriangle::Run() {}
     void HelloTriangle::Close() {
         Application::Close();
     }

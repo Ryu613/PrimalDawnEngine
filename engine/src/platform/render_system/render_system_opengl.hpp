@@ -8,8 +8,8 @@ namespace primaldawn {
 		explicit RenderSystemOpenGL(config::RenderSystem config);
 		~RenderSystemOpenGL();
 
-		void bindPipeline() override;
-		void draw() override;
+		void BindPipeline() override;
+		void Draw() override;
 	private:
 	};
-}
+} // namespace primaldawn

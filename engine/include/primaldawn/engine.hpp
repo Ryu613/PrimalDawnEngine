@@ -6,6 +6,7 @@
 
 namespace primaldawn {
     class Scene;
+    class Camera;
     /**
     * @brief Engine类是整个系统的入口，负责全局管理各个子系统的功能,也负责创建和销毁各种相关资源
     * 
@@ -21,6 +22,7 @@ namespace primaldawn {
     * 2. 构造析构隐藏，访问控制
     * 3. 公私分离，实际实现类在PdEngine
     * 4. RAII, noexcept
+    * 5. 堆分配
     */
 	class Engine {
 	public:
@@ -44,6 +46,11 @@ namespace primaldawn {
         * @brief 创建场景
         */
         Scene* CreateScene() noexcept;
+
+        /**
+        * @brief 创建相机
+        */
+        Camera* CreateCamera() noexcept;
         
         /**
         * @brief 当前是否在运行
@@ -56,7 +63,7 @@ namespace primaldawn {
 
     public:
         // 不允许移动拷贝
-        Engine(const Engine& engine) = delete;
+        Engine(const Engine&) = delete;
         Engine& operator=(const Engine&) = delete;
         Engine(Engine&&) = delete;
         Engine& operator=(Engine&&) = delete;

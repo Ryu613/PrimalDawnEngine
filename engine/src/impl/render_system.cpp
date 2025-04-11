@@ -13,11 +13,11 @@ namespace primaldawn {
         LOGI("destroying render system...")
     }
 
-    void PdRenderSystem::bindPipeline() {
+    void PdRenderSystem::BindPipeline() {
 
     }
 
-    void PdRenderSystem::draw() {
+    void PdRenderSystem::Draw() {
 
     }
 
