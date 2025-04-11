@@ -18,13 +18,17 @@ namespace primaldawn::config {
     };
 
     struct Platform {
+        OS os = OS::WINDOWS;
         WindowSystemType window_system_type = WindowSystemType::GLFW3;
         WindowSystem window_system;
 
     };
     struct RenderSystem {
+        std::string app_name{ "default"};
         std::string engine_name{ "Primal Dawn" };
+        OS os = OS::WINDOWS;
         RenderSystemType render_system_type = RenderSystemType::NOOP;
+        bool enable_debug = false;
     };
     struct Renderer {
 

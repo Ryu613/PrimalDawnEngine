@@ -27,4 +27,7 @@ namespace pd {
         vk::Queue mGraphicsQueue = VK_NULL_HANDLE;
 
     };
+
+    inline bool validateExtensions(const std::vector<const char*>& required,
+        const std::vector<vk::ExtensionProperties>& available);
 }

@@ -15,8 +15,6 @@ namespace primaldawn {
     }
 
      void Application::SetupScene() {};
-     void Application::SetupWindow() {};
-     void Application::SetupEngine() {};
      void Application::Run() {
          // 执行完要销毁
          Close();

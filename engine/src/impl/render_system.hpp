@@ -11,8 +11,8 @@ namespace primaldawn {
 		explicit PdRenderSystem(config::RenderSystem config);
 		virtual ~PdRenderSystem();
 
-		virtual void bindPipeline();
-		virtual void draw();
+		virtual void BindPipeline();
+		virtual void Draw();
 
 	protected:
 		config::RenderSystem config_;

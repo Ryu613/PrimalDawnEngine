@@ -86,6 +86,8 @@ if(${BACKEND_TYPE} STREQUAL "VULKAN")
    	list(APPEND PLATFORM_SRCS
 		src/platform/render_system/render_system_vulkan.hpp
 		src/platform/render_system/render_system_vulkan.cpp
+		src/platform/render_system/vulkan/vulkan_context.hpp
+		src/platform/render_system/vulkan/vulkan_context.cpp
 	)
 elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 	find_package(OpenGL REQUIRED OpenGL)
