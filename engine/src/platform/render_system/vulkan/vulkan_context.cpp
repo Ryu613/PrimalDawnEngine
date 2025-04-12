@@ -25,22 +25,17 @@ namespace primaldawn {
 
     VKAPI_ATTR VkBool32 VKAPI_CALL DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT /*type*/,
         uint64_t /*object*/, size_t /*location*/, int32_t /*message_code*/,
-        const char* layer_prefix, const char* message, void* /*user_data*/)
-    {
-        if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT)
-        {
+        const char* layer_prefix, const char* message, void* /*user_data*/) {
+        if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
             LOGE("{}: {}", layer_prefix, message);
         }
-        else if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
-        {
+        else if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) {
             LOGW("{}: {}", layer_prefix, message);
         }
-        else if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
-        {
+        else if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) {
             LOGW("{}: {}", layer_prefix, message);
         }
-        else
-        {
+        else {
             LOGI("{}: {}", layer_prefix, message);
         }
         return VK_FALSE;
@@ -90,7 +85,7 @@ namespace primaldawn {
                         DebugUtilsCallback);
                 instance_info.pNext = &debug_utils_create_info;
             }
-            if (vulkan_config_.use_debug_report) {
+            else if (vulkan_config_.use_debug_report) {
                 vk::DebugReportCallbackCreateInfoEXT debug_report_create_info =
                     vk::DebugReportCallbackCreateInfoEXT(
                         vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::ePerformanceWarning,
