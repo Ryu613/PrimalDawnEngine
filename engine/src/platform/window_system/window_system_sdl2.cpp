@@ -38,7 +38,7 @@ namespace primaldawn {
     void* WindowSystemSdl2::GetNativeWindow() const {
         SDL_SysWMinfo wmi;
         SDL_VERSION(&wmi.version);
-        if (!SDL_GetWindowWMInfo(mSDLWindow, &wmi)) {
+        if (!SDL_GetWindowWMInfo(sdl_window_, &wmi)) {
             LOGE("SDL2 get native window ptr fail !");
             throw std::runtime_error("SDLWindow get native Window info error!");
         }

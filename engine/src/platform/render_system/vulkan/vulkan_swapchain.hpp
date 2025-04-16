@@ -10,13 +10,13 @@ namespace primaldawn {
 	struct SwapchainProps {
 		vk::SwapchainKHR old_swapchain{ nullptr };
 		uint32_t image_count = 3U;
-		vk::Extent2D extent{ nullptr };
-		vk::SurfaceFormatKHR surface_format{ nullptr };
+		vk::Extent2D extent;
+		vk::SurfaceFormatKHR surface_format;
 		uint32_t array_layers;
-		vk::ImageUsageFlags image_usage_flags{ nullptr };
-		vk::SurfaceTransformFlagBitsKHR pre_transform{nullptr};
-		vk::CompositeAlphaFlagBitsKHR composite_alpha{ nullptr };
-		vk::PresentModeKHR present_mode{ nullptr };
+		vk::ImageUsageFlags image_usage_flags;
+		vk::SurfaceTransformFlagBitsKHR pre_transform = vk::SurfaceTransformFlagBitsKHR::eIdentity;
+		vk::CompositeAlphaFlagBitsKHR composite_alpha = vk::CompositeAlphaFlagBitsKHR::eInherit;
+		vk::PresentModeKHR present_mode;
 	};
 	class VulkanSwapchain {
 	public:

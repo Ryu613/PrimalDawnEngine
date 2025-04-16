@@ -10,7 +10,7 @@
 
 namespace primaldawn {
 namespace {
-    constexpr std::vector<vk::SurfaceFormatKHR> desired_surface_format = {
+    const std::vector<vk::SurfaceFormatKHR> desired_surface_format = {
         {vk::Format::eR8G8B8A8Srgb, vk::ColorSpaceKHR::eSrgbNonlinear},
         {vk::Format::eB8G8R8A8Srgb, vk::ColorSpaceKHR::eSrgbNonlinear}
     };
@@ -20,7 +20,7 @@ namespace {
         : render_system_vulkan_(render_system_vulkan) {
         auto& physical_device = render_system_vulkan_.GetContext()->GetPhysicalDevice();
         auto& surface = render_system_vulkan_.GetSurface();
-        auto old_swapchain = render_system_vulkan_.GetSwapchain();
+        auto old_swapchain = swapchain_;
         const vk::SurfaceCapabilitiesKHR surface_caps = physical_device.getSurfaceCapabilitiesKHR(surface);
         props_.old_swapchain = old_swapchain;
         uint32_t desired_image_count = surface_caps.minImageCount + 1;
@@ -79,7 +79,7 @@ namespace {
         // create swapchain
         const vk::SwapchainCreateInfoKHR create_info(
             {},
-            &surface,
+            surface,
             props_.image_count,
             props_.surface_format.format,
             props_.surface_format.colorSpace,

@@ -36,7 +36,6 @@ namespace primaldawn {
 		const PdPlatform* GetPlatform() const;
 		const VulkanContext* GetContext() const;
 		const vk::SurfaceKHR& GetSurface() const;
-		const VulkanSwapchain* GetSwapchain() const;
 	private:
 		const PdPlatform* platform_{ nullptr };
 		std::unique_ptr<VulkanContext> context_{nullptr};

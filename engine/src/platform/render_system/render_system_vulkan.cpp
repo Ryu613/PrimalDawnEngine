@@ -5,9 +5,11 @@
 #define VMA_DYNAMIC_VULKAN_FUNCTIONS 1
 #include "vma/vk_mem_alloc.h"
 
-#include "platform/render_system/vulkan/vulkan_context.hpp"
 #include "impl/platform.hpp"
 #include "impl/window_system.hpp"
+#include "platform/render_system/vulkan/vulkan_context.hpp"
+#include "platform/render_system/vulkan/render_context.hpp"
+#include "platform/render_system/vulkan/render_pipeline.hpp"
 
 namespace primaldawn {
     RenderSystemVulkan::RenderSystemVulkan(const PdPlatform* platform, config::RenderSystem cfg)
@@ -40,7 +42,7 @@ namespace primaldawn {
         createAllocator();
         createCommandPool();
         createSurface();
-        swapchain_ = std::make_unique<VulkanSwapchain>(*this);
+        render_context_ = std::make_unique<RenderContext>(*this);
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
@@ -96,9 +98,5 @@ namespace primaldawn {
 
     const vk::SurfaceKHR& RenderSystemVulkan::GetSurface() const {
         return surface_;
-    }
-
-    const VulkanSwapchain* RenderSystemVulkan::GetSwapchain() const {
-        return swapchain_.get();
     }
 } // namespace primaldawn

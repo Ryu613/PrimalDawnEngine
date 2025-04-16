@@ -17,7 +17,7 @@ namespace primaldawn {
 		const vk::Instance& GetInstance() const;
 		const vk::PhysicalDevice& GetPhysicalDevice() const;
 		const vk::Device& GetLogicalDevice() const;
-		uint32_t GetGraphicsQueueIndex() const;
+		const uint32_t GetGraphicsQueueIndex() const;
 		const vk::Queue& GetGraphicsQueue() const;
 
 	private:
