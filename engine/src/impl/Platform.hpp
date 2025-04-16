@@ -12,6 +12,7 @@ namespace primaldawn {
 
 	class PdPlatform {
 	public:
+		PdWindowSystem* GetWindowSystem() const;
 		explicit PdPlatform(config::Platform config);
 		virtual ~PdPlatform();
 	private:

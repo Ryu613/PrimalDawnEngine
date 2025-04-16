@@ -2,9 +2,9 @@
 
 #include "impl/window_system.hpp"
 
-#include "primaldawn/config.hpp"
-
 #include "SDL.h"
+
+#include "primaldawn/config.hpp"
 
 namespace primaldawn {
 	class WindowSystemSdl2 : public PdWindowSystem {
@@ -18,7 +18,10 @@ namespace primaldawn {
 		void DoEvents() override;
 
 		void Close() override;
+
+		void* GetNativeWindow() const override;
+
 	private:
-		SDL_Window* mSDLWindow{ nullptr };
+		SDL_Window* sdl_window_{ nullptr };
 	};
 }

@@ -16,6 +16,7 @@
 #endif
 
 #include "primaldawn/logging.hpp"
+#include "impl/engine.hpp"
 
 namespace primaldawn::factory {
 
@@ -29,7 +30,7 @@ namespace primaldawn::factory {
     #endif
     }
 
-    std::unique_ptr<PdRenderSystem> CreateRenderSystem(config::RenderSystem config) {
+    std::unique_ptr<PdRenderSystem> CreateRenderSystem(const PdPlatform* platform, config::RenderSystem config) {
         if (config.render_system_type == RenderSystemType::OPENGL) {
             LOGI("RenderSystem - OpenGL")
 #if defined(PRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
@@ -41,7 +42,7 @@ namespace primaldawn::factory {
         else if (config.render_system_type == RenderSystemType::VULKAN) {
             LOGI("Render System - Vulkan")
 #if defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
-            return std::make_unique<RenderSystemVulkan>(config);
+            return std::make_unique<RenderSystemVulkan>(platform, config);
 #else
             throw std::runtime_error("init Platform failed, Vulkan not supported !");
 #endif

@@ -25,22 +25,17 @@ namespace primaldawn {
 
     VKAPI_ATTR VkBool32 VKAPI_CALL DebugReportCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT /*type*/,
         uint64_t /*object*/, size_t /*location*/, int32_t /*message_code*/,
-        const char* layer_prefix, const char* message, void* /*user_data*/)
-    {
-        if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT)
-        {
+        const char* layer_prefix, const char* message, void* /*user_data*/) {
+        if (flags & VK_DEBUG_REPORT_ERROR_BIT_EXT) {
             LOGE("{}: {}", layer_prefix, message);
         }
-        else if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT)
-        {
+        else if (flags & VK_DEBUG_REPORT_WARNING_BIT_EXT) {
             LOGW("{}: {}", layer_prefix, message);
         }
-        else if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT)
-        {
+        else if (flags & VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT) {
             LOGW("{}: {}", layer_prefix, message);
         }
-        else
-        {
+        else {
             LOGI("{}: {}", layer_prefix, message);
         }
         return VK_FALSE;
@@ -81,17 +76,19 @@ namespace primaldawn {
         }
         vk::ApplicationInfo app_info(vulkan_config_.app_name.c_str(), {}, vulkan_config_.engine_name.c_str(), {}, VK_MAKE_VERSION(1, 0, 0));
         vk::InstanceCreateInfo instance_info({}, &app_info, active_instance_layers, active_instance_extensions);
+        vk::DebugUtilsMessengerCreateInfoEXT debug_utils_create_info;
+        vk::DebugReportCallbackCreateInfoEXT debug_report_create_info;
         if (vulkan_config_.enable_debug) {
             if (vulkan_config_.use_debug_utils) {
-                vk::DebugUtilsMessengerCreateInfoEXT debug_utils_create_info =
+                debug_utils_create_info =
                     vk::DebugUtilsMessengerCreateInfoEXT({},
                         vk::DebugUtilsMessageSeverityFlagBitsEXT::eError | vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning,
                         vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation | vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
                         DebugUtilsCallback);
                 instance_info.pNext = &debug_utils_create_info;
             }
-            if (vulkan_config_.use_debug_report) {
-                vk::DebugReportCallbackCreateInfoEXT debug_report_create_info =
+            else if (vulkan_config_.use_debug_report) {
+                debug_report_create_info =
                     vk::DebugReportCallbackCreateInfoEXT(
                         vk::DebugReportFlagBitsEXT::eError | vk::DebugReportFlagBitsEXT::eWarning | vk::DebugReportFlagBitsEXT::ePerformanceWarning,
                         DebugReportCallback);
@@ -103,17 +100,28 @@ namespace primaldawn {
         VULKAN_HPP_DEFAULT_DISPATCHER.init(instance_);
         // debug messenger
         if (vulkan_config_.enable_debug) {
-           // mVulkanContext->mDebugUtilsMsgr = mVulkanContext->mInstance.createDebugUtilsMessengerEXT(debugUtilCreateInfo);
+            if (vulkan_config_.use_debug_utils) {
+                debug_utils_messenger_ = instance_.createDebugUtilsMessengerEXT(debug_utils_create_info);
+            }
+            else if (vulkan_config_.use_debug_report) {
+                debug_report_callback_ = instance_.createDebugReportCallbackEXT(debug_report_create_info);
+            }
+            else {
+                throw std::runtime_error("debug function create failed !");
+            }
         }
         // select physical device
         std::vector<vk::PhysicalDevice> gpus = instance_.enumeratePhysicalDevices();
-        std::vector<const char*> required_device_extensions({ VK_KHR_SWAPCHAIN_EXTENSION_NAME });
-        if (vulkan_config_.enable_debug) {
-            // TODO : add validation Layers
-            // requiredDeviceExtensions.push_back(VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
+        if (gpus.empty()) {
+            throw std::runtime_error("no physical device support vulkan !");
         }
+        std::vector<const char*> required_device_extensions({ VK_KHR_SWAPCHAIN_EXTENSION_NAME });
         for (auto i = 0; i < gpus.size(); ++i) {
             physical_device_ = gpus[i];
+            if (vulkan_config_.enable_debug) {
+                // debug marker
+                // requiredDeviceExtensions.push_back(VK_EXT_DEBUG_MARKER_EXTENSION_NAME);
+            }
             // check device extensions support
             std::vector<vk::ExtensionProperties> device_extensions = physical_device_.enumerateDeviceExtensionProperties();
             if (!ValidateExtensions(required_device_extensions, device_extensions)) {
@@ -123,7 +131,7 @@ namespace primaldawn {
             if (queue_family_properties.empty()) {
                 throw std::runtime_error("no queue family found");
             }
-            for (uint32_t j = 0; j < queue_family_properties.size(); ++j) {
+            for (uint32_t j = 0U; j < queue_family_properties.size(); ++j) {
                 vk::QueueFamilyProperties props = queue_family_properties[j];
                 if (props.queueCount != 0 && (props.queueFlags & vk::QueueFlagBits::eGraphics)) {
                     graphics_queue_index_ = j;
@@ -135,10 +143,13 @@ namespace primaldawn {
             LOGE("GPU not support necessary queue family props! Vulkan initial failed")
             throw std::runtime_error("failed to select available physical device");
         }
+        LOGI("GPU: {}", physical_device_.getProperties().deviceName.data());
         // create logical device
         float queue_priority = 1.f;
         vk::DeviceQueueCreateInfo queue_info({}, graphics_queue_index_, 1, &queue_priority);
         vk::DeviceCreateInfo device_info({}, queue_info, {}, required_device_extensions);
+        // optional: enable Vma Dedicated Allocation extensions?(from vulkan-samples)
+        // optional: performance queries?(from vulkan-samples)
         // device create
         LOGI("creating Vulkan logical device...")
         logic_device_ = physical_device_.createDevice(device_info);
@@ -146,7 +157,35 @@ namespace primaldawn {
         graphics_queue_ = logic_device_.getQueue(graphics_queue_index_, 0);
     }
     VulkanContext::~VulkanContext() {
+        if (debug_utils_messenger_) {
+            instance_.destroyDebugUtilsMessengerEXT(debug_utils_messenger_);
+        }
+        if (debug_report_callback_) {
+            instance_.destroyDebugReportCallbackEXT(debug_report_callback_);
+        }
+    }
 
+    const VulkanContext::VulkanConfig& VulkanContext::GetVulkanConfig() const {
+        return vulkan_config_;
+    }
+
+    const vk::Instance& VulkanContext::GetInstance() const {
+        return instance_;
+    }
+
+    const vk::PhysicalDevice& VulkanContext::GetPhysicalDevice() const {
+        return physical_device_;
+    }
+
+    const vk::Device& VulkanContext::GetLogicalDevice() const {
+        return logic_device_;
+    }
+
+    const uint32_t VulkanContext::GetGraphicsQueueIndex() const {
+        return graphics_queue_index_;
+    }
+    const vk::Queue& VulkanContext::GetGraphicsQueue() const {
+        return graphics_queue_;
     }
 
     bool ValidateExtensions(

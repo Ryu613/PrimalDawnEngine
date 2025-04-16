@@ -5,6 +5,7 @@
 #include "impl/factory.hpp"
 #include "impl/render_system.hpp"
 #include "impl/platform.hpp"
+#include "impl/window_system.hpp"
 #include "impl/view.hpp"
 #include "impl/renderer.hpp"
 #include "impl/scene.hpp"
@@ -20,7 +21,7 @@ namespace primaldawn {
         logging::Init();
         LOGI("Engine initializing...")
         platform_ = factory::CreatePlatform(config_.platform);
-        render_system_ = factory::CreateRenderSystem(config_.render_system);
+        render_system_ = factory::CreateRenderSystem(platform_.get(), config_.render_system);
         //renderer_ = factory::CreateRenderer(engine_config_.renderer_config);
         LOGI("Engine initialized")
     }

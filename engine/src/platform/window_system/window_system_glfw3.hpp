@@ -19,6 +19,9 @@ namespace primaldawn {
 		void DoEvents() override;
 
 		void Close() override;
+
+		void* GetNativeWindow() const override;
+
 	private:
 		GLFWwindow* glfw_window_{ nullptr };
 	};

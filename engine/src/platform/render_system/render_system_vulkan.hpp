@@ -8,20 +8,49 @@
 
 namespace primaldawn {
 	class VulkanContext;
-
+	class PdPlatform;
+	class RenderContext;
+	class RenderPipeline;
+	/**
+	* @brief vulkan render system
+	* 
+	* init order:
+	* 1. vulkan context
+	* 2. vma allocator
+	* 3. command pool(command buffers)
+	* 4. surface
+	* 5. swapchain
+	* 6. image view
+	* 7. render pass
+	* 8. frame buffer
+	* 9. command buffer
+	*/
 	class RenderSystemVulkan : public PdRenderSystem {
 	public:
-		explicit RenderSystemVulkan(config::RenderSystem cfg);
+		explicit RenderSystemVulkan(const PdPlatform* platform, config::RenderSystem cfg);
 		~RenderSystemVulkan();
 
 		void BindPipeline() override;
 		void Draw() override;
+
+		const PdPlatform* GetPlatform() const;
+		const VulkanContext* GetContext() const;
+		const vk::SurfaceKHR& GetSurface() const;
 	private:
-		std::unique_ptr<VulkanContext> vulkan_context_{nullptr};
+		const PdPlatform* platform_{ nullptr };
+		std::unique_ptr<VulkanContext> context_{nullptr};
+		vk::CommandPool command_pool_ = VK_NULL_HANDLE;
+		vk::SurfaceKHR surface_ = VK_NULL_HANDLE;
 
 		VmaAllocator vma_allocator_ = VK_NULL_HANDLE;
+		// manage rendering & frame related data
+		std::unique_ptr<RenderContext> render_context_;
+		// encapsulate render pipeline
+		std::unique_ptr<RenderPipeline> render_pipeline_;
 
 		void createAllocator();
+		void createCommandPool();
+		void createSurface();
 	public:
 		// movable only
 		RenderSystemVulkan(const RenderSystemVulkan&) = delete;

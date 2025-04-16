@@ -26,6 +26,10 @@ namespace primaldawn {
 		*/
 		virtual void Close() = 0;
 
+		virtual void* GetNativeWindow() const = 0;
+
+		const config::WindowSystem& GetConfig() const;
+
 	protected:
 		config::WindowSystem config_;
 		bool closed_ = true;
