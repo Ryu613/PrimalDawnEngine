@@ -46,13 +46,12 @@ namespace primaldawn {
 		VmaAllocator vma_allocator_ = VK_NULL_HANDLE;
 		// manage rendering & frame related data
 		std::unique_ptr<RenderContext> render_context_;
-		// encapsures render pipeline
+		// encapsulate render pipeline
 		std::unique_ptr<RenderPipeline> render_pipeline_;
 
 		void createAllocator();
 		void createCommandPool();
 		void createSurface();
-		void createImageViews();
 	public:
 		// movable only
 		RenderSystemVulkan(const RenderSystemVulkan&) = delete;

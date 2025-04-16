@@ -22,6 +22,9 @@ namespace primaldawn {
 	public:
 		explicit VulkanSwapchain(const RenderSystemVulkan& render_system_vulkan);
 		~VulkanSwapchain();
+
+		const vk::Extent2D& GetExtent() const;
+		const std::vector<vk::Image>& GetImages() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		SwapchainProps props_;
@@ -30,7 +33,7 @@ namespace primaldawn {
 	public:
 		VulkanSwapchain(const VulkanSwapchain&) = delete;
 		VulkanSwapchain& operator=(const VulkanSwapchain&) = delete;
-		VulkanSwapchain(VulkanSwapchain&&) noexcept = default;
-		VulkanSwapchain& operator=(VulkanSwapchain&&) noexcept = default;
+		VulkanSwapchain(VulkanSwapchain&&) = delete;
+		VulkanSwapchain& operator=(VulkanSwapchain&&) = delete;
 	};
 } // namespace primaldawn

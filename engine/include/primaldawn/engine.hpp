@@ -22,7 +22,7 @@ namespace primaldawn {
     * 2. 构造析构隐藏，访问控制
     * 3. 公私分离，实际实现类在PdEngine
     * 4. RAII, noexcept
-    * 5. 堆分配
+    * 5. 内存分配控制
     */
 	class Engine {
 	public:

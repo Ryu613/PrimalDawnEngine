@@ -100,6 +100,16 @@ namespace {
     }
 
     VulkanSwapchain::~VulkanSwapchain() {
+        if (swapchain_) {
+            render_system_vulkan_.GetContext()->GetLogicalDevice().destroySwapchainKHR(swapchain_);
+        }
+    }
 
+    const vk::Extent2D& VulkanSwapchain::GetExtent() const {
+        return props_.extent;
+    }
+
+    const std::vector<vk::Image>& VulkanSwapchain::GetImages() const {
+        return images_;
     }
 } // namespace primaldawn
