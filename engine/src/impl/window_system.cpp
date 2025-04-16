@@ -15,4 +15,8 @@ namespace primaldawn {
     void PdWindowSystem::DoEvents() {
 
     }
+
+    const config::WindowSystem& PdWindowSystem::GetConfig() const {
+        return config_;
+    }
 }

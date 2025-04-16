@@ -12,6 +12,14 @@ namespace primaldawn {
 		};
 		explicit VulkanContext(VulkanConfig cfg);
 		~VulkanContext();
+
+		const VulkanConfig& GetVulkanConfig() const;
+		const vk::Instance& GetInstance() const;
+		const vk::PhysicalDevice& GetPhysicalDevice() const;
+		const vk::Device& GetLogicalDevice() const;
+		uint32_t GetGraphicsQueueIndex() const;
+		const vk::Queue& GetGraphicsQueue() const;
+
 	private:
 		VulkanConfig vulkan_config_;
 		vk::Instance instance_ = VK_NULL_HANDLE;
@@ -20,7 +28,15 @@ namespace primaldawn {
 		uint32_t graphics_queue_index_ = INVALID_VK_INDEX;
 		vk::Queue graphics_queue_ = VK_NULL_HANDLE;
 
-		friend class RenderSystemVulkan;
+		// debug
+		vk::DebugUtilsMessengerEXT debug_utils_messenger_ = VK_NULL_HANDLE;
+		vk::DebugReportCallbackEXT debug_report_callback_ = VK_NULL_HANDLE;
+
+	public:
+		VulkanContext(const VulkanContext&) = delete;
+		VulkanContext& operator=(const VulkanContext&) = delete;
+		VulkanContext(VulkanContext&&) noexcept = default;
+		VulkanContext& operator=(VulkanContext&&) noexcept = default;
 	};
 
 	/**

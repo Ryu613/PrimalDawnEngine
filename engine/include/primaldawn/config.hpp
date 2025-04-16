@@ -12,7 +12,8 @@ namespace primaldawn::config {
 
     struct WindowSystem {
         std::string title{};
-        WindowSystemMode windowSystemMode = WindowSystemMode::DEFAULT;
+        WindowSystemMode window_system_mode = WindowSystemMode::DEFAULT;
+        bool is_headless = false;
         bool resizable = true;
         WindowSystemExtent extent{ 1024, 768 };
     };

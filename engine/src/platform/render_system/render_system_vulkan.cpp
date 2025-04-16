@@ -6,11 +6,14 @@
 #include "vma/vk_mem_alloc.h"
 
 #include "platform/render_system/vulkan/vulkan_context.hpp"
+#include "impl/platform.hpp"
+#include "impl/window_system.hpp"
 
 namespace primaldawn {
-    RenderSystemVulkan::RenderSystemVulkan(config::RenderSystem cfg)
-        :PdRenderSystem(std::move(cfg)) {
-        // google-filament vulkan init ref:
+    RenderSystemVulkan::RenderSystemVulkan(const PdPlatform* platform, config::RenderSystem cfg)
+        :PdRenderSystem(std::move(cfg)),
+         platform_(platform) {
+        // ref:
         // x vulkanPlatform
         // x resourceManager
         // (delay) vulkanSwapchain
@@ -19,7 +22,7 @@ namespace primaldawn {
         // √ VmaAllocator
         // (optional) VkDebugReportCallbackExt
         // √ VulkanContext
-        // √ VulkanCommands
+        // √ VulkanCommands(command buffer pool)
         // √ VulkanPipelineLayoutCache
         // √ VulkanPipelineCache
         // √ VulkanStagePool
@@ -33,14 +36,11 @@ namespace primaldawn {
         // (delay) struct RenderPassFboInfo
         // √ other params
 
-        /**
-        * vulkan init order:
-        * 
-        * 1. vulkan context
-        * 2. vma allocator
-        */
-        vulkan_context_ = std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(cfg));
+        context_ = std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(cfg));
         createAllocator();
+        createCommandPool();
+        createSurface();
+        swapchain_ = std::make_unique<VulkanSwapchain>(*this);
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
@@ -61,11 +61,44 @@ namespace primaldawn {
             .vkGetDeviceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetDeviceProcAddr,
         };
         VmaAllocatorCreateInfo const allocatorInfo{
-            .physicalDevice = vulkan_context_->physical_device_,
-            .device = vulkan_context_->logic_device_,
+            .physicalDevice = context_->GetPhysicalDevice(),
+            .device = context_->GetLogicalDevice(),
             .pVulkanFunctions = &funcs,
-            .instance = vulkan_context_->instance_,
+            .instance = context_->GetInstance(),
         };
         vmaCreateAllocator(&allocatorInfo, &vma_allocator_);
+    }
+
+    void RenderSystemVulkan::createCommandPool() {
+        vk::CommandPoolCreateFlags flags = vk::CommandPoolCreateFlagBits::eTransient | vk::CommandPoolCreateFlagBits::eResetCommandBuffer;
+        vk::CommandPoolCreateInfo command_pool_create_info(flags, context_->GetGraphicsQueueIndex());
+        command_pool_ = context_->GetLogicalDevice().createCommandPool(command_pool_create_info);
+    }
+
+    void RenderSystemVulkan::createSurface() {
+        void* nativeWindow = platform_->GetWindowSystem()->GetNativeWindow();
+        vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo;
+        surfaceCreateInfo.hinstance = GetModuleHandle(nullptr);
+        surfaceCreateInfo.hwnd = (HWND)nativeWindow;
+        // windows
+        surface_ = context_->GetInstance().createWin32SurfaceKHR(surfaceCreateInfo);
+        if (!surface_) {
+            throw std::runtime_error("failed to create window surface");
+        }
+    }
+
+    const PdPlatform* RenderSystemVulkan::GetPlatform() const {
+        return platform_;
+    }
+    const VulkanContext* RenderSystemVulkan::GetContext() const {
+        return context_.get();
+    }
+
+    const vk::SurfaceKHR& RenderSystemVulkan::GetSurface() const {
+        return surface_;
+    }
+
+    const VulkanSwapchain* RenderSystemVulkan::GetSwapchain() const {
+        return swapchain_.get();
     }
 } // namespace primaldawn

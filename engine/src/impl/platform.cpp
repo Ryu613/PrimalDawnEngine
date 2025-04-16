@@ -38,4 +38,8 @@ namespace primaldawn {
         throw std::runtime_error("init Platform failed, Unknown Platform!");
     #endif
     }
+
+    PdWindowSystem* PdPlatform::GetWindowSystem() const {
+        return window_system_.get();
+    }
 } // namespace primaldawn
