@@ -19,10 +19,20 @@ namespace {
     VulkanSwapchain::VulkanSwapchain(const RenderSystemVulkan& render_system_vulkan)
         : render_system_vulkan_(render_system_vulkan) {
         auto& physical_device = render_system_vulkan_.GetContext()->GetPhysicalDevice();
+        auto& device = render_system_vulkan_.GetContext()->GetLogicalDevice();
         auto& surface = render_system_vulkan_.GetSurface();
         auto old_swapchain = swapchain_;
         const vk::SurfaceCapabilitiesKHR surface_caps = physical_device.getSurfaceCapabilitiesKHR(surface);
-        props_.old_swapchain = old_swapchain;
+        if (old_swapchain) {
+            props_.old_swapchain = swapchain_;
+            for (auto& each_image : image_bundle_) {
+                device.destroyImage(each_image.image);
+                for (auto& each_image_view : each_image.image_views) {
+                    device.destroyImageView(each_image_view);
+                }
+                each_image.image_views.clear();
+            }
+        }
         uint32_t desired_image_count = surface_caps.minImageCount + 1;
         if (surface_caps.maxImageCount > 0 && desired_image_count > surface_caps.maxImageCount) {
             desired_image_count = surface_caps.maxImageCount;
@@ -94,9 +104,13 @@ namespace {
             {},
             props_.old_swapchain
         );
-        auto& device = render_system_vulkan_.GetContext()->GetLogicalDevice();
         swapchain_ = device.createSwapchainKHR(create_info);
-        images_ = device.getSwapchainImagesKHR(swapchain_);
+        auto images = device.getSwapchainImagesKHR(swapchain_);
+        image_bundle_.clear();
+        image_bundle_.resize(images.size());
+        for (int i = 0; i < images.size(); ++i) {
+            image_bundle_[i].image = images[i];
+        }
     }
 
     VulkanSwapchain::~VulkanSwapchain() {
@@ -109,7 +123,15 @@ namespace {
         return props_.extent;
     }
 
-    const std::vector<vk::Image>& VulkanSwapchain::GetImages() const {
-        return images_;
+    const SwapchainProps& VulkanSwapchain::GetProps() const {
+        return props_;
+    }
+
+    const std::vector<ImageBundle>& VulkanSwapchain::GetImageBundle() const {
+        return image_bundle_;
+    }
+
+    const RenderSystemVulkan& VulkanSwapchain::getRenderSystemVulkan() const {
+        return render_system_vulkan_;
     }
 } // namespace primaldawn
