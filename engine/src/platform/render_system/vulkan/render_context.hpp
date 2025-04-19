@@ -1,11 +1,11 @@
 #pragma once
 
-#include <memory>
-
-#include "platform/render_system/vulkan/vulkan_swapchain.hpp"
-#include "platform/render_system/vulkan/render_frame.hpp"
+#include "platform/render_system/vulkan/vulkan_common.hpp"
 
 namespace primaldawn {
+	class RenderSystemVulkan;
+	class VulkanSwapchain;
+	class RenderFrame;
 	/**
 	* @brief 负责管理渲染相关的上下文数据
 	*/
