@@ -19,10 +19,6 @@ namespace primaldawn {
 		vk::CompositeAlphaFlagBitsKHR composite_alpha = vk::CompositeAlphaFlagBitsKHR::eInherit;
 		vk::PresentModeKHR present_mode;
 	};
-	struct ImageBundle {
-		vk::Image image;
-		std::vector<vk::ImageView> image_views;
-	};
 	class VulkanSwapchain {
 	public:
 		explicit VulkanSwapchain(const RenderSystemVulkan& render_system_vulkan);
@@ -30,13 +26,13 @@ namespace primaldawn {
 
 		const vk::Extent2D& GetExtent() const;
 		const SwapchainProps& GetProps() const;
-		const std::vector<ImageBundle>& GetImageBundle() const;
+		const std::vector<vk::Image>& GetImages() const;
 		const RenderSystemVulkan& getRenderSystemVulkan() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		SwapchainProps props_;
 		vk::SwapchainKHR swapchain_;
-		std::vector<ImageBundle> image_bundle_;
+		std::vector<vk::Image> images_;
 	public:
 		VulkanSwapchain(const VulkanSwapchain&) = delete;
 		VulkanSwapchain& operator=(const VulkanSwapchain&) = delete;

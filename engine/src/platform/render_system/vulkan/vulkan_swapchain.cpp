@@ -25,12 +25,8 @@ namespace {
         const vk::SurfaceCapabilitiesKHR surface_caps = physical_device.getSurfaceCapabilitiesKHR(surface);
         if (old_swapchain) {
             props_.old_swapchain = swapchain_;
-            for (auto& each_image : image_bundle_) {
-                device.destroyImage(each_image.image);
-                for (auto& each_image_view : each_image.image_views) {
-                    device.destroyImageView(each_image_view);
-                }
-                each_image.image_views.clear();
+            for (auto& each_image : images_) {
+                device.destroyImage(each_image);
             }
         }
         uint32_t desired_image_count = surface_caps.minImageCount + 1;
@@ -105,12 +101,7 @@ namespace {
             props_.old_swapchain
         );
         swapchain_ = device.createSwapchainKHR(create_info);
-        auto images = device.getSwapchainImagesKHR(swapchain_);
-        image_bundle_.clear();
-        image_bundle_.resize(images.size());
-        for (int i = 0; i < images.size(); ++i) {
-            image_bundle_[i].image = images[i];
-        }
+        images_ = device.getSwapchainImagesKHR(swapchain_);
     }
 
     VulkanSwapchain::~VulkanSwapchain() {
@@ -127,8 +118,8 @@ namespace {
         return props_;
     }
 
-    const std::vector<ImageBundle>& VulkanSwapchain::GetImageBundle() const {
-        return image_bundle_;
+    const std::vector<vk::Image>& VulkanSwapchain::GetImages() const {
+        return images_;
     }
 
     const RenderSystemVulkan& VulkanSwapchain::getRenderSystemVulkan() const {

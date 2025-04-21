@@ -43,6 +43,8 @@ namespace primaldawn {
         createCommandPool();
         createSurface();
         render_context_ = std::make_unique<RenderContext>(*this);
+        createSyncObject();
+        createCommandBuffers();
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
@@ -87,6 +89,19 @@ namespace primaldawn {
         if (!surface_) {
             throw std::runtime_error("failed to create window surface");
         }
+    }
+
+    void RenderSystemVulkan::createSyncObject() {
+        semaphores_.acquired_image_ready = context_->GetLogicalDevice().createSemaphore({});
+        semaphores_.render_complete = context_->GetLogicalDevice().createSemaphore({});
+        vk::PipelineStageFlags submit_pipeline_stages = vk::PipelineStageFlagBits::eColorAttachmentOutput;
+        submit_info_.pWaitDstStageMask = &submit_pipeline_stages;
+        submit_info_.setWaitSemaphores(semaphores_.acquired_image_ready);
+        submit_info_.setSignalSemaphores(semaphores_.render_complete);
+    }
+
+    void RenderSystemVulkan::createCommandBuffers() {
+
     }
 
     const PdPlatform* RenderSystemVulkan::GetPlatform() const {

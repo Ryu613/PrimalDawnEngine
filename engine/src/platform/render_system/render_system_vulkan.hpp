@@ -37,6 +37,10 @@ namespace primaldawn {
 		const VulkanContext* GetContext() const;
 		const vk::SurfaceKHR& GetSurface() const;
 	private:
+		struct Semaphores {
+			vk::Semaphore acquired_image_ready;
+			vk::Semaphore render_complete;
+		};
 		const PdPlatform* platform_{ nullptr };
 		std::unique_ptr<VulkanContext> context_{nullptr};
 		vk::CommandPool command_pool_ = VK_NULL_HANDLE;
@@ -47,10 +51,14 @@ namespace primaldawn {
 		std::unique_ptr<RenderContext> render_context_;
 		// encapsulate render pipeline
 		std::unique_ptr<RenderPipeline> render_pipeline_;
+		Semaphores semaphores_;
+		vk::SubmitInfo submit_info_;
 
 		void createAllocator();
 		void createCommandPool();
 		void createSurface();
+		void createSyncObject();
+		void createCommandBuffers();
 	public:
 		// movable only
 		RenderSystemVulkan(const RenderSystemVulkan&) = delete;
