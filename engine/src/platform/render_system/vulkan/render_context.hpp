@@ -5,6 +5,7 @@
 namespace primaldawn {
 	class RenderSystemVulkan;
 	class VulkanSwapchain;
+	class VulkanContext;
 	class RenderFrame;
 	/**
 	* @brief 负责管理渲染相关的上下文数据
@@ -13,6 +14,9 @@ namespace primaldawn {
 	public:
 		explicit RenderContext(const RenderSystemVulkan& render_system_vulkan);
 		virtual ~RenderContext() = default;
+
+		const VulkanContext* GetVulkanContext() const;
+		const VulkanSwapchain* GetVulkanSwapchain() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		std::unique_ptr<VulkanSwapchain> swapchain_;

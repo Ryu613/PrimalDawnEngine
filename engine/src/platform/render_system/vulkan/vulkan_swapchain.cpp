@@ -25,12 +25,8 @@ namespace {
         const vk::SurfaceCapabilitiesKHR surface_caps = physical_device.getSurfaceCapabilitiesKHR(surface);
         if (old_swapchain) {
             props_.old_swapchain = swapchain_;
-            for (auto& each_image : image_bundle_) {
-                device.destroyImage(each_image.image);
-                for (auto& each_image_view : each_image.image_views) {
-                    device.destroyImageView(each_image_view);
-                }
-                each_image.image_views.clear();
+            for (auto& each_image : images_) {
+                device.destroyImage(each_image);
             }
         }
         uint32_t desired_image_count = surface_caps.minImageCount + 1;
