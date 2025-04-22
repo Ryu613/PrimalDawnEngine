@@ -125,4 +125,8 @@ namespace {
     const RenderSystemVulkan& VulkanSwapchain::getRenderSystemVulkan() const {
         return render_system_vulkan_;
     }
+
+    vk::Format VulkanSwapchain::GetFormat() const {
+        return props_.surface_format.format;
+    }
 } // namespace primaldawn

@@ -16,7 +16,12 @@ namespace primaldawn {
 		virtual ~RenderContext() = default;
 
 		const VulkanContext* GetVulkanContext() const;
+		vk::Format GetDepthFormat() const;
 		const VulkanSwapchain* GetVulkanSwapchain() const;
+		const std::vector<std::unique_ptr<RenderFrame>>& GetRenderFrames() const;
+		vk::Format GetFormat() const;
+		const vk::Extent2D& GetSurfaceExtent() const;
+		VmaAllocator GetMemoryAllocator() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		std::unique_ptr<VulkanSwapchain> swapchain_;

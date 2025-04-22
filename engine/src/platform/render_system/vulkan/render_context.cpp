@@ -22,7 +22,27 @@ namespace primaldawn {
         return render_system_vulkan_.GetContext();
     }
 
+    vk::Format RenderContext::GetDepthFormat() const {
+        return render_system_vulkan_.GetDepthFormat();
+    }
+
     const VulkanSwapchain* RenderContext::GetVulkanSwapchain() const {
         return swapchain_.get();
+    }
+
+    const std::vector<std::unique_ptr<RenderFrame>>& RenderContext::GetRenderFrames() const {
+        return frames_;
+    }
+
+    vk::Format RenderContext::GetFormat() const {
+        return swapchain_->GetFormat();
+    }
+
+    const vk::Extent2D& RenderContext::GetSurfaceExtent() const {
+        return swapchain_->GetExtent();
+    }
+
+    VmaAllocator RenderContext::GetMemoryAllocator() const {
+        return render_system_vulkan_.GetMemoryAllocator();
     }
 } // namespace primaldawn

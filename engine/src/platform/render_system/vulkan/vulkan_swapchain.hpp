@@ -28,6 +28,7 @@ namespace primaldawn {
 		const SwapchainProps& GetProps() const;
 		const std::vector<vk::Image>& GetImages() const;
 		const RenderSystemVulkan& getRenderSystemVulkan() const;
+		vk::Format GetFormat() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		SwapchainProps props_;

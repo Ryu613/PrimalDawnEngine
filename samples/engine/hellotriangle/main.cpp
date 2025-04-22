@@ -17,7 +17,8 @@ int main() {
                 }
             },
             .render_system {
-                .render_system_type = RenderSystemType::VULKAN
+                .render_system_type = RenderSystemType::VULKAN,
+                .enable_debug = true,
             }
         }
     };

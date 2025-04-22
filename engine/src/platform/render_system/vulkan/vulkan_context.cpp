@@ -96,7 +96,7 @@ namespace primaldawn {
             }
         }
         LOGI("creating Vulkan instance...")
-        instance_ = vk::createInstance(instance_info);
+            instance_ = vk::createInstance(instance_info);
         VULKAN_HPP_DEFAULT_DISPATCHER.init(instance_);
         // debug messenger
         if (vulkan_config_.enable_debug) {
@@ -141,7 +141,7 @@ namespace primaldawn {
         }
         if (graphics_queue_index_ == INVALID_VK_INDEX) {
             LOGE("GPU not support necessary queue family props! Vulkan initial failed")
-            throw std::runtime_error("failed to select available physical device");
+                throw std::runtime_error("failed to select available physical device");
         }
         LOGI("GPU: {}", physical_device_.getProperties().deviceName.data());
         // create logical device
@@ -152,7 +152,7 @@ namespace primaldawn {
         // optional: performance queries?(from vulkan-samples)
         // device create
         LOGI("creating Vulkan logical device...")
-        logic_device_ = physical_device_.createDevice(device_info);
+            logic_device_ = physical_device_.createDevice(device_info);
         VULKAN_HPP_DEFAULT_DISPATCHER.init(logic_device_);
         graphics_queue_ = logic_device_.getQueue(graphics_queue_index_, 0);
     }
@@ -186,6 +186,19 @@ namespace primaldawn {
     }
     const vk::Queue& VulkanContext::GetGraphicsQueue() const {
         return graphics_queue_;
+    }
+
+    uint32_t VulkanContext::GetMemoryType(uint32_t bits, vk::MemoryPropertyFlags props) const {
+        vk::PhysicalDeviceMemoryProperties mem_props = physical_device_.getMemoryProperties();
+        for (uint32_t i = 0; i < mem_props.memoryTypeCount; ++i) {
+            if ((bits & 1) == 1) {
+                if ((mem_props.memoryTypes[i].propertyFlags & props) == props) {
+                    return i;
+                }
+            }
+            bits >>= 1;
+        }
+        throw std::runtime_error("cannot find a matching memory type! ");
     }
 
     bool ValidateExtensions(

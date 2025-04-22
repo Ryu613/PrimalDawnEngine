@@ -19,7 +19,10 @@ namespace primaldawn {
 		const vk::Device& GetLogicalDevice() const;
 		const uint32_t GetGraphicsQueueIndex() const;
 		const vk::Queue& GetGraphicsQueue() const;
-
+		/**
+		* @brief 检查GPU是否支持指定的内存类型
+		*/
+		uint32_t GetMemoryType(uint32_t bits, vk::MemoryPropertyFlags props) const;
 	private:
 		VulkanConfig vulkan_config_;
 		vk::Instance instance_ = VK_NULL_HANDLE;
