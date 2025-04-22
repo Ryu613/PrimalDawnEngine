@@ -5,9 +5,10 @@
 #include "platform/render_system/vulkan/vulkan_swapchain.hpp"
 
 namespace primaldawn {
-    RenderTarget::RenderTarget(const RenderContext& render_context, const vk::Image& swapchain_image)
+    RenderTarget::RenderTarget(const RenderContext& render_context, vk::Image&& swapchain_image)
       : render_context_(render_context) {
-        swapchain_images_.push_back(swapchain_image);
+        swapchain_images_.push_back(std::move(swapchain_image));
+        // create depth image
         auto& device = render_context_.GetVulkanContext()->GetLogicalDevice();
         auto swapchain = render_context_.GetVulkanSwapchain();
         //depth image
@@ -23,6 +24,21 @@ namespace primaldawn {
         image_create_info.arrayLayers = 1;
         image_create_info.mipLevels = 1;
         image_create_info.tiling = vk::ImageTiling::eOptimal;
+        VmaAllocation allocation;
+        VmaAllocationInfo allocation_info{};
+        VmaAllocationCreateInfo alloc_create_info{
+            .flags = VMA_ALLOCATION_CREATE_DEDICATED_MEMORY_BIT,
+            .usage = VMA_MEMORY_USAGE_AUTO,
+            .priority = 1.0f,
+        };
+        vmaCreateImage(
+            render_context_.GetMemoryAllocator(),
+            &image_create_info,
+            &alloc_create_info,
+            &image,
+            &allocation,
+            &allocation_info
+        );
         auto depth_image = device.createImage(image_create_info);
         swapchain_images_.emplace_back(depth_image);
         // create image view
@@ -42,9 +58,16 @@ namespace primaldawn {
         image_view_create_info.format = depth_format;
         swapchain_image_views_.emplace_back(device.createImageView(image_view_create_info));
         // TODO: allocate and bind memory
-        VmaAllocationCreateInfo alloc_create_info{
-            .flags = VMA_ALLOCATION_CREATE_DEDICATED_MEMORY_BIT,
-            .usage = VMA_MEMORY_USAGE_AUTO
-        };
+    }
+
+    void RenderTarget::createImages() {
+        // color image
+        swapchain_images_.push_back(swapchain_image);
+        // depth image
+    }
+
+    void RenderTarget::createImageViews() {
+        // color image view
+        // depth image view
     }
 } // namespace primaldawn

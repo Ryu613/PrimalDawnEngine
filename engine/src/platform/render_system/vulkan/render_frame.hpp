@@ -10,7 +10,7 @@ namespace primaldawn {
 	*/
 	class RenderFrame {
 	public:
-		explicit RenderFrame(const RenderContext& render_context, const vk::Image& swapchain_image);
+		explicit RenderFrame(const RenderContext& render_context, vk::Image swapchain_image);
 	private:
 		const RenderContext& render_context_;
 		std::unique_ptr<RenderTarget> render_target_;
