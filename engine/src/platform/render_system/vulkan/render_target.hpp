@@ -10,8 +10,5 @@ namespace primaldawn {
         const RenderContext& render_context_;
         std::vector<vk::Image> swapchain_images_;
         std::vector<vk::ImageView> swapchain_image_views_;
-
-        void createImages();
-        void createImageViews();
     };
 } // namespace primaldawn

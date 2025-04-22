@@ -24,21 +24,21 @@ namespace primaldawn {
         image_create_info.arrayLayers = 1;
         image_create_info.mipLevels = 1;
         image_create_info.tiling = vk::ImageTiling::eOptimal;
-        VmaAllocation allocation;
-        VmaAllocationInfo allocation_info{};
-        VmaAllocationCreateInfo alloc_create_info{
-            .flags = VMA_ALLOCATION_CREATE_DEDICATED_MEMORY_BIT,
-            .usage = VMA_MEMORY_USAGE_AUTO,
-            .priority = 1.0f,
-        };
-        vmaCreateImage(
-            render_context_.GetMemoryAllocator(),
-            &image_create_info,
-            &alloc_create_info,
-            &image,
-            &allocation,
-            &allocation_info
-        );
+        //VmaAllocation allocation;
+        //VmaAllocationInfo allocation_info{};
+        //VmaAllocationCreateInfo alloc_create_info{
+        //    .flags = VMA_ALLOCATION_CREATE_DEDICATED_MEMORY_BIT,
+        //    .usage = VMA_MEMORY_USAGE_AUTO,
+        //    .priority = 1.0f,
+        //};
+        //vmaCreateImage(
+        //    render_context_.GetMemoryAllocator(),
+        //    &image_create_info,
+        //    &alloc_create_info,
+        //    &image,
+        //    &allocation,
+        //    &allocation_info
+        //);
         auto depth_image = device.createImage(image_create_info);
         swapchain_images_.emplace_back(depth_image);
         // create image view
@@ -58,16 +58,5 @@ namespace primaldawn {
         image_view_create_info.format = depth_format;
         swapchain_image_views_.emplace_back(device.createImageView(image_view_create_info));
         // TODO: allocate and bind memory
-    }
-
-    void RenderTarget::createImages() {
-        // color image
-        swapchain_images_.push_back(swapchain_image);
-        // depth image
-    }
-
-    void RenderTarget::createImageViews() {
-        // color image view
-        // depth image view
     }
 } // namespace primaldawn
