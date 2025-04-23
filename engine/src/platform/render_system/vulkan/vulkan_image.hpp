@@ -21,6 +21,8 @@ namespace primaldawn {
 
 		~VulkanImage();
 
+		VulkanImage(VulkanImage&&) noexcept;
+
 		const vk::ImageCreateInfo& GetCreateInfo() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
@@ -38,7 +40,6 @@ namespace primaldawn {
 		// no copy & no operator move, only move construct allowed
 		VulkanImage(const VulkanImage&) = delete;
 		VulkanImage& operator=(const VulkanImage&) = delete;
-		VulkanImage(VulkanImage&&) noexcept;
 		VulkanImage& operator=(VulkanImage&&) noexcept = delete;
 	};
 } // namespace primaldawn
