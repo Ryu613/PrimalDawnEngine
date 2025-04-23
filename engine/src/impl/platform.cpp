@@ -16,8 +16,8 @@ namespace primaldawn {
         LOGI("destroying platform")
     }
 
-    PdPlatform::PdPlatform(config::Platform config)
-      : config_(std::move(config)){
+    PdPlatform::PdPlatform(const config::Platform& config)
+      : config_(config){
     #if defined(PRIMALDAWN_WSI_TYPE_SDL2)
         LOGI("WindowSystem - SDL2")
         if (config_.window_system_type == WindowSystemType::SDL2) {
@@ -39,7 +39,11 @@ namespace primaldawn {
     #endif
     }
 
-    PdWindowSystem* PdPlatform::GetWindowSystem() const {
-        return window_system_.get();
+    const PdWindowSystem& PdPlatform::GetWindowSystem() const {
+        return *window_system_;
+    }
+
+    const OS PdPlatform::GetOS() const {
+        return config_.os;
     }
 } // namespace primaldawn

@@ -41,8 +41,8 @@ namespace primaldawn {
         return VK_FALSE;
     }
 
-    VulkanContext::VulkanContext(VulkanConfig cfg)
-      : vulkan_config_(std::move(cfg)) {
+    VulkanContext::VulkanContext(const VulkanConfig& cfg)
+      : vulkan_config_(cfg) {
         LOGI("initializing Vulkan...")
         static vk::DynamicLoader dl;
         VULKAN_HPP_DEFAULT_DISPATCHER.init(dl.getProcAddress<PFN_vkGetInstanceProcAddr>("vkGetInstanceProcAddr"));

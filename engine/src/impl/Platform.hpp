@@ -12,12 +12,16 @@ namespace primaldawn {
 
 	class PdPlatform {
 	public:
-		PdWindowSystem* GetWindowSystem() const;
-		explicit PdPlatform(config::Platform config);
+		const PdWindowSystem& GetWindowSystem() const;
+		explicit PdPlatform(const config::Platform& config);
 		virtual ~PdPlatform();
+		const OS GetOS() const;
 	private:
 		config::Platform config_;
 		std::unique_ptr<PdWindowSystem> window_system_{nullptr};
+	public:
+		PdPlatform(const PdPlatform&) = delete;
+		PdPlatform(PdPlatform&&) = delete;
 	};
 
 	// DOWNCAST(Platform);

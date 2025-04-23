@@ -73,7 +73,20 @@ if(${BACKEND_TYPE} STREQUAL "VULKAN")
 		GIT_TAG d1517d64cfca91f573af1bf7341dc3a5113349c0 #sdk-1.3.250.0
 		GIT_SHALLOW TRUE
 		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/glslang
-
+	)
+	FetchContent_Declare(
+		VulkanMemoryAllocator
+		GIT_REPOSITORY https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+		GIT_TAG 009ecd192c1289c7529bff248a16cfe896254816 #v3.1.0
+		GIT_SHALLOW TRUE
+		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/VulkanMemoryAllocator
+	)
+	FetchContent_Declare(
+		VulkanMemoryAllocator-Hpp
+		GIT_REPOSITORY https://github.com/YaaZ/VulkanMemoryAllocator-Hpp.git
+		GIT_TAG c980328c45929d9638ddb4342a50605b03285407 #v3.1.0
+		GIT_SHALLOW TRUE
+		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/VulkanMemoryAllocator-Hpp
 	)
 elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 	#set(GLAD_OUT_DIR "${EXTERNALS_DIR}/glad" CACHE STRING "Output directory")

@@ -24,19 +24,19 @@ namespace primaldawn {
     };
 
     enum class WindowSystemMode {
-        HEADLESS,
-        FULLSCREEN,
-        BORDERLESS,
-        DEFAULT,
+        HEADLESS = 1,
+        FULLSCREEN = 2,
+        BORDERLESS = 3,
+        DEFAULT = 99,
     };
 
     enum class CameraProjectionType {
-        PERSPECTIVE,
-        ORTHO,
+        PERSPECTIVE = 1,
+        ORTHOGRAPHIC = 2,
     };
 
     enum class CameraFovType {
-        VERTICAL,
-        HORIZONTAL,
+        VERTICAL = 1,
+        HORIZONTAL = 2,
     };
 } // namespace primaldawn

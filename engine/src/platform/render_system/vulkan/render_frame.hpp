@@ -5,12 +5,16 @@
 namespace primaldawn {
 	class RenderContext;
 	class RenderTarget;
+	class VulkanImage;
 	/**
 	* @brief 封装每一帧的数据
 	*/
 	class RenderFrame {
 	public:
-		explicit RenderFrame(const RenderContext& render_context, vk::Image swapchain_image);
+		/**
+		* @brief 注意VulkanImage必须右值
+		*/
+		explicit RenderFrame(const RenderContext& render_context, VulkanImage swapchain_image);
 	private:
 		const RenderContext& render_context_;
 		std::unique_ptr<RenderTarget> render_target_;

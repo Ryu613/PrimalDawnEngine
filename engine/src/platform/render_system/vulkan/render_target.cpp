@@ -2,46 +2,28 @@
 
 #include "platform/render_system/vulkan/render_context.hpp"
 #include "platform/render_system/vulkan/vulkan_context.hpp"
+#include "platform/render_system/vulkan/vulkan_image.hpp"
 #include "platform/render_system/vulkan/vulkan_swapchain.hpp"
 
 namespace primaldawn {
-    RenderTarget::RenderTarget(const RenderContext& render_context, vk::Image&& swapchain_image)
+    RenderTarget::RenderTarget(const RenderContext& render_context, VulkanImage swapchain_image)
       : render_context_(render_context) {
-        swapchain_images_.push_back(std::move(swapchain_image));
+        auto image_depth_ci = swapchain_image.GetCreateInfo();
+        swapchain_images_.emplace_back(std::move(swapchain_image));
         // create depth image
         auto& device = render_context_.GetVulkanContext()->GetLogicalDevice();
         auto swapchain = render_context_.GetVulkanSwapchain();
         //depth image
-        auto depth_format = render_context_.GetDepthFormat();
-        vk::ImageCreateInfo image_create_info;
-        image_create_info.samples = vk::SampleCountFlagBits::e1;
-        image_create_info.usage = vk::ImageUsageFlagBits::eDepthStencilAttachment
+        auto& depth_format = render_context_.GetDepthFormat();
+        image_depth_ci.usage = vk::ImageUsageFlagBits::eDepthStencilAttachment
             | vk::ImageUsageFlagBits::eTransientAttachment;
-        image_create_info.format = depth_format;
-        image_create_info.extent = vk::Extent3D{ render_context_.GetSurfaceExtent(), 1 };
-        // should value extent to choose image type
-        image_create_info.imageType = vk::ImageType::e2D;
-        image_create_info.arrayLayers = 1;
-        image_create_info.mipLevels = 1;
-        image_create_info.tiling = vk::ImageTiling::eOptimal;
-        //VmaAllocation allocation;
-        //VmaAllocationInfo allocation_info{};
-        //VmaAllocationCreateInfo alloc_create_info{
-        //    .flags = VMA_ALLOCATION_CREATE_DEDICATED_MEMORY_BIT,
-        //    .usage = VMA_MEMORY_USAGE_AUTO,
-        //    .priority = 1.0f,
-        //};
-        //vmaCreateImage(
-        //    render_context_.GetMemoryAllocator(),
-        //    &image_create_info,
-        //    &alloc_create_info,
-        //    &image,
-        //    &allocation,
-        //    &allocation_info
-        //);
-        auto depth_image = device.createImage(image_create_info);
-        swapchain_images_.emplace_back(depth_image);
+        image_depth_ci.format = depth_format;
+        VulkanImage depth_image(render_context_.GetRenderSystem(), image_depth_ci);
+        swapchain_images_.emplace_back(std::move(depth_image));
         // create image view
+        for (auto& image : swapchain_images_) {
+            swapchain_image_views_.emplace_back(image, vk::ImageViewType::e2D);
+        }
         vk::ImageViewCreateInfo image_view_create_info;
         image_view_create_info.format = swapchain->GetFormat();
         image_view_create_info.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;

@@ -15,13 +15,14 @@ namespace primaldawn {
 		explicit RenderContext(const RenderSystemVulkan& render_system_vulkan);
 		virtual ~RenderContext() = default;
 
-		const VulkanContext* GetVulkanContext() const;
-		vk::Format GetDepthFormat() const;
+		const RenderSystemVulkan& GetRenderSystem() const;
+		const VulkanContext& GetVulkanContext() const;
+		const vk::Format& GetDepthFormat() const;
 		const VulkanSwapchain* GetVulkanSwapchain() const;
 		const std::vector<std::unique_ptr<RenderFrame>>& GetRenderFrames() const;
-		vk::Format GetFormat() const;
+		const vk::Format& GetFormat() const;
 		const vk::Extent2D& GetSurfaceExtent() const;
-		VmaAllocator GetMemoryAllocator() const;
+		const vma::Allocator& GetMemoryAllocator() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		std::unique_ptr<VulkanSwapchain> swapchain_;
@@ -30,7 +31,7 @@ namespace primaldawn {
 		// no move, no copy
 		RenderContext(const RenderContext&) = delete;
 		RenderContext& operator=(const RenderContext&) = delete;
-		RenderContext(const RenderContext&&) = delete;
+		RenderContext(RenderContext&&) = delete;
 		RenderContext& operator=(RenderContext&&) = delete;
 	};
 } // namespace primaldawn

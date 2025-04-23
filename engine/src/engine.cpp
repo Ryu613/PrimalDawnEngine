@@ -4,8 +4,12 @@
 
 namespace primaldawn {
 
-    Engine* Engine::Create(config::Engine config) noexcept {
-        return PdEngine::Create(config);
+    Engine* Engine::Create(const config::Engine* config) noexcept {
+        if (!config) {
+            config::Engine default_config;
+            config = &default_config;
+        }
+        return PdEngine::Create(*config);
     }
 
     /**

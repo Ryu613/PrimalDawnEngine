@@ -8,7 +8,7 @@ namespace primaldawn {
 	*/
 	class PdWindowSystem {
 	public:
-		explicit PdWindowSystem(config::WindowSystem config);
+		explicit PdWindowSystem(const config::WindowSystem& config);
 		virtual ~PdWindowSystem();
 
 		/**

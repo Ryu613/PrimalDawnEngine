@@ -15,26 +15,20 @@ namespace {
         {vk::Format::eB8G8R8A8Srgb, vk::ColorSpaceKHR::eSrgbNonlinear}
     };
     const vk::SurfaceTransformFlagBitsKHR transform = vk::SurfaceTransformFlagBitsKHR::eIdentity;
-}
+} // namespace
+
     VulkanSwapchain::VulkanSwapchain(const RenderSystemVulkan& render_system_vulkan)
         : render_system_vulkan_(render_system_vulkan) {
-        auto& physical_device = render_system_vulkan_.GetContext()->GetPhysicalDevice();
-        auto& device = render_system_vulkan_.GetContext()->GetLogicalDevice();
+        auto& physical_device = render_system_vulkan_.GetContext().GetPhysicalDevice();
+        auto& device = render_system_vulkan_.GetContext().GetLogicalDevice();
         auto& surface = render_system_vulkan_.GetSurface();
-        auto old_swapchain = swapchain_;
         const vk::SurfaceCapabilitiesKHR surface_caps = physical_device.getSurfaceCapabilitiesKHR(surface);
-        if (old_swapchain) {
-            props_.old_swapchain = swapchain_;
-            for (auto& each_image : images_) {
-                device.destroyImage(each_image);
-            }
-        }
         uint32_t desired_image_count = surface_caps.minImageCount + 1;
         if (surface_caps.maxImageCount > 0 && desired_image_count > surface_caps.maxImageCount) {
             desired_image_count = surface_caps.maxImageCount;
         }
         props_.image_count = desired_image_count;
-        auto& window_config = render_system_vulkan_.GetPlatform()->GetWindowSystem()->GetConfig();
+        auto& window_config = render_system_vulkan_.GetPlatform().GetWindowSystem().GetConfig();
 
         if (surface_caps.currentExtent.width == INVALID_VK_INDEX) {
             props_.extent.width = window_config.extent.width;
@@ -106,7 +100,7 @@ namespace {
 
     VulkanSwapchain::~VulkanSwapchain() {
         if (swapchain_) {
-            render_system_vulkan_.GetContext()->GetLogicalDevice().destroySwapchainKHR(swapchain_);
+            render_system_vulkan_.GetContext().GetLogicalDevice().destroySwapchainKHR(swapchain_);
         }
     }
 
@@ -126,7 +120,7 @@ namespace {
         return render_system_vulkan_;
     }
 
-    vk::Format VulkanSwapchain::GetFormat() const {
+    const vk::Format& VulkanSwapchain::GetFormat() const {
         return props_.surface_format.format;
     }
 } // namespace primaldawn

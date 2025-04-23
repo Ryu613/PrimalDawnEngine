@@ -5,7 +5,7 @@
 #define VMA_IMPLEMENTATION
 #define VMA_STATIC_VULKAN_FUNCTIONS 0
 #define VMA_DYNAMIC_VULKAN_FUNCTIONS 1
-#include "vma/vk_mem_alloc.h"
+#include "vk_mem_alloc.hpp"
 #include "vulkan/vulkan_format_traits.hpp"
 
 #include "primaldawn/logging.hpp"
@@ -24,10 +24,9 @@ namespace {
         vk::Format::eD16Unorm
     };
 }
-    RenderSystemVulkan::RenderSystemVulkan(const PdPlatform* platform, config::RenderSystem cfg)
-        :PdRenderSystem(std::move(cfg)),
-         platform_(platform) {
-        context_ = std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(cfg));
+    RenderSystemVulkan::RenderSystemVulkan(const PdPlatform& platform, const config::RenderSystem& cfg)
+        :PdRenderSystem(platform, cfg) {
+        context_ = std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(config_));
         setupDepthFormat();
         createAllocator();
         createSurface();
@@ -73,17 +72,15 @@ namespace {
     }
 
     void RenderSystemVulkan::createAllocator() {
-        VmaVulkanFunctions const funcs{
-            .vkGetInstanceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetInstanceProcAddr,
-            .vkGetDeviceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetDeviceProcAddr,
-        };
-        VmaAllocatorCreateInfo const allocatorInfo{
-            .physicalDevice = context_->GetPhysicalDevice(),
-            .device = context_->GetLogicalDevice(),
-            .pVulkanFunctions = &funcs,
-            .instance = context_->GetInstance(),
-        };
-        vmaCreateAllocator(&allocatorInfo, &vma_allocator_);
+        vma::VulkanFunctions funcs;
+        funcs.vkGetInstanceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetInstanceProcAddr;
+        funcs.vkGetDeviceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetDeviceProcAddr;
+        vma::AllocatorCreateInfo alloc_create_info;
+        alloc_create_info.physicalDevice = context_->GetPhysicalDevice();
+        alloc_create_info.device = context_->GetLogicalDevice();
+        alloc_create_info.pVulkanFunctions = &funcs;
+        alloc_create_info.instance = context_->GetInstance();
+        vma_allocator_ = vma::createAllocator(alloc_create_info);
     }
 
     void RenderSystemVulkan::createSwapchainBuffers() {
@@ -116,14 +113,16 @@ namespace {
     }
 
     void RenderSystemVulkan::createSurface() {
-        void* nativeWindow = platform_->GetWindowSystem()->GetNativeWindow();
+        void* nativeWindow = platform_.GetWindowSystem().GetNativeWindow();
         vk::Win32SurfaceCreateInfoKHR surfaceCreateInfo;
         surfaceCreateInfo.hinstance = GetModuleHandle(nullptr);
         surfaceCreateInfo.hwnd = (HWND)nativeWindow;
         // windows
-        surface_ = context_->GetInstance().createWin32SurfaceKHR(surfaceCreateInfo);
-        if (!surface_) {
-            throw std::runtime_error("failed to create window surface");
+        if (GetPlatform().GetOS() == OS::WINDOWS) {
+            surface_ = context_->GetInstance().createWin32SurfaceKHR(surfaceCreateInfo);
+        }
+        else {
+            throw std::runtime_error("create vulkan failed: this OS not supported!");
         }
     }
 
@@ -284,11 +283,8 @@ namespace {
         }
     }
 
-    const PdPlatform* RenderSystemVulkan::GetPlatform() const {
-        return platform_;
-    }
-    const VulkanContext* RenderSystemVulkan::GetContext() const {
-        return context_.get();
+    const VulkanContext& RenderSystemVulkan::GetContext() const {
+        return *context_;
     }
 
     const vk::SurfaceKHR& RenderSystemVulkan::GetSurface() const {
@@ -299,7 +295,7 @@ namespace {
         return depth_format_;
     }
 
-    VmaAllocator RenderSystemVulkan::GetMemoryAllocator() const {
+    const vma::Allocator& RenderSystemVulkan::GetMemoryAllocator() const {
         return vma_allocator_;
     }
 } // namespace primaldawn

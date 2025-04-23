@@ -1,8 +1,8 @@
 #include "platform_windows.hpp"
 
 namespace primaldawn {
-    PlatformWindows::PlatformWindows(config::Platform config)
-      : PdPlatform(std::move(config)) {
+    PlatformWindows::PlatformWindows(const config::Platform& config)
+      : PdPlatform(config) {
 
     }
     PlatformWindows::~PlatformWindows() {

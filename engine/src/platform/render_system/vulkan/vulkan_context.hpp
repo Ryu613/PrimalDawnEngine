@@ -10,7 +10,7 @@ namespace primaldawn {
 			bool use_debug_utils = false;
 			bool use_debug_report = false;
 		};
-		explicit VulkanContext(VulkanConfig cfg);
+		explicit VulkanContext(const VulkanConfig& cfg);
 		~VulkanContext();
 
 		const VulkanConfig& GetVulkanConfig() const;
@@ -38,8 +38,8 @@ namespace primaldawn {
 	public:
 		VulkanContext(const VulkanContext&) = delete;
 		VulkanContext& operator=(const VulkanContext&) = delete;
-		VulkanContext(VulkanContext&&) noexcept = default;
-		VulkanContext& operator=(VulkanContext&&) noexcept = default;
+		VulkanContext(VulkanContext&&) noexcept = delete;
+		VulkanContext& operator=(VulkanContext&&) noexcept = delete;
 	};
 
 	/**

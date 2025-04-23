@@ -9,7 +9,7 @@
 namespace primaldawn {
 	class WindowSystemSdl2 : public PdWindowSystem {
 	public:
-		explicit WindowSystemSdl2(config::WindowSystem cfg);
+		explicit WindowSystemSdl2(const config::WindowSystem& cfg);
 
 		~WindowSystemSdl2();
 

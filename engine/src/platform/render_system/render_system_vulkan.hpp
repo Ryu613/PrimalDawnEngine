@@ -33,17 +33,16 @@ namespace primaldawn {
 	*/
 	class RenderSystemVulkan : public PdRenderSystem {
 	public:
-		explicit RenderSystemVulkan(const PdPlatform* platform, config::RenderSystem cfg);
+		explicit RenderSystemVulkan(const PdPlatform& platform, const config::RenderSystem& cfg);
 		~RenderSystemVulkan();
 
 		void BindPipeline() override;
 		void Draw() override;
 
-		const PdPlatform* GetPlatform() const;
-		const VulkanContext* GetContext() const;
+		const VulkanContext& GetContext() const;
 		const vk::SurfaceKHR& GetSurface() const;
 		const vk::Format& GetDepthFormat() const;
-		VmaAllocator GetMemoryAllocator() const;
+		const vma::Allocator& GetMemoryAllocator() const;
 	private:
 		struct Semaphores {
 			vk::Semaphore acquired_image_ready;
@@ -54,12 +53,11 @@ namespace primaldawn {
 			vk::DeviceMemory mem;
 			vk::ImageView view;
 		} depth_stencil_;
-		const PdPlatform* platform_{ nullptr };
 		std::unique_ptr<VulkanContext> context_{nullptr};
 		vk::CommandPool command_pool_ = VK_NULL_HANDLE;
 		vk::SurfaceKHR surface_ = VK_NULL_HANDLE;
 
-		VmaAllocator vma_allocator_ = VK_NULL_HANDLE;
+		vma::Allocator vma_allocator_ = VK_NULL_HANDLE;
 		// manage rendering & frame related data
 		std::unique_ptr<RenderContext> render_context_;
 		// encapsulate render pipeline
@@ -85,11 +83,5 @@ namespace primaldawn {
 		void setupRenderPass();
 		void createPipelineCache();
 		void setupFrameBuffer();
-	public:
-		// movable only
-		RenderSystemVulkan(const RenderSystemVulkan&) = delete;
-		RenderSystemVulkan& operator=(const RenderSystemVulkan&) = delete;
-		RenderSystemVulkan(RenderSystemVulkan&&) noexcept = default;
-		RenderSystemVulkan& operator=(RenderSystemVulkan&&) noexcept = default;
 	};
 } // namespace primaldawn

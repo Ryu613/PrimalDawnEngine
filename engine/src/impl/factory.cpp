@@ -20,17 +20,17 @@
 
 namespace primaldawn::factory {
 
-    std::unique_ptr<PdPlatform> CreatePlatform(config::Platform config) {
+    std::unique_ptr<PdPlatform> CreatePlatform(config::Platform& config) {
     #if defined(WIN32)
         LOGI("Platform is {}", "Windows")
-        return std::make_unique<PlatformWindows>(std::move(config));
+        return std::make_unique<PlatformWindows>(config);
     #else
         LOG_INFO("Platform is {}", "Vulkan - Unknown OS")
         return nullptr;
     #endif
     }
 
-    std::unique_ptr<PdRenderSystem> CreateRenderSystem(const PdPlatform* platform, config::RenderSystem config) {
+    std::unique_ptr<PdRenderSystem> CreateRenderSystem(const PdPlatform& platform, config::RenderSystem& config) {
         if (config.render_system_type == RenderSystemType::OPENGL) {
             LOGI("RenderSystem - OpenGL")
 #if defined(PRIMALDAWN_DRIVER_SUPPORTS_OPENGL)

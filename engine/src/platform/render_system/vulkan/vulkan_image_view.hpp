@@ -6,9 +6,10 @@ namespace primaldawn {
 	class VulkanImage;
 	class VulkanImageView {
 	public:
-		explicit VulkanImageView(const  vk::ImageViewCreateInfo& create_info);
+		explicit VulkanImageView(const VulkanImage& image, vk::ImageViewType image_view_type);
+		~VulkanImageView();
 	private:
 		VulkanImage* image_ = nullptr;
-		const vk::ImageViewCreateInfo& create_info_;
+		vk::ImageViewCreateInfo create_info_;
 	};
 } // namespace primaldawn
