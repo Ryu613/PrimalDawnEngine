@@ -5,7 +5,7 @@
 #define VMA_IMPLEMENTATION
 #define VMA_STATIC_VULKAN_FUNCTIONS 0
 #define VMA_DYNAMIC_VULKAN_FUNCTIONS 1
-#include "vk_mem_alloc.hpp"
+#include "vma/vk_mem_alloc.h"
 #include "vulkan/vulkan_format_traits.hpp"
 
 #include "primaldawn/logging.hpp"
@@ -25,8 +25,8 @@ namespace {
     };
 }
     RenderSystemVulkan::RenderSystemVulkan(const PdPlatform& platform, const config::RenderSystem& cfg)
-        :PdRenderSystem(platform, cfg) {
-        context_ = std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(config_));
+        : PdRenderSystem(platform, cfg),
+          context_(std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(config_))){
         setupDepthFormat();
         createAllocator();
         createSurface();
@@ -72,19 +72,21 @@ namespace {
     }
 
     void RenderSystemVulkan::createAllocator() {
-        vma::VulkanFunctions funcs;
-        funcs.vkGetInstanceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetInstanceProcAddr;
-        funcs.vkGetDeviceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetDeviceProcAddr;
-        vma::AllocatorCreateInfo alloc_create_info;
-        alloc_create_info.physicalDevice = context_->GetPhysicalDevice();
-        alloc_create_info.device = context_->GetLogicalDevice();
-        alloc_create_info.pVulkanFunctions = &funcs;
-        alloc_create_info.instance = context_->GetInstance();
-        vma_allocator_ = vma::createAllocator(alloc_create_info);
+        VmaVulkanFunctions const funcs{
+            .vkGetInstanceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetInstanceProcAddr,
+            .vkGetDeviceProcAddr = VULKAN_HPP_DEFAULT_DISPATCHER.vkGetDeviceProcAddr,
+        };
+        VmaAllocatorCreateInfo const allocatorInfo{
+            .physicalDevice = context_->GetPhysicalDevice(),
+            .device = context_->GetLogicalDevice(),
+            .pVulkanFunctions = &funcs,
+            .instance = context_->GetInstance(),
+        };
+        vmaCreateAllocator(&allocatorInfo, &vma_allocator_);
     }
 
     void RenderSystemVulkan::createSwapchainBuffers() {
-        auto& images = render_context_->GetVulkanSwapchain()->GetImages();
+        auto& images = render_context_->GetVulkanSwapchain().GetImages();
         auto& device = context_->GetLogicalDevice();
         for (auto& swapchain_buffer : swapchain_buffers_) {
             context_->GetLogicalDevice().destroyImageView(swapchain_buffer.view);
@@ -92,7 +94,8 @@ namespace {
         swapchain_buffers_.clear();
         swapchain_buffers_.reserve(images.size());
         vk::ImageViewCreateInfo image_view_create_info;
-        image_view_create_info.format = render_context_->GetVulkanSwapchain()->GetFormat();
+        auto format = render_context_->GetVulkanSwapchain().GetFormat();
+        image_view_create_info.format = format;
         image_view_create_info.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
         image_view_create_info.subresourceRange.levelCount = 1;
         image_view_create_info.subresourceRange.layerCount = 1;
@@ -295,7 +298,7 @@ namespace {
         return depth_format_;
     }
 
-    const vma::Allocator& RenderSystemVulkan::GetMemoryAllocator() const {
+    const VmaAllocator& RenderSystemVulkan::GetMemoryAllocator() const {
         return vma_allocator_;
     }
 } // namespace primaldawn

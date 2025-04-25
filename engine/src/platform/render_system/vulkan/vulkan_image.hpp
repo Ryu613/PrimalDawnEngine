@@ -8,6 +8,11 @@ namespace primaldawn {
 	class RenderSystemVulkan;
 	class VulkanImageView;
 	struct SwapchainProps;
+	/**
+	* @brief vulkan image
+	* use Vulkan Memory Allocator to create image
+	* this resource must be managed, cannot assign(by operator) and copy
+	*/
 	class VulkanImage {
 	public:
 		/**
@@ -21,16 +26,23 @@ namespace primaldawn {
 
 		~VulkanImage();
 
-		VulkanImage(VulkanImage&&) noexcept;
+		VulkanImage(VulkanImage&& other) noexcept;
 
+		const vk::Image& GetImage() const;
+
+		std::unordered_set<VulkanImageView*>& GetImageViews();
+		
 		const vk::ImageCreateInfo& GetCreateInfo() const;
+
+		const vk::ImageSubresource& GetSubresource() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		vk::ImageCreateInfo create_info_;
 		vk::ImageSubresource subresource_;
 		vk::Image image_;
-		vma::Allocation allocation_;
-		std::unordered_set<VulkanImageView*> views_;
+		VmaAllocationCreateInfo allocation_create_info_;
+		VmaAllocation allocation_;
+		std::unordered_set<VulkanImageView*> image_views_;
 
 		/**
 		* @brief allocate image from vma allocator

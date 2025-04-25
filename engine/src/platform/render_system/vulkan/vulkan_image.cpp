@@ -1,5 +1,6 @@
 #include "platform/render_system/vulkan/vulkan_image.hpp"
 
+#include "vulkan/vk_enum_string_helper.h"
 #include <tuple>
 
 #include "primaldawn/logging.hpp"
@@ -29,6 +30,8 @@ namespace {
     VulkanImage::VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::ImageCreateInfo& create_info)
       : render_system_vulkan_(render_system_vulkan),
         create_info_(create_info) {
+        subresource_.mipLevel = 1;
+        subresource_.arrayLayer = 1;
         allocateImage();
     }
 
@@ -47,11 +50,42 @@ namespace {
     }
 
     VulkanImage::~VulkanImage() {
-        render_system_vulkan_.GetMemoryAllocator().destroyImage(image_, allocation_);
+        if (image_) {
+            vmaDestroyImage(
+                render_system_vulkan_.GetMemoryAllocator(),
+                static_cast<VkImage>(image_),
+                allocation_
+            );
+        }
+    }
+
+    VulkanImage::VulkanImage(VulkanImage&& other) noexcept
+        : render_system_vulkan_(other.render_system_vulkan_),
+          image_(std::exchange(other.image_, {})),
+          allocation_create_info_(std::exchange(other.allocation_create_info_, {})),
+          allocation_(std::exchange(other.allocation_, {})),
+          create_info_(std::exchange(other.create_info_, {})),
+          subresource_(std::exchange(other.subresource_, {})),
+          image_views_(std::exchange(other.image_views_, {})) {
+        for (auto& view : image_views_) {
+            view->SetImage(*this);
+        }
+    }
+
+    const vk::Image& VulkanImage::GetImage() const {
+        return image_;
+    }
+
+    std::unordered_set<VulkanImageView*>& VulkanImage::GetImageViews() {
+        return image_views_;
     }
 
     const vk::ImageCreateInfo& VulkanImage::GetCreateInfo() const {
         return create_info_;
+    }
+
+    const vk::ImageSubresource& VulkanImage::GetSubresource() const {
+        return subresource_;
     }
 
     void VulkanImage::allocateImage() {
@@ -59,13 +93,21 @@ namespace {
             LOGE("this image has been allocated !");
             return;
         }
-        vma::AllocationCreateInfo alloc_create_info;
-        alloc_create_info.usage = vma::MemoryUsage::eAuto;
-        vma::AllocationInfo alloc_info;
-        std::tie(image_, allocation_) = render_system_vulkan_.GetMemoryAllocator().createImage(
-            create_info_,
-            alloc_create_info,
-            alloc_info
+        VmaAllocationCreateInfo alloc_create_info{
+            .usage = VMA_MEMORY_USAGE_AUTO,
+        };
+        VmaAllocationInfo alloc_info;
+        VkResult result = vmaCreateImage(
+            render_system_vulkan_.GetMemoryAllocator(),
+            reinterpret_cast<VkImageCreateInfo*>(&create_info_),
+            &alloc_create_info,
+            reinterpret_cast<VkImage*>(&image_),
+            &allocation_,
+            &alloc_info
         );
+        if (result != VK_SUCCESS) {
+            LOGE("VMA allocate image failed!\n{}", string_VkResult(result));
+            throw std::runtime_error("vma allocate image failed!");
+        }
     }
 }

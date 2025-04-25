@@ -8,9 +8,8 @@
 
 namespace primaldawn {
     RenderContext::RenderContext(const RenderSystemVulkan& render_system_vulkan)
-        : render_system_vulkan_(render_system_vulkan) {
-        // create swapchain
-        swapchain_ = std::make_unique<VulkanSwapchain>(render_system_vulkan_);
+        : render_system_vulkan_(render_system_vulkan),
+          swapchain_(std::make_unique<VulkanSwapchain>(render_system_vulkan_)) {
         // fill up render frames
         GetVulkanContext().GetLogicalDevice().waitIdle();
         for (auto& image : swapchain_->GetImages()) {
@@ -31,8 +30,8 @@ namespace primaldawn {
         return render_system_vulkan_.GetDepthFormat();
     }
 
-    const VulkanSwapchain* RenderContext::GetVulkanSwapchain() const {
-        return swapchain_.get();
+    const VulkanSwapchain& RenderContext::GetVulkanSwapchain() const {
+        return *swapchain_;
     }
 
     const std::vector<std::unique_ptr<RenderFrame>>& RenderContext::GetRenderFrames() const {
@@ -47,7 +46,7 @@ namespace primaldawn {
         return swapchain_->GetExtent();
     }
 
-    const vma::Allocator& RenderContext::GetMemoryAllocator() const {
+    const VmaAllocator& RenderContext::GetMemoryAllocator() const {
         return render_system_vulkan_.GetMemoryAllocator();
     }
 } // namespace primaldawn

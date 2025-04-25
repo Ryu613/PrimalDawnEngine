@@ -5,6 +5,7 @@ FetchContent_Declare(
 	GIT_REPOSITORY https://github.com/fmtlib/fmt.git
 	GIT_TAG 123913715afeb8a437e6388b4473fcc4753e1c9a #11.1.4
 	GIT_SHALLOW TRUE
+	GIT_PROGRESS TRUE
 	SOURCE_DIR ${PRIMALDAWN_DIR}/externals/fmt
 )
 FetchContent_MakeAvailable(fmt)
@@ -15,6 +16,7 @@ FetchContent_Declare(
 	GIT_REPOSITORY https://github.com/gabime/spdlog.git
 	GIT_TAG f355b3d58f7067eee1706ff3c801c2361011f3d5 #v1.15.1
 	GIT_SHALLOW TRUE
+	GIT_PROGRESS TRUE
 	SOURCE_DIR ${PRIMALDAWN_DIR}/externals/spdlog
 )
 FetchContent_MakeAvailable(spdlog)
@@ -25,6 +27,7 @@ FetchContent_Declare(
 	GIT_REPOSITORY https://github.com/g-truc/glm.git
 	GIT_TAG 0af55ccecd98d4e5a8d1fad7de25ba429d60e863 #1.0.1
 	GIT_SHALLOW TRUE
+	GIT_PROGRESS TRUE
 	SOURCE_DIR ${PRIMALDAWN_DIR}/externals/glm
 )
 FetchContent_MakeAvailable(glm)
@@ -41,6 +44,7 @@ if(${WSI_TYPE} STREQUAL "SDL2")
 		GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
 		GIT_TAG e11183ea6caa3ae4895f4bc54cad2bbb0e365417 #release-2.32.2
 		GIT_SHALLOW TRUE
+		GIT_PROGRESS TRUE
 		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/sdl2
 	)
 elseif(${WSI_TYPE} STREQUAL "GLFW3")
@@ -49,6 +53,7 @@ elseif(${WSI_TYPE} STREQUAL "GLFW3")
 		GIT_REPOSITORY https://github.com/glfw/glfw.git
 		GIT_TAG 7b6aead9fb88b3623e3b3725ebb42670cbe4c579 #3.4
 		GIT_SHALLOW TRUE
+		GIT_PROGRESS TRUE
 		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/glfw3
 		CMAKE_ARGS
 			-DGLFW_BUILD_EXAMPLES=OFF
@@ -72,21 +77,8 @@ if(${BACKEND_TYPE} STREQUAL "VULKAN")
 		GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
 		GIT_TAG d1517d64cfca91f573af1bf7341dc3a5113349c0 #sdk-1.3.250.0
 		GIT_SHALLOW TRUE
+		GIT_PROGRESS TRUE
 		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/glslang
-	)
-	FetchContent_Declare(
-		VulkanMemoryAllocator
-		GIT_REPOSITORY https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
-		GIT_TAG 009ecd192c1289c7529bff248a16cfe896254816 #v3.1.0
-		GIT_SHALLOW TRUE
-		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/VulkanMemoryAllocator
-	)
-	FetchContent_Declare(
-		VulkanMemoryAllocator-Hpp
-		GIT_REPOSITORY https://github.com/YaaZ/VulkanMemoryAllocator-Hpp.git
-		GIT_TAG c980328c45929d9638ddb4342a50605b03285407 #v3.1.0
-		GIT_SHALLOW TRUE
-		SOURCE_DIR ${PRIMALDAWN_DIR}/externals/VulkanMemoryAllocator-Hpp
 	)
 elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 	#set(GLAD_OUT_DIR "${EXTERNALS_DIR}/glad" CACHE STRING "Output directory")

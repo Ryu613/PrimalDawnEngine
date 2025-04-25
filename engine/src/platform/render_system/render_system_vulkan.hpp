@@ -42,7 +42,7 @@ namespace primaldawn {
 		const VulkanContext& GetContext() const;
 		const vk::SurfaceKHR& GetSurface() const;
 		const vk::Format& GetDepthFormat() const;
-		const vma::Allocator& GetMemoryAllocator() const;
+		const VmaAllocator& GetMemoryAllocator() const;
 	private:
 		struct Semaphores {
 			vk::Semaphore acquired_image_ready;
@@ -57,7 +57,7 @@ namespace primaldawn {
 		vk::CommandPool command_pool_ = VK_NULL_HANDLE;
 		vk::SurfaceKHR surface_ = VK_NULL_HANDLE;
 
-		vma::Allocator vma_allocator_ = VK_NULL_HANDLE;
+		VmaAllocator vma_allocator_ = VK_NULL_HANDLE;
 		// manage rendering & frame related data
 		std::unique_ptr<RenderContext> render_context_;
 		// encapsulate render pipeline

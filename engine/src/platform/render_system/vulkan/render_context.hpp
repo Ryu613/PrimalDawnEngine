@@ -1,9 +1,8 @@
 #pragma once
 
-#include "platform/render_system/vulkan/vulkan_common.hpp"
+#include "platform/render_system/render_system_vulkan.hpp"
 
 namespace primaldawn {
-	class RenderSystemVulkan;
 	class VulkanSwapchain;
 	class VulkanContext;
 	class RenderFrame;
@@ -18,11 +17,11 @@ namespace primaldawn {
 		const RenderSystemVulkan& GetRenderSystem() const;
 		const VulkanContext& GetVulkanContext() const;
 		const vk::Format& GetDepthFormat() const;
-		const VulkanSwapchain* GetVulkanSwapchain() const;
+		const VulkanSwapchain& GetVulkanSwapchain() const;
 		const std::vector<std::unique_ptr<RenderFrame>>& GetRenderFrames() const;
 		const vk::Format& GetFormat() const;
 		const vk::Extent2D& GetSurfaceExtent() const;
-		const vma::Allocator& GetMemoryAllocator() const;
+		const VmaAllocator& GetMemoryAllocator() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		std::unique_ptr<VulkanSwapchain> swapchain_;

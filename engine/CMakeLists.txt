@@ -20,8 +20,6 @@ set(EXTERNALS
 	fmt
 	spdlog::spdlog
 	glm
-	GPUOpen::VulkanMemoryAllocator
-	VulkanMemoryAllocator-Hpp::VulkanMemoryAllocator-Hpp
 )
 
 set(EXT_HEADERS_DIR
@@ -73,8 +71,6 @@ if(${BACKEND_TYPE} STREQUAL "VULKAN")
 		message(FATAL_ERROR "Vulkan Not Found! Project build terminated")
 	endif()
 	FetchContent_MakeAvailable(glslang)
-	FetchContent_MakeAvailable(VulkanMemoryAllocator)
-	FetchContent_MakeAvailable(VulkanMemoryAllocator-Hpp)
 	list(APPEND EXTERNALS
 		${Vulkan_LIBRARIES}
 		glslang
