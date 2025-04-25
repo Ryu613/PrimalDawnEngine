@@ -1,3 +1,5 @@
 .vs/
 out/
 docs/html/
+CMakeSettings.json
+CMakeUserPresets.json
