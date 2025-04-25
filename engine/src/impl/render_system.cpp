@@ -1,6 +1,6 @@
 #include "impl/render_system.hpp"
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 
 namespace primaldawn {
 

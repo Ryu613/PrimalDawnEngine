@@ -10,10 +10,10 @@
 namespace primaldawn {
     class PdPlatform;
     class PdRenderSystem;
-    class Renderer;
-    class Scene;
-    class View;
-    class Camera;
+    class PdRenderer;
+    class PdScene;
+    class PdView;
+    class PdCamera;
 
 	class PdEngine : public Engine {
     public:
@@ -55,9 +55,9 @@ namespace primaldawn {
         // 注意声明顺序影响析构顺序！
         std::unique_ptr<PdPlatform> platform_{ nullptr };
         std::unique_ptr<PdRenderSystem> render_system_{ nullptr };
-        std::unique_ptr<Renderer> renderer_{ nullptr };
-        std::unique_ptr<Scene> scene_{ nullptr };
-        std::unique_ptr<View> view_{ nullptr };
+        std::unique_ptr<PdRenderer> renderer_{ nullptr };
+        std::unique_ptr<PdScene> scene_{ nullptr };
+        std::unique_ptr<PdView> view_{ nullptr };
 	};
 
     DOWNCAST(Engine);

@@ -2,7 +2,7 @@
 
 #include <SDL_syswm.h>
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 
 namespace primaldawn {
     WindowSystemSdl2::WindowSystemSdl2(const config::WindowSystem& cfg)

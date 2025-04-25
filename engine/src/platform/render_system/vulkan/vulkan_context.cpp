@@ -3,7 +3,7 @@
 #include <vector>
 #include <stdexcept>
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 
 VULKAN_HPP_DEFAULT_DISPATCH_LOADER_DYNAMIC_STORAGE
 

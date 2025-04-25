@@ -8,7 +8,7 @@
 #include "vma/vk_mem_alloc.h"
 #include "vulkan/vulkan_format_traits.hpp"
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 #include "impl/platform.hpp"
 #include "impl/window_system.hpp"
 #include "platform/render_system/vulkan/vulkan_context.hpp"
@@ -28,11 +28,11 @@ namespace {
         : PdRenderSystem(platform, cfg),
           context_(std::make_unique<VulkanContext>(static_cast<VulkanContext::VulkanConfig>(config_))){
         setupDepthFormat();
+        createSyncObject();
         createAllocator();
         createSurface();
         render_context_ = std::make_unique<RenderContext>(*this);
         createSwapchainBuffers();
-        createSyncObject();
         createCommandPool();
         createCommandBuffers();
         createSyncPrimitives();
@@ -44,7 +44,9 @@ namespace {
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
+        if (context_) {
 
+        }
     }
 
     void RenderSystemVulkan::BindPipeline() {
@@ -236,6 +238,7 @@ namespace {
             | vk::AccessFlagBits::eDepthStencilAttachmentRead
             | vk::AccessFlagBits::eDepthStencilAttachmentWrite;
         deps[0].dependencyFlags = vk::DependencyFlagBits::eByRegion;
+
         deps[1].srcSubpass = 0;
         deps[1].dstSubpass = VK_SUBPASS_EXTERNAL;
         deps[1].srcStageMask = vk::PipelineStageFlagBits::eColorAttachmentOutput

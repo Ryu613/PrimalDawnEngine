@@ -3,7 +3,7 @@
 #include <memory>
 #include <stdexcept>
 
-#include "primaldawn/platform.hpp"
+#include "primaldawn/enums.hpp"
 #include "primaldawn/config.hpp"
 #if defined(WIN32)
 #include "platform/os/platform_windows.hpp"
@@ -15,7 +15,7 @@
 #include "platform/render_system/render_system_opengl.hpp"
 #endif
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 #include "impl/engine.hpp"
 
 namespace primaldawn::factory {

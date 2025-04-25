@@ -59,7 +59,7 @@ namespace primaldawn {
         inline bool IsRunning() const;
 
     protected:
-        Engine() = default;
+        Engine() noexcept = default;
         ~Engine() = default;
 
     public:
