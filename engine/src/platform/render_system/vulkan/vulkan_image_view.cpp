@@ -28,7 +28,9 @@ namespace primaldawn {
     }
 
     VulkanImageView::~VulkanImageView() {
-
+        if (image_view_) {
+            render_system_vulkan_.GetContext().GetLogicalDevice().destroyImageView(image_view_);
+        }
     }
 
     VulkanImageView::VulkanImageView(VulkanImageView&& other) noexcept

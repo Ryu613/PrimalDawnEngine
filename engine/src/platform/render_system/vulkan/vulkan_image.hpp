@@ -18,11 +18,12 @@ namespace primaldawn {
 		/**
 		* @brief construct vk::Image in this constructor
 		*/
-		explicit VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::ImageCreateInfo& create_info);
+		explicit VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::ImageCreateInfo& create_info, bool owns_image = true);
 		/**
 		* @brief construct base on swapchain image & props
+		* image created by swapchain is not owned by this object, owns_image flag will be used by destructor
 		*/
-		explicit VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::Image& image, const SwapchainProps& swapchain_props);
+		explicit VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::Image& image, const SwapchainProps& swapchain_props, bool owns_image = false);
 
 		~VulkanImage();
 
@@ -40,6 +41,7 @@ namespace primaldawn {
 		vk::ImageCreateInfo create_info_;
 		vk::ImageSubresource subresource_;
 		vk::Image image_;
+		bool owns_image_ = false;
 		VmaAllocationCreateInfo allocation_create_info_;
 		VmaAllocation allocation_;
 		std::unordered_set<VulkanImageView*> image_views_;

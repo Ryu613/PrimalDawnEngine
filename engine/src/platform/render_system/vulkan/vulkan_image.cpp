@@ -27,17 +27,19 @@ namespace {
     }
 } // namespace
 
-    VulkanImage::VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::ImageCreateInfo& create_info)
+    VulkanImage::VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::ImageCreateInfo& create_info, bool owns_image)
       : render_system_vulkan_(render_system_vulkan),
-        create_info_(create_info) {
+        create_info_(create_info),
+        owns_image_(owns_image) {
         subresource_.mipLevel = 1;
         subresource_.arrayLayer = 1;
         allocateImage();
     }
 
-    VulkanImage::VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::Image& image, const SwapchainProps& swapchain_props)
+    VulkanImage::VulkanImage(const RenderSystemVulkan& render_system_vulkan, const vk::Image& image, const SwapchainProps& swapchain_props, bool owns_image)
       : render_system_vulkan_(render_system_vulkan),
-        image_(image) {
+        image_(image),
+        owns_image_(owns_image) {
         create_info_.samples = vk::SampleCountFlagBits::e1;
         create_info_.format = swapchain_props.surface_format.format;
         create_info_.extent = vk::Extent3D{ swapchain_props.extent, 1 };
@@ -50,7 +52,7 @@ namespace {
     }
 
     VulkanImage::~VulkanImage() {
-        if (image_) {
+        if (owns_image_ && image_ && allocation_ != VK_NULL_HANDLE) {
             vmaDestroyImage(
                 render_system_vulkan_.GetMemoryAllocator(),
                 static_cast<VkImage>(image_),
