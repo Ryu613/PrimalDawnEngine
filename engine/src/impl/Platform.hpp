@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "primaldawn/platform.hpp"
 #include "primaldawn/config.hpp"
+#include "primaldawn/enums.hpp"
 
 #include "downcast.hpp"
 

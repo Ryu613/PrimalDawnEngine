@@ -1,6 +1,6 @@
 #include "platform/window_system/window_system_glfw3.hpp"
 
-#include "primaldawn/Logging.hpp"
+#include "impl/logging.hpp"
 
 namespace primaldawn {
 

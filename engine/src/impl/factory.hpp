@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "primaldawn/config.hpp"
-#include "primaldawn/platform.hpp"
+#include "primaldawn/enums.hpp"
 
 #include "impl/Platform.hpp"
 #include "impl/render_system.hpp"

@@ -3,7 +3,7 @@
 #include <memory>
 #include <stdexcept>
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 #if defined(PRIMALDAWN_WSI_TYPE_SDL2)
 #include "platform/window_system/window_system_sdl2.hpp"
 #elif defined(PRIMALDAWN_WSI_TYPE_GLFW)

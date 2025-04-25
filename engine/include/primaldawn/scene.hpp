@@ -1,5 +1,7 @@
 #pragma once
 
+#include "primaldawn/api.hpp"
+
 namespace primaldawn {
 
 	/**
@@ -7,7 +9,8 @@ namespace primaldawn {
 	* 
 	* 由Engine管理Scene的创建和销毁
 	*/
-	class Scene {
-
+	class Scene : public Api {
+	protected:
+		~Scene() = default;
 	};
 } // namespace primaldawn

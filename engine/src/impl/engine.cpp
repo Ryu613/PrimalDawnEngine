@@ -1,6 +1,6 @@
 #include "impl/engine.hpp"
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 
 #include "impl/factory.hpp"
 #include "impl/render_system.hpp"

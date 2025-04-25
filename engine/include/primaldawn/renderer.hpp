@@ -1,7 +1,10 @@
 #pragma once
 
-namespace primaldawn {
-	class Renderer {
+#include "primaldawn/api.hpp"
 
+namespace primaldawn {
+	class Renderer : public Api {
+	protected:
+		~Renderer() = default;
 	};
 } // namespace primaldawn

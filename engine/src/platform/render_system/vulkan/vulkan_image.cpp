@@ -3,7 +3,7 @@
 #include "vulkan/vk_enum_string_helper.h"
 #include <tuple>
 
-#include "primaldawn/logging.hpp"
+#include "impl/logging.hpp"
 #include "platform/render_system/render_system_vulkan.hpp"
 #include "platform/render_system/vulkan/vulkan_swapchain.hpp"
 #include "platform/render_system/vulkan/vulkan_image_view.hpp"
