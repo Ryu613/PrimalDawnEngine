@@ -20,10 +20,10 @@ namespace primaldawn {
 		virtual void Run();
 		virtual void Close();
 	protected:
-		Application(ApplicationConfig config);
+		Application(const ApplicationConfig& config);
 		virtual ~Application();
 
-		ApplicationConfig application_config_;
+		const ApplicationConfig& application_config_;
 		Engine* engine_{ nullptr };
 		bool close_ = true;
 	};

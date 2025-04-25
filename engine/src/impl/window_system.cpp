@@ -3,8 +3,8 @@
 #include "primaldawn/logging.hpp"
 
 namespace primaldawn {
-    PdWindowSystem::PdWindowSystem(config::WindowSystem config)
-      : config_(std::move(config)){
+    PdWindowSystem::PdWindowSystem(const config::WindowSystem& config)
+      : config_(config){
         LOGI("initializing window system...")
     }
 

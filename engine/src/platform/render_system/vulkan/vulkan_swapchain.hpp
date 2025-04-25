@@ -28,6 +28,7 @@ namespace primaldawn {
 		const SwapchainProps& GetProps() const;
 		const std::vector<vk::Image>& GetImages() const;
 		const RenderSystemVulkan& getRenderSystemVulkan() const;
+		const vk::Format& GetFormat() const;
 	private:
 		const RenderSystemVulkan& render_system_vulkan_;
 		SwapchainProps props_;
@@ -36,7 +37,7 @@ namespace primaldawn {
 	public:
 		VulkanSwapchain(const VulkanSwapchain&) = delete;
 		VulkanSwapchain& operator=(const VulkanSwapchain&) = delete;
-		VulkanSwapchain(VulkanSwapchain&&) = delete;
-		VulkanSwapchain& operator=(VulkanSwapchain&&) = delete;
+		VulkanSwapchain(VulkanSwapchain&&) noexcept = delete;
+		VulkanSwapchain& operator=(VulkanSwapchain&&) noexcept = delete;
 	};
 } // namespace primaldawn

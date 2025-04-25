@@ -4,10 +4,10 @@
 #include "primaldawn/logging.hpp"
 
 namespace primaldawn {
-    Application::Application(ApplicationConfig config)
-        : application_config_(std::move(config)) {
+    Application::Application(const ApplicationConfig& config)
+        : application_config_(config) {
         LOGI("init APP [{}]", application_config_.app_name)
-        engine_ = Engine::Create(application_config_.engine_config);
+        engine_ = Engine::Create(&application_config_.engine_config);
         close_ = false;
     }
 

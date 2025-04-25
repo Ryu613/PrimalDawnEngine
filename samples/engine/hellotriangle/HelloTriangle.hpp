@@ -11,7 +11,7 @@ namespace primaldawn {
 
 		};
 	public:
-		HelloTriangle(ApplicationConfig config);
+		HelloTriangle(const ApplicationConfig& config);
 		~HelloTriangle();
 		void Prepare() override;
 		void SetupScene() override;

@@ -10,7 +10,7 @@ namespace primaldawn {
 			bool use_debug_utils = false;
 			bool use_debug_report = false;
 		};
-		explicit VulkanContext(VulkanConfig cfg);
+		explicit VulkanContext(const VulkanConfig& cfg);
 		~VulkanContext();
 
 		const VulkanConfig& GetVulkanConfig() const;
@@ -19,7 +19,10 @@ namespace primaldawn {
 		const vk::Device& GetLogicalDevice() const;
 		const uint32_t GetGraphicsQueueIndex() const;
 		const vk::Queue& GetGraphicsQueue() const;
-
+		/**
+		* @brief 检查GPU是否支持指定的内存类型
+		*/
+		uint32_t GetMemoryType(uint32_t bits, vk::MemoryPropertyFlags props) const;
 	private:
 		VulkanConfig vulkan_config_;
 		vk::Instance instance_ = VK_NULL_HANDLE;
@@ -35,8 +38,8 @@ namespace primaldawn {
 	public:
 		VulkanContext(const VulkanContext&) = delete;
 		VulkanContext& operator=(const VulkanContext&) = delete;
-		VulkanContext(VulkanContext&&) noexcept = default;
-		VulkanContext& operator=(VulkanContext&&) noexcept = default;
+		VulkanContext(VulkanContext&&) noexcept = delete;
+		VulkanContext& operator=(VulkanContext&&) noexcept = delete;
 	};
 
 	/**

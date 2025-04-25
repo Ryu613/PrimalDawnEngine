@@ -20,7 +20,7 @@ namespace primaldawn {
         /**
         * @brief 创建Engine类
         */
-        static Engine* Create(config::Engine config);
+        static Engine* Create(const config::Engine& config);
 
         /**
         * @brief 关闭引擎
@@ -46,7 +46,7 @@ namespace primaldawn {
 
         ~PdEngine();
     private:
-        explicit PdEngine(config::Engine config);
+        explicit PdEngine(const config::Engine& config);
         
         void shutdown();
 

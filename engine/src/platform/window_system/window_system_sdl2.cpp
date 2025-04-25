@@ -5,8 +5,8 @@
 #include "primaldawn/logging.hpp"
 
 namespace primaldawn {
-    WindowSystemSdl2::WindowSystemSdl2(config::WindowSystem cfg)
-      : PdWindowSystem(std::move(cfg)) {
+    WindowSystemSdl2::WindowSystemSdl2(const config::WindowSystem& cfg)
+      : PdWindowSystem(cfg) {
         SDL_Init(SDL_INIT_EVENTS);
         // 创建窗口
         const int x = SDL_WINDOWPOS_CENTERED;

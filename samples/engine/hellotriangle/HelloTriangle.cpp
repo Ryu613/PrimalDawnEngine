@@ -4,8 +4,8 @@
 
 namespace primaldawn {
 
-    HelloTriangle::HelloTriangle(ApplicationConfig config)
-      : Application(std::move(config)) {
+    HelloTriangle::HelloTriangle(const ApplicationConfig& config)
+      : Application(config) {
     }
     HelloTriangle::~HelloTriangle() {
 

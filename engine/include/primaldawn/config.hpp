@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "primaldawn/platform_enum.hpp"
+#include "primaldawn/enums.hpp"
 
 namespace primaldawn::config {
 

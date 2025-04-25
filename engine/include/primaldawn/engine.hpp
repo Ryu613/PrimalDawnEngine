@@ -28,12 +28,13 @@ namespace primaldawn {
 	public:
 
         /**
-        * @brief 创建Engine类
+        * @brief create Engine, if no config specified, then use default config
+        * @return in order to destroy Engine, use Destroy(Engine* engine)
         */
-        static Engine* Create(config::Engine config) noexcept;
+        static Engine* Create(const config::Engine* config = nullptr) noexcept;
 
         /**
-        * @brief 销毁引擎
+        * @brief destroy engine
         */
         static void Destroy(Engine* engine);
 

@@ -16,12 +16,12 @@ namespace primaldawn {
     * 2. 渲染系统
     * 3. 渲染器
     */
-    PdEngine::PdEngine(config::Engine config)
+    PdEngine::PdEngine(const config::Engine& config)
       : config_(config) {
         logging::Init();
         LOGI("Engine initializing...")
         platform_ = factory::CreatePlatform(config_.platform);
-        render_system_ = factory::CreateRenderSystem(platform_.get(), config_.render_system);
+        render_system_ = factory::CreateRenderSystem(*platform_, config_.render_system);
         //renderer_ = factory::CreateRenderer(engine_config_.renderer_config);
         LOGI("Engine initialized")
     }
@@ -30,8 +30,8 @@ namespace primaldawn {
         LOGI("destroying engine...")
     }
 
-    Engine* PdEngine::Create(config::Engine config) {
-        return new PdEngine(std::move(config));
+    Engine* PdEngine::Create(const config::Engine& config) {
+        return new PdEngine(config);
     }
 
     void PdEngine::Destroy(PdEngine* engine) {
