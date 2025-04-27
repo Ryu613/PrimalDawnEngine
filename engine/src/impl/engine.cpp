@@ -1,6 +1,6 @@
 #include "impl/engine.hpp"
 
-#include "impl/logging.hpp"
+#include "primaldawn/logging.hpp"
 
 #include "impl/factory.hpp"
 #include "impl/render_system.hpp"
@@ -18,7 +18,7 @@ namespace primaldawn {
     */
     PdEngine::PdEngine(const config::Engine& config)
       : config_(config) {
-        logging::Init();
+        //logging::Init();
         LOGI("Engine initializing...")
         platform_ = factory::CreatePlatform(config_.platform);
         render_system_ = factory::CreateRenderSystem(*platform_, config_.render_system);

@@ -1,24 +1,79 @@
 #include "application/application.hpp"
 
+#include <stdexcept>
+
 #include "primaldawn/engine.hpp"
+#include "primaldawn/logging.hpp"
 
 namespace primaldawn {
-    Application::Application(const ApplicationConfig& config)
-        : application_config_(config) {
-        engine_ = Engine::Create(&application_config_.engine_config);
-        close_ = false;
+    Application& Application::Get() {
+        static Application app;
+        return app;
+    }
+
+    Application& Application::Configure(const ApplicationConfig* config) {
+        if (configured_) {
+            LOGW("you have configure this application, cannot reconfigure!")
+            return *this;
+        }
+        if (!config) {
+            LOGW("no config specified, use default configuration!")
+            config_ = ApplicationConfig{};
+        }
+        else {
+            config_ = *config;
+        }
+        configured_ = true;
+        return *this;
     }
 
     Application::~Application() {
     }
 
-     void Application::SetupScene() {};
-     void Application::Run() {
-         // 执行完要销毁
-         Close();
-     };
-     void Application::Close() {
-         Engine::Destroy(engine_);
-         close_ = true;
-     };
+    void Application::Run() {
+        if (!configured_) {
+            throw std::runtime_error("please run Configure() explicitly first!");
+        }
+        // configure and create engine
+        config::Engine engine_config;
+        engine_config.app_name = config_.app_name;
+        engine_config.enable_debug = config_.enable_debug;
+        if (config_.backend == RenderSystemType::DEFAULT) {
+#if defined(_WIN32) && defined(PRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
+            config_.backend = RenderSystemType::VULKAN;
+#elif defined(PRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
+            config.backend = RenderSystemType::OPENGL;
+#else
+            throw std::runtime_error("cannot find a proper backend! application run failed");
+#endif
+        }
+        engine_config.render_system.render_system_type = config_.backend;
+        if (config_.window_api == WindowSystemType::DEFAULT) {
+            config_.window_api = WindowSystemType::SDL2;
+        }
+        engine_config.platform.window_system.title = config_.app_name;
+        engine_config.platform.window_system_type = config_.window_api;
+        engine_config.platform.window_system.headless = config_.window_headless;
+        engine_config.platform.window_system.resizable = config_.window_resizable;
+        engine_config.platform.window_system.window_height = config_.window_height;
+        engine_config.platform.window_system.window_width = config_.window_width;
+        engine_ = Engine::Create(&engine_config);
+        // configure scene and view
+        scene_ = engine_->CreateScene();
+        view_ = engine_->CreateView();
+        camera_ = engine_->CreateCamera();
+        // TODO renderer
+        close_ = false;
+        // TODO render loop
+        // TODO destroy
+        Engine::Destroy(engine_);
+        engine_ = nullptr;
+    }
+
+    void Application::Close() {
+        close_ = true;
+    }
+
+    Application::Application() {
+    }
 } // namespace primaldawn

@@ -1,6 +1,6 @@
 #include "impl/renderer.hpp"
 
-#include "impl/logging.hpp"
+#include "primaldawn/logging.hpp"
 
 namespace primaldawn {
     PdRenderer::PdRenderer(const PdEngine& engine)

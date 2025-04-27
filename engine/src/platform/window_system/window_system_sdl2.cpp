@@ -2,7 +2,7 @@
 
 #include <SDL_syswm.h>
 
-#include "impl/logging.hpp"
+#include "primaldawn/logging.hpp"
 
 namespace primaldawn {
     WindowSystemSdl2::WindowSystemSdl2(const config::WindowSystem& cfg)
@@ -15,13 +15,13 @@ namespace primaldawn {
         sdl_window_ = SDL_CreateWindow(config_.title.c_str(),
             x,
             y,
-            static_cast<int>(config_.extent.width),
-            static_cast<int>(config_.extent.height),
+            static_cast<int>(config_.window_width),
+            static_cast<int>(config_.window_height),
             windowFlags);
     }
 
     WindowSystemSdl2::~WindowSystemSdl2() {
-
+        SDL_Quit();
     }
 
     bool WindowSystemSdl2::ShouldClose() {
@@ -32,7 +32,7 @@ namespace primaldawn {
     }
 
     void WindowSystemSdl2::Close() {
-
+        closed_ = true;
     }
 
     void* WindowSystemSdl2::GetNativeWindow() const {

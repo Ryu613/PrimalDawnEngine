@@ -4,9 +4,8 @@
 
 namespace primaldawn {
 	/**
-	* @brief 相机相关操作
-	*
-	* 相机应从Engine.CreateCamera()构建
+	* @brief camera class specifies camera's properties
+	* camera should be created by Engine.CreateCamera()
 	*/
 	class Camera : public Api {
 	public:

@@ -5,7 +5,7 @@
 
 #include "primaldawn/enums.hpp"
 #include "primaldawn/config.hpp"
-#if defined(WIN32)
+#if defined(_WIN32)
 #include "platform/os/platform_windows.hpp"
 #endif
 
@@ -15,13 +15,13 @@
 #include "platform/render_system/render_system_opengl.hpp"
 #endif
 
-#include "impl/logging.hpp"
+#include "primaldawn/logging.hpp"
 #include "impl/engine.hpp"
 
 namespace primaldawn::factory {
 
     std::unique_ptr<PdPlatform> CreatePlatform(config::Platform& config) {
-    #if defined(WIN32)
+    #if defined(_WIN32)
         LOGI("Platform is {}", "Windows")
         return std::make_unique<PlatformWindows>(config);
     #else

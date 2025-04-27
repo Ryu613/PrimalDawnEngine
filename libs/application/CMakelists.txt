@@ -19,6 +19,12 @@ set(LIBS
 	engine
 )
 
+if(${BACKEND_TYPE} STREQUAL "VULKAN")
+	add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_VULKAN)
+elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
+	add_definitions(-DPRIMALDAWN_DRIVER_SUPPORTS_OPENGL)
+endif()
+
 add_library(application STATIC ${HEADERS} ${SRCS})
 
 target_link_libraries(application PUBLIC ${LIBS})

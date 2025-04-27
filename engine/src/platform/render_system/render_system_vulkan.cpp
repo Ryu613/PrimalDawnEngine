@@ -8,7 +8,7 @@
 #include "vma/vk_mem_alloc.h"
 #include "vulkan/vulkan_format_traits.hpp"
 
-#include "impl/logging.hpp"
+#include "primaldawn/logging.hpp"
 #include "impl/platform.hpp"
 #include "impl/window_system.hpp"
 #include "platform/render_system/vulkan/vulkan_context.hpp"
@@ -44,9 +44,8 @@ namespace {
     }
 
     RenderSystemVulkan::~RenderSystemVulkan() {
-        if (context_) {
-
-        }
+        context_->GetLogicalDevice().waitIdle();
+        // TODO: destroy vulkan things
     }
 
     void RenderSystemVulkan::BindPipeline() {
