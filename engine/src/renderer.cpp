@@ -1,5 +1,6 @@
 #include "impl/renderer.hpp"
 
+#include "impl/engine.hpp"
 #include "impl/view.hpp"
 
 namespace primaldawn {

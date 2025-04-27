@@ -3,6 +3,7 @@
 #include "primaldawn/api.hpp"
 
 namespace primaldawn {
+	class Engine;
 	class View;
 	/**
 	* @brief renderer is used for drawing on per-frame image, specifies render config and get frame infos

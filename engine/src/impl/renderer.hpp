@@ -6,19 +6,19 @@
 
 namespace primaldawn {
 	class PdEngine;
-
+	class PdView;
 	class PdRenderer : public Renderer {
 	public:
-		explicit PdRenderer(const PdEngine& engine);
+		explicit PdRenderer(PdEngine& engine);
 		~PdRenderer() noexcept;
 
-		const PdEngine& GetEngine() const noexcept {
+		PdEngine& GetEngine() const noexcept {
 			return engine_;
 		}
 
 		void Render(const PdView* view);
 	private:
-		const PdEngine& engine_;
+		PdEngine& engine_;
 	};
 
 	DOWNCAST(Renderer);

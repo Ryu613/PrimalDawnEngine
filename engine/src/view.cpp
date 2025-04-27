@@ -1,6 +1,7 @@
 #include "impl/view.hpp"
 
 #include "impl/camera.hpp"
+#include "impl/scene.hpp"
 
 namespace primaldawn {
     void View::SetScene(Scene* scene) {

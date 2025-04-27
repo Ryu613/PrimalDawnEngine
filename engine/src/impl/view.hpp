@@ -5,16 +5,18 @@
 #include "downcast.hpp"
 
 namespace primaldawn {
+	class PdEngine;
 	class PdScene;
 	class PdCamera;
 	class PdView : public View {
 	public:
 		explicit PdView(const PdEngine& engine);
 		~PdView() noexcept;
+
 		void SetScene(PdScene* scene) {
 			scene_ = scene;
 		}
-		PdScene const* GetScene() const {
+		PdScene* GetScene() noexcept {
 			return scene_;
 		}
 		void SetCamera(PdCamera* camera) {
