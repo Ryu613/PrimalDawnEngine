@@ -31,17 +31,17 @@ namespace {
         auto& window_config = render_system_vulkan_.GetPlatform().GetWindowSystem().GetConfig();
 
         if (surface_caps.currentExtent.width == INVALID_VK_INDEX) {
-            props_.extent.width = window_config.extent.width;
-            props_.extent.height = window_config.extent.height;
+            props_.extent.width = window_config.window_width;
+            props_.extent.height = window_config.window_height;
         }
         else {
             props_.extent.width = std::clamp(
-                window_config.extent.width,
+                static_cast<uint32_t>(window_config.window_width),
                 surface_caps.minImageExtent.width,
                 surface_caps.maxImageExtent.width
             );
             props_.extent.height = std::clamp(
-                window_config.extent.height,
+                static_cast<uint32_t>(window_config.window_height),
                 surface_caps.minImageExtent.height,
                 surface_caps.maxImageExtent.height
             );

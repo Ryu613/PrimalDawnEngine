@@ -1,6 +1,6 @@
 #include "impl/window_system.hpp"
 
-#include "impl/logging.hpp"
+#include "primaldawn/logging.hpp"
 
 namespace primaldawn {
     PdWindowSystem::PdWindowSystem(const config::WindowSystem& config)

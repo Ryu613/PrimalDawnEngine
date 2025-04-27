@@ -1,33 +1,32 @@
 #pragma once
 
+#include <cstdint>
+
 namespace primaldawn {
-    enum class RenderSystemType {
-        NOOP = 0,
+    enum class RenderSystemType : uint8_t {
+        DEFAULT = 0,
         OPENGL = 1,
         VULKAN = 2,
         METAL = 3,
-        D3DX12 = 4,
-        UNKWONN = 99,
     };
 
-    enum class OS {
+    enum class OS : uint8_t {
         WINDOWS = 1,
         LINUX = 2,
         MACOS = 3,
-        UNKNOWN = 99,
     };
 
-    enum class WindowSystemType {
+    enum class WindowSystemType : uint8_t {
+        DEFAULT = 0,
         SDL2 = 1,
         GLFW3 = 2,
-        UNKNOWN = 99,
     };
 
     enum class WindowSystemMode {
+        DEFAULT = 0,
         HEADLESS = 1,
         FULLSCREEN = 2,
         BORDERLESS = 3,
-        DEFAULT = 99,
     };
 
     enum class CameraProjectionType {

@@ -5,22 +5,18 @@
 
 namespace primaldawn::config {
 
-    struct WindowSystemExtent {
-        unsigned int width = 1024;
-        unsigned int height = 768;
-    };
-
     struct WindowSystem {
         std::string title{};
         WindowSystemMode window_system_mode = WindowSystemMode::DEFAULT;
-        bool is_headless = false;
+        bool headless = false;
         bool resizable = true;
-        WindowSystemExtent extent{ 1024, 768 };
+        size_t window_height = 1024;
+        size_t window_width = 768;
     };
 
     struct Platform {
         OS os = OS::WINDOWS;
-        WindowSystemType window_system_type = WindowSystemType::GLFW3;
+        WindowSystemType window_system_type = WindowSystemType::SDL2;
         WindowSystem window_system;
 
     };
@@ -28,7 +24,7 @@ namespace primaldawn::config {
         std::string app_name{ "default"};
         std::string engine_name{ "Primal Dawn" };
         OS os = OS::WINDOWS;
-        RenderSystemType render_system_type = RenderSystemType::NOOP;
+        RenderSystemType render_system_type = RenderSystemType::VULKAN;
         bool enable_debug = false;
     };
     struct Renderer {
@@ -41,9 +37,9 @@ namespace primaldawn::config {
 	struct Engine {
         std::string app_name{ "default" };
         bool enable_debug = false;
-        Platform platform = {};
-        RenderSystem render_system = {};
-        Renderer renderer = {};
+        Platform platform;
+        RenderSystem render_system;
+        Renderer renderer;
 
 	};
 } // namespace primaldawn::config

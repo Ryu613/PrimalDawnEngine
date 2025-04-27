@@ -8,6 +8,7 @@
 #include "downcast.hpp"
 
 namespace primaldawn {
+    class PdLogger;
     class PdPlatform;
     class PdRenderSystem;
     class PdRenderer;
