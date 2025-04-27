@@ -12,7 +12,11 @@ namespace primaldawn {
 		explicit PdRenderer(const PdEngine& engine);
 		~PdRenderer() noexcept;
 
-		void render();
+		const PdEngine& GetEngine() const noexcept {
+			return engine_;
+		}
+
+		void Render(const PdView* view);
 	private:
 		const PdEngine& engine_;
 	};

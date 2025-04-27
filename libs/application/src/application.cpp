@@ -75,5 +75,6 @@ namespace primaldawn {
     }
 
     Application::Application() {
+        logging::Init();
     }
 } // namespace primaldawn

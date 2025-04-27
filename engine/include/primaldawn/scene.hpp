@@ -5,7 +5,8 @@
 namespace primaldawn {
 
 	/**
-	* @brief 
+	* @brief scene contains object and light instances
+	* Scene is created from Engine.CreateScene()
 	*/
 	class Scene : public Api {
 	protected:
