@@ -12,9 +12,8 @@
 
 namespace primaldawn {
     /**
-    * 1. 平台层
-    * 2. 渲染系统
-    * 3. 渲染器
+    * 1. platform
+    * 2. render system
     */
     PdEngine::PdEngine(const config::Engine& config)
       : config_(config) {
@@ -22,7 +21,6 @@ namespace primaldawn {
         LOGI("Engine initializing...")
         platform_ = factory::CreatePlatform(config_.platform);
         render_system_ = factory::CreateRenderSystem(*platform_, config_.render_system);
-        //renderer_ = factory::CreateRenderer(engine_config_.renderer_config);
         LOGI("Engine initialized")
     }
 
