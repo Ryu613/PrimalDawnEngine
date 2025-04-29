@@ -12,9 +12,10 @@ int main() {
     auto& app = Application::Get();
     try {
         app.Configure(&config)
+           .SetupScene()
            .Run();
     }
-    catch (std::exception e) {
+    catch (const std::exception& e) {
         std::cerr << e.what();
         return -1;
     }

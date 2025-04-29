@@ -7,7 +7,7 @@ namespace primaldawn::config {
 
     struct WindowSystem {
         std::string title{};
-        WindowSystemMode window_system_mode = WindowSystemMode::DEFAULT;
+        WindowMode window_mode = WindowMode::DEFAULT;
         bool headless = false;
         bool resizable = true;
         size_t window_height = 1024;
@@ -30,10 +30,7 @@ namespace primaldawn::config {
     struct Renderer {
 
     };
-    struct CameraConfig {
-        CameraProjectionType cam_proj_type = CameraProjectionType::PERSPECTIVE;
-        CameraFovType cam_fov_type = CameraFovType::HORIZONTAL;
-    };
+
 	struct Engine {
         std::string app_name{ "default" };
         bool enable_debug = false;

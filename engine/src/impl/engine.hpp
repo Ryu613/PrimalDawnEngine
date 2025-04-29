@@ -8,6 +8,9 @@
 #include "downcast.hpp"
 
 namespace primaldawn {
+namespace utils {
+    class PdEntityManager;
+} // namespace utils
     class PdPlatform;
     class PdRenderSystem;
     class PdRenderer;
@@ -20,7 +23,7 @@ namespace primaldawn {
         /**
         * @brief 创建Engine类
         */
-        static Engine* Create(const config::Engine& config);
+        static PdEngine* Create(const config::Engine& config);
 
         /**
         * @brief 关闭引擎
@@ -35,9 +38,9 @@ namespace primaldawn {
         /**
         * @brief 添加视图
         */
-        Scene* CreateScene();
+        PdScene* CreateScene();
 
-        Camera* CreateCamera();
+        PdCamera* CreateCamera();
 
         /**
         * @brief 当前是否在运行
@@ -58,6 +61,7 @@ namespace primaldawn {
         std::unique_ptr<PdRenderer> renderer_{ nullptr };
         std::unique_ptr<PdScene> scene_{ nullptr };
         std::unique_ptr<PdView> view_{ nullptr };
+        std::unique_ptr<utils::PdEntityManager> entity_manager_{ nullptr };
 	};
 
     DOWNCAST(Engine);

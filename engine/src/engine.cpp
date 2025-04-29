@@ -1,3 +1,6 @@
+#include "primaldawn/engine.hpp"
+
+#include "primaldawn/scene.hpp"
 #include "impl/engine.hpp"
 
 #include "impl/scene.hpp"
@@ -5,11 +8,7 @@
 namespace primaldawn {
 
     Engine* Engine::Create(const config::Engine* config) noexcept {
-        if (!config) {
-            config::Engine default_config;
-            config = &default_config;
-        }
-        return PdEngine::Create(*config);
+        return PdEngine::Create(config ? *config : config::Engine{});
     }
 
     void Engine::Destroy(Engine* engine) {

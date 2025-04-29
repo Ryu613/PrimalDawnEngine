@@ -9,15 +9,18 @@
 #include "impl/view.hpp"
 #include "impl/renderer.hpp"
 #include "impl/scene.hpp"
+#include "impl/utils/entity_manager.hpp"
 
 namespace primaldawn {
     /**
     * 1. platform
     * 2. render system
+    * 3. entity manager
     */
     PdEngine::PdEngine(const config::Engine& config)
-      : config_(config) {
-        //logging::Init();
+      : config_(config),
+        entity_manager_(std::make_unique<utils::PdEntityManager>()) {
+        logging::Init();
         LOGI("Engine initializing...")
         platform_ = factory::CreatePlatform(config_.platform);
         render_system_ = factory::CreateRenderSystem(*platform_, config_.render_system);
@@ -28,7 +31,7 @@ namespace primaldawn {
         LOGI("destroying engine...")
     }
 
-    Engine* PdEngine::Create(const config::Engine& config) {
+    PdEngine* PdEngine::Create(const config::Engine& config) {
         return new PdEngine(config);
     }
 
@@ -39,7 +42,9 @@ namespace primaldawn {
         }
     }
 
-    Scene* PdEngine::CreateScene() {
+    PdScene* PdEngine::CreateScene() {
+        //scene_ = std::make_unique<PdScene>();
+        //return scene_.get();
         return nullptr;
     }
 
