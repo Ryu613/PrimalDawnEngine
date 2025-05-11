@@ -4,4 +4,6 @@ file(GLOB_RECURSE util_src CONFIGURE_DEPENDS *.hpp *.cpp)
 
 add_library(primaldawn_utils STATIC ${util_src})
 
+add_executable(allocator_test ${util_src})
+
 target_include_directories(primaldawn_utils PUBLIC include)

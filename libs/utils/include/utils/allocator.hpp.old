@@ -94,7 +94,7 @@ namespace LockingPolicy {
 	* TrackingPolicy: NoTrack/...
 	*/
 	template<
-		typename AreaPolicy,
+		typename ResourcePolicy,
 		typename AllocatorPolicy,
 		typename LockingPolicy,
 		typename TrackingPolicy,
@@ -106,8 +106,8 @@ namespace LockingPolicy {
 		template<typename ... ARGS>
 		Arena(const char* name, size_t size, ARGS&& ... args)
 			: name_(name),
-			  area_(size),
-			  allocator_(area_, std::forward<ARGS>(args)...) {
+			  mem_resource_(size),
+			  allocator_(mem_resource_, std::forward<ARGS>(args)...) {
 		}
 
 		void* alloc(size_t size, size_t alignment = alignof(std::max_align_t)) noexcept {
@@ -115,7 +115,7 @@ namespace LockingPolicy {
 		}
 	private:
 		const char* name_ = nullptr;
-		AreaPolicy area_;
+		ResourcePolicy mem_resource_;
 		AllocatorPolicy allocator_;
 		LockingPolicy lock_;
 		TrackingPolicy listener_;
@@ -123,7 +123,7 @@ namespace LockingPolicy {
 	};
 
 	using HeapArena = Arena<
-		AreaPolicy::HeapArea,
+		AreaPolicy::HeapResource,
 		AllocatorPolicy::HeapAllocator,
 		LockingPolicy::NoLock,
 		TrackingPolicy::Untracked>;
