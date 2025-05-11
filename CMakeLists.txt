@@ -12,7 +12,6 @@ project(
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 预定义变量
 set(PRIMALDAWN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARIES_DIR ${PRIMALDAWN_DIR}/libs)
 set(EXTERNALS_DIR ${PRIMALDAWN_DIR}/externals)
@@ -23,8 +22,11 @@ set(BACKEND_TYPE "VULKAN" CACHE STRING "specify backend type: VULKAN/OPENGL" FOR
 # SDL2, GLFW3
 set(WSI_TYPE "SDL2" CACHE STRING "specify WSI type: SDL2/GLFW3" FORCE)
 
-# 添加子目录
 add_subdirectory(${PRIMALDAWN_DIR}/engine)
+
+#libs
 add_subdirectory(${LIBRARIES_DIR}/application)
+add_subdirectory(${LIBRARIES_DIR}/utils)
+
+# samples
 add_subdirectory(${PRIMALDAWN_DIR}/samples)
-#add_subdirectory(${PRIMALDAWN_DIR}/examples)

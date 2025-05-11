@@ -17,6 +17,7 @@ set(ENGINE_PRIVATE_HEADERS
 )
 
 set(EXTERNALS
+	primaldawn_utils
 	fmt
 	spdlog::spdlog
 	glm

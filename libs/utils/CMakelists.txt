@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.27)
+
+file(GLOB_RECURSE util_src CONFIGURE_DEPENDS *.hpp *.cpp)
+
+add_library(primaldawn_utils STATIC ${util_src})
+
+target_include_directories(primaldawn_utils PUBLIC include)
