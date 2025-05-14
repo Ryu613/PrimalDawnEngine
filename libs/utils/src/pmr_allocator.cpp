@@ -1,34 +1,36 @@
 #include "utils/pmr_allocator.hpp"
 
 namespace utils {
-	struct PmrAllocatorDetails {
-		AllocatorType allocator_type;
-		AreaType area_type;
-		TracingType tracing_type;
-		LockingType locking_type;
-	};
+	//struct PmrAllocatorDetails {
+	//	AllocatorType allocator_type;
+	//	AreaType area_type;
+	//	TracingType tracing_type;
+	//	LockingType locking_type;
+	//};
 
-    PmrAllocator::Builder& PmrAllocator::Builder::allocatorType(const AllocatorType alloc_type) noexcept {
-        impl_->allocator_type = alloc_type;
-        return *this;
-    }
+ //   using PBuilder = PmrAllocator::Builder;
 
-    PmrAllocator::Builder& PmrAllocator::Builder::areaType(const AreaType area_type) noexcept {
-        impl_->area_type = area_type;
-        return *this;
-    }
+ //   PBuilder& PBuilder::allocatorType(const AllocatorType alloc_type) noexcept {
+ //       impl_->allocator_type = alloc_type;
+ //       return *this;
+ //   }
 
-    PmrAllocator::Builder& PmrAllocator::Builder::tracingType(const TracingType tracing_type) noexcept {
-        impl_->tracing_type = tracing_type;
-        return *this;
-    }
+ //   PBuilder& PBuilder::areaType(const AreaType area_type) noexcept {
+ //       impl_->area_type = area_type;
+ //       return *this;
+ //   }
 
-    PmrAllocator::Builder& PmrAllocator::Builder::lockingType(const LockingType locking_type) noexcept {
-        impl_->locking_type = locking_type;
-        return *this;
-    }
+ //   PBuilder& PBuilder::tracingType(const TracingType tracing_type) noexcept {
+ //       impl_->tracing_type = tracing_type;
+ //       return *this;
+ //   }
 
-    PmrAllocator::Allocator* PmrAllocator::Builder::Build() const {
-        return nullptr;
-    }
+ //   PBuilder& PBuilder::lockingType(const LockingType locking_type) noexcept {
+ //       impl_->locking_type = locking_type;
+ //       return *this;
+ //   }
+
+ //   PmrAllocator::Allocator* PBuilder::build() const {
+ //       return nullptr;
+ //   }
 } // namespace utils

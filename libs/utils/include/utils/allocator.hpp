@@ -3,7 +3,6 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
-#include <memory_resource>
 
 namespace utils {
 
@@ -17,8 +16,7 @@ namespace utils {
 		// compatibility for POSIX
 		assert((align % sizeof(void*)) == 0);
 		void* p = nullptr;
-		// some platform or SDK not support std::aligned_alloc, so call os-specific malloc instead
-		// ref: https://developercommunity.visualstudio.com/t/c17-stdaligned-alloc%E7%BC%BA%E5%A4%B1/468021
+		// use system native aligned malloc
 #if defined(_WIN32)
 		p = ::_aligned_malloc(size, align);
 #else
@@ -38,7 +36,7 @@ namespace utils {
 
 namespace AllocatorPolicy {
 	/**
-	* heap allocator
+	* heap allocator: only alloc aligned, not a pool allocator
 	*/
 	class HeapAllocator {
 	public:
@@ -64,8 +62,8 @@ namespace TrackingPolicy {
 	};
 } // namespace TrackingPolicy
 
-namespace AreaPolicy {
-	class HeapResource : public std::pmr::memory_resource {
+namespace ResourcePolicy {
+	class HeapResource {
 	public:
 		HeapResource() noexcept = default;
 		explicit HeapResource(size_t size) {
@@ -76,6 +74,9 @@ namespace AreaPolicy {
 	private:
 		void* begin_ = nullptr;
 		void* end_ = nullptr;
+	};
+
+	class NullResource {
 	};
 }
 
@@ -121,10 +122,4 @@ namespace LockingPolicy {
 		TrackingPolicy listener_;
 
 	};
-
-	using HeapArena = Arena<
-		AreaPolicy::HeapResource,
-		AllocatorPolicy::HeapAllocator,
-		LockingPolicy::NoLock,
-		TrackingPolicy::Untracked>;
 }
