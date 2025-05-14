@@ -6,11 +6,10 @@
 
 #include "primaldawn/config.hpp"
 #include "downcast.hpp"
+#include "allocators.hpp"
 
 namespace primaldawn {
-namespace utils {
-    class PdEntityManager;
-} // namespace utils
+    class utils::PdEntityManager;
     class PdPlatform;
     class PdRenderSystem;
     class PdRenderer;
@@ -19,6 +18,14 @@ namespace utils {
     class PdCamera;
 
 	class PdEngine : public Engine {
+    public:
+        void* operator new(const std::size_t size) noexcept {
+            return ::utils::aligned_alloc(size, alignof(PdEngine));
+        }
+
+        void operator delete(void* p) noexcept {
+            ::utils::aligned_free(p);
+        }
     public:
         /**
         * @brief 创建Engine类
