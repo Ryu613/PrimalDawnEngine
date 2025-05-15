@@ -4,9 +4,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(
     PrimalDawnEngine 
+    VERSION 1.2.0
     LANGUAGES CXX C
     DESCRIPTION "☀PRIMAL DAWN ENGINE"
-    VERSION 1.2.0
 )
 
 set(CMAKE_CXX_STANDARD 20)
@@ -27,6 +27,7 @@ add_subdirectory(${PRIMALDAWN_DIR}/engine)
 #libs
 add_subdirectory(${LIBRARIES_DIR}/application)
 add_subdirectory(${LIBRARIES_DIR}/utils)
+add_subdirectory(${LIBRARIES_DIR}/ecs)
 
 # samples
 add_subdirectory(${PRIMALDAWN_DIR}/samples)

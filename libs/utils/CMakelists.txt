@@ -6,7 +6,7 @@ include(${PRIMALDAWN_DIR}/cmake/externals-utils.cmake)
 
 add_library(primaldawn_utils STATIC ${util_src})
 
-target_link_libraries(primaldawn_utils PUBLIC mimalloc)
+target_link_libraries(primaldawn_utils)
 
 #add_executable(allocator_test ${util_src})
 
