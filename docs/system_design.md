@@ -44,12 +44,12 @@ libs用于方便engine使用的库，或者可从engine独立出来的库
 
 ## 子模块设计
 
-1. [内存分配方案](内存分配方案.md)
-1. [RHI设计](RHI设计.md)
-1. [PBR设计](PBR设计.md)
-1. [ECS设计](ECS设计.md)
-1. [RenderGraph设计](RenderGraph设计.md)
-1. [JobSystem设计](JobSystem设计.md)
+1. [内存分配方案](design/内存分配方案.md)
+1. [ECS设计](design/ECS设计.md)
+1. [RHI设计](design/RHI设计.md)
+1. [PBR设计](design/PBR设计.md)
+1. [RenderGraph设计](design/RenderGraph设计.md)
+1. [JobSystem设计](design/JobSystem设计.md)
 
 ## 核心调用链
 
@@ -82,8 +82,8 @@ Application.Run() -> Engine.Run() -> Renderer.Render() -> (loop)RenderSystem.Dra
 
 ### 待调研
 
-- boost
+- boost/folly/openMP
 - 依赖注入
 - graphviz
 - tracy, renderdoc
-- debug工具
+- 其他调试工具

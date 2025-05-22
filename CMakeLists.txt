@@ -27,7 +27,6 @@ add_subdirectory(${PRIMALDAWN_DIR}/engine)
 #libs
 add_subdirectory(${LIBRARIES_DIR}/application)
 add_subdirectory(${LIBRARIES_DIR}/utils)
-add_subdirectory(${LIBRARIES_DIR}/ecs)
 
 # samples
 add_subdirectory(${PRIMALDAWN_DIR}/samples)

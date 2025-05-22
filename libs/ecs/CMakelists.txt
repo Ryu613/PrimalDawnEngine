@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 3.27)
-
-file(GLOB_RECURSE ecs_src CONFIGURE_DEPENDS *.hpp *.cpp)
-
-add_library(primaldawn_ecs STATIC ${ecs_src})
-
-target_include_directories(primaldawn_ecs PUBLIC include)

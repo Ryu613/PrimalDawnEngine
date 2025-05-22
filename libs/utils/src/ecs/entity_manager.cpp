@@ -1,0 +1,101 @@
+#include "utils/ecs/entity_manager.hpp"
+
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+#include <algorithm>
+
+namespace utils::ecs {
+
+    EntityManager& EntityManager::GetSingleton() {
+        static EntityManager singleton;
+        return singleton;
+    }
+
+    EntityManager::EntityManager() : impl_(std::make_unique<EntityManagerImpl>()) {
+    }
+
+    Entity EntityManager::CreateEntity(Entity e) {
+        impl_->CreateEntity(e);
+    }
+
+    void EntityManager::DestroyEntity(const Entity& e) {
+        impl_->DestroyEntity(e);
+    }
+
+    void EntityManager::AddComponentToEntity(const Entity& e, const Component& c) {
+        impl_->AddComponentToEntity(e, c);
+    }
+
+    void EntityManager::RemoveComponentFromEntity(const Entity& e, const Component& c) {
+        impl_->RemoveComponentFromEntity(e, c);
+    }
+
+    bool EntityManager::EntityHasComponent(const Entity& e, const Component& c) {
+        impl_->EntityHasComponent(e, c);
+    }
+
+
+    class EntityManagerImpl {
+        using EntityIdType = Entity::IdType;
+        using ComponentIdType = Component::IdType;
+        using EntityInstanceIdType = size_t;
+    public:
+        Entity CreateEntity(Entity& e) {
+            if (e.isNull()) {
+                // prefer to use recycled id
+                if (!free_list_.empty()) {
+                    e = Entity(free_list_.front());
+                    free_list_.pop();
+                }
+                else {
+                    // generate id and set into this entity
+                    e = Entity(current_index_++);
+                }
+            }
+            return e;
+        }
+
+        void DestroyEntity(const Entity& e) {
+            // check if this entity is alive(not in freelist)
+            if (!isInFreeList(e.id_)) {
+                // recycle entity id
+                free_list_.push(e.id_);
+            }
+        }
+
+        void AddComponentToEntity(const Entity& e, const Component& c) {
+            // check if this entity has component
+            if (!EntityHasComponent(e, c)) {
+                // update ec/ce map
+            }
+        }
+
+        void RemoveComponentFromEntity(const Entity& e, const Component& c) {
+            // check if this entity has component
+            if (!EntityHasComponent(e, c)) {
+                // destroy component
+                // update ec/ce map
+            }
+        }
+
+        bool EntityHasComponent(const Entity& e, const Component& c) {
+            auto pos = ec_map_.find(e.id_);
+            return pos != ec_map_.end();
+        }
+
+
+    private:
+
+        bool isInFreeList(EntityIdType id) {
+            auto pos = free_list_.find(id);
+            return pos != free_list_.end();
+        }
+
+        EntityIdType current_index_ = 1;
+        std::queue<EntityIdType> free_list_;
+        std::unordered_map<EntityIdType, std::unordered_set<ComponentIdType>> ec_map_;
+        std::unordered_map<ComponentIdType, std::unordered_set<EntityIdType>> ce_map_;
+        std::unordered_map<EntityIdType, std::vector<EntityInstanceIdType>> ei_map_;
+    };
+} // namespace utils::ecs
