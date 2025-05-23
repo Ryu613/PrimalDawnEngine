@@ -6,6 +6,7 @@
 
 #include "primaldawn/config.hpp"
 #include "downcast.hpp"
+#include "allocators.hpp"
 
 namespace primaldawn {
     class PdPlatform;
@@ -17,10 +18,18 @@ namespace primaldawn {
 
 	class PdEngine : public Engine {
     public:
+        void* operator new(const std::size_t size) noexcept {
+            return ::utils::aligned_alloc(size, alignof(PdEngine));
+        }
+
+        void operator delete(void* p) noexcept {
+            ::utils::aligned_free(p);
+        }
+    public:
         /**
         * @brief 创建Engine类
         */
-        static Engine* Create(const config::Engine& config);
+        static PdEngine* Create(const config::Engine& config);
 
         /**
         * @brief 关闭引擎
@@ -35,9 +44,9 @@ namespace primaldawn {
         /**
         * @brief 添加视图
         */
-        Scene* CreateScene();
+        PdScene* CreateScene();
 
-        Camera* CreateCamera();
+        PdCamera* CreateCamera();
 
         /**
         * @brief 当前是否在运行

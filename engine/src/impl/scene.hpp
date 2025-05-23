@@ -6,7 +6,6 @@
 
 namespace primaldawn {
 	class PdScene : public Scene {
-
 	};
 
 	DOWNCAST(Scene);

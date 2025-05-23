@@ -1,10 +1,9 @@
 #pragma once
 
 /**
-* 这些函数用于把某类的指针/引用安全地转为Pd开头的指针/引用
-* 
-* 主要用于对外接口类和私有类的公私分离
-* 例如: engine* 转为Pdengine* 
+* same function comparing with pimpl, but pure interface classes are more cleaner.
+* no members and impl pointer needed, but impl classes must inheritant from base classes
+* ensure ABI(backward compatibility) without pimpl
 */
 #define DOWNCAST(CLASS)                                    \
     inline Pd##CLASS& downcast(CLASS& that) noexcept {               \

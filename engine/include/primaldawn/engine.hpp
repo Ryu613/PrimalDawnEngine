@@ -9,8 +9,8 @@ namespace primaldawn {
     class View;
     class Camera;
     /**
-    * @brief Engine is Main entry of whole system, provide global management api of subsystems 
-    * Engine should be created by Create(), and destroy by Destroy();
+    * @brief Engine is Main entry of whole system, it provides global management api of subsystems 
+    * Engine should be created by Create(), and destroy by Destroy(), cannot use ctor/dtor
     */
 	class Engine {
 	public:
@@ -63,7 +63,7 @@ namespace primaldawn {
 
     public:
         // copy & assignment & move not supported, Engine holder cannot pass ownership
-        // delete unnecessary ctor
+        // delete unnecessary ctors
         Engine(const Engine&) = delete;
         Engine& operator=(const Engine&) = delete;
         Engine(Engine&&) = delete;

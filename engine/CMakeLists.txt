@@ -17,6 +17,7 @@ set(ENGINE_PRIVATE_HEADERS
 )
 
 set(EXTERNALS
+	primaldawn_utils
 	fmt
 	spdlog::spdlog
 	glm
@@ -117,7 +118,9 @@ set(SRC_FILES
 	${ENGINE_PRIVATE_HEADERS}
 	${PLATFORM_SRCS}
 	src/*.cpp
+	src/utils/*.cpp
 	src/impl/*.cpp
+	src/impl/utils/*.cpp
 )
 
 # note: not GLOB_RECURSE

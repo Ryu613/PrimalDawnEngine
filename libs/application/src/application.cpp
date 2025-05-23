@@ -2,8 +2,10 @@
 
 #include <stdexcept>
 
-#include "primaldawn/engine.hpp"
 #include "primaldawn/logging.hpp"
+#include "primaldawn/engine.hpp"
+#include "primaldawn/scene.hpp"
+#include "primaldawn/view.hpp"
 
 namespace primaldawn {
     Application& Application::Get() {
@@ -11,14 +13,17 @@ namespace primaldawn {
         return app;
     }
 
+    Application::~Application() {
+    }
+
     Application& Application::Configure(const ApplicationConfig* config) {
         if (configured_) {
-            LOGW("you have configure this application, cannot reconfigure!")
-            return *this;
+            LOGW("you have configured this application, cannot re-configure!")
+                return *this;
         }
         if (!config) {
-            LOGW("no config specified, use default configuration!")
-            config_ = ApplicationConfig{};
+            LOGW("no config specified, use default configuration")
+                config_ = ApplicationConfig{};
         }
         else {
             config_ = *config;
@@ -27,7 +32,19 @@ namespace primaldawn {
         return *this;
     }
 
-    Application::~Application() {
+    Application& Application::SetupScene(SceneSetupCallback setup) {
+        // configure scene and view
+        //scene_ = engine_->CreateScene();
+        //view_ = engine_->CreateView();
+        //view_->SetScene(scene_);
+        //camera_ = engine_->CreateCamera();
+        if (!setup) {
+            LOGW("scene not setup, use default scene!")
+            scene_ = engine_->CreateScene();
+            //scene_->AddEntity();
+        }
+        scene_setup_ = true;
+        return *this;
     }
 
     void Application::Run() {
@@ -58,13 +75,12 @@ namespace primaldawn {
         engine_config.platform.window_system.window_height = config_.window_height;
         engine_config.platform.window_system.window_width = config_.window_width;
         engine_ = Engine::Create(&engine_config);
-        // configure scene and view
-        scene_ = engine_->CreateScene();
-        view_ = engine_->CreateView();
-        camera_ = engine_->CreateCamera();
         // TODO renderer
         close_ = false;
         // TODO render loop
+        while (!close_) {
+
+        }
         // TODO destroy
         Engine::Destroy(engine_);
         engine_ = nullptr;

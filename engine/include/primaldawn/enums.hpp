@@ -22,20 +22,10 @@ namespace primaldawn {
         GLFW3 = 2,
     };
 
-    enum class WindowSystemMode {
+    enum class WindowMode : uint8_t {
         DEFAULT = 0,
         HEADLESS = 1,
         FULLSCREEN = 2,
         BORDERLESS = 3,
-    };
-
-    enum class CameraProjectionType {
-        PERSPECTIVE = 1,
-        ORTHOGRAPHIC = 2,
-    };
-
-    enum class CameraFovType {
-        VERTICAL = 1,
-        HORIZONTAL = 2,
     };
 } // namespace primaldawn

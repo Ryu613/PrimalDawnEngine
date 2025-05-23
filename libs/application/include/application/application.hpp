@@ -1,11 +1,13 @@
 #pragma once
 
-#include <memory>
 #include <string>
+#include <functional>
 
 #include "primaldawn/engine.hpp"
 
 namespace primaldawn {
+	class Scene;
+	class View;
 
 	struct ApplicationConfig {
 		std::string app_name{ "default" };
@@ -21,9 +23,12 @@ namespace primaldawn {
 
 	class Application {
 	public:
+		using SceneSetupCallback = std::function<void(Engine*, Scene*, View*)>;
+
 		static Application& Get();
 		~Application();
 		Application& Configure(const ApplicationConfig* config = nullptr);
+		Application& SetupScene(SceneSetupCallback setup = SceneSetupCallback());
 		void Run();
 		void Close();
 	private:
@@ -36,6 +41,7 @@ namespace primaldawn {
 		Camera* camera_ = nullptr;
 		bool close_ = true;
 		bool configured_ = false;
+		bool scene_setup_ = false;
 	public:
 		Application(const Application&) = delete;
 		Application& operator=(const Application&) = delete;
