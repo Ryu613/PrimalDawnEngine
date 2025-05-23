@@ -1,55 +1,74 @@
 # ECS设计
 
+## 设计哲学
+
+尽量少抽象新概念，减少使用的学习成本，尽量不用看文档，看api就能知道怎么用
+
 ## 总体设计
 
-本版设计考虑的优先级为: 功能 > 性能 > 空间
+### 类设计
 
-对经典ECS架构进行改进，故ECS并不直接对应到这三种class，本版暂不考虑多线程环境和事件监听，但是预留了扩展性
+- `ecs`: 头文件，用户只需引入此头文件即可使用ecs
+- `entity`: 实体类，只有一个id
+- `system`: 系统的基类模板，具体的系统需要派生其上
+- `ecs_manager`: 管理entity的id和生命周期
+- `archetype`: 管理component的信息和存储,archetype内部分为多个chunk
 
-- `Identity`: 有id, name, 用于标记和识别信息，可当作Entity, Component,EntityInstance，这么做可减少数据存储多份副本
-- `SOA`: 以数组形式存储同类型数据，是一个类模板，可设定内存分配器，同时还保存了component的实际数据，还提供了SOA数据的访问
-- `EntityManager`: 负责维护e/c, e/i关系，生命周期，创建/销毁Entity, 添加/删除Component, 还可以根据Component和字段名改数据
-- `register`: 在EntityManager内部，有个id生成器，还有记录了可复用的id集合，里面是2个bitset数组,有E/C的增删函数
-- `sparse_set`: 在register内部，用来维护E/C和C位置关系，查询E是否有C，若有，这个C在SOA里的下标是多少，此结构的查询和增删算法复杂度都为O(1),效率极高 
+### api设计
 
-没有直接的system，system就是各个manager，一个manager对应一个或多个entity
+类似std的风格，上手简单
+
+### 存储方案
+
+archetype + chunk
 
 ## 使用
 
-例如，有个类是RenderableManager,那么使用这个ECS例子如下:
+如下所示
 
 ```c++
-// 一般是单例的
-class RenderableManager {
-public:
-    // 一些getter/setter,其实是调用EntityManager的对应函数来做获取和设置
-    ...
-    // 构造器，实现里可以把这个EntityManager按照你要求的Entity和Component关系构造出来
-    RenderableManager();
-    void OnUpdate();
-private:
-    Entity renderableEntity;
-}
-...
-// 构造方法
-RenderableManager() {
-    const auto& mgr = EntityManager::get();
-    renderable = mgr.createEntity<int, Box, Layer>("height", "Box", "Layer");
-}
-...
-// 更新方法
-void OnUpdate() {
-     const auto& mgr = EntityManager::get();
-     int addHeight = 5;
-     auto setHeight = [addHeight](int& height){height += addheight};
-     mgr.setComponentData<renderable>("height", setHeight);
-}
+ecs::init();
+ecs::Entity e = ecs::make_entity<Position, Attr>(
+    Position{ 50,24,12 },
+    Attr{ "john", 100 }
+);
+// add Position & Attr component data to e
+ecs::add_component_data<Position, Attr>(e, Position{ 20,10,20 }, Attr{ "mary", 105 });
+// add Position component data to e
+ecs::add_component_data<Position>(e, Position{ 20, 10, 20 });
+// error! Extra is not exist in e
+ecs::add_component_data<Extra>(e, Extra{});
+// add new component(empty data) to e
+ecs::add_component<Extra>(e, Extra{});
+// error! Position is exist in e
+ecs::add_component<Position, Another>(e, Position{ 20,40,20 }, Another{ "tehe" });
+// add new component Another to e
+ecs::add_component<Another>(e, { "tehe" });
+// true
+ecs::has_components<Attr>(e);
+// remove Another component from e
+ecs::remove_components<Another>(e);
+// remove Another component from All, is it necessary?
+//ecs::remove_component_all<Another>();
+// destroy entity e
+ecs::destroy_entity(e);
+// register new system and enable it
+// can add stage & priority in the future
+ecs::register_system<MoveSystem>();
+// trigger specific system's OnUpdate();
+ecs::system_update<MoveSystem>();
+// trigger registered systems' OnUpdate() in order
+ecs::system_update_all();
+// disable system not unregister
+ecs::disable_system<MoveSystem>();
+// re-enable system
+ecs::enable_system<MoveSystem>();
 
 ```
 
 ## 实现
 
-参考libs/ecs
+参考libs/utils/ecs
 
 ## 参考资料
 

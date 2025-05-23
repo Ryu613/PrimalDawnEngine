@@ -12,8 +12,7 @@ namespace utils::ecs {
 			return id_ == 0;
 		}
 	private:
-		friend class EntityManager;
-		friend class EntityManagerImpl;
+		friend class EcsManager;
 		Entity(IdType id) : id_(id){}
 		IdType id_{ 0 };
 	};

@@ -98,7 +98,7 @@ namespace LockingPolicy {
 		typename ResourcePolicy,
 		typename AllocatorPolicy,
 		typename LockingPolicy,
-		typename TrackingPolicy,
+		typename TrackingPolicy
 	>
 	class Arena {
 	public:

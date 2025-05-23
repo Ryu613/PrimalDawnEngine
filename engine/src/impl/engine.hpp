@@ -9,7 +9,6 @@
 #include "allocators.hpp"
 
 namespace primaldawn {
-    class utils::PdEntityManager;
     class PdPlatform;
     class PdRenderSystem;
     class PdRenderer;
@@ -68,7 +67,6 @@ namespace primaldawn {
         std::unique_ptr<PdRenderer> renderer_{ nullptr };
         std::unique_ptr<PdScene> scene_{ nullptr };
         std::unique_ptr<PdView> view_{ nullptr };
-        std::unique_ptr<utils::PdEntityManager> entity_manager_{ nullptr };
 	};
 
     DOWNCAST(Engine);

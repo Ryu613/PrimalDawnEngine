@@ -9,7 +9,6 @@
 #include "impl/view.hpp"
 #include "impl/renderer.hpp"
 #include "impl/scene.hpp"
-#include "impl/utils/entity_manager.hpp"
 
 namespace primaldawn {
     /**
@@ -18,8 +17,7 @@ namespace primaldawn {
     * 3. entity manager
     */
     PdEngine::PdEngine(const config::Engine& config)
-      : config_(config),
-        entity_manager_(std::make_unique<utils::PdEntityManager>()) {
+      : config_(config) {
         logging::Init();
         LOGI("Engine initializing...")
         platform_ = factory::CreatePlatform(config_.platform);
