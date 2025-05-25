@@ -68,7 +68,7 @@ ecs::enable_system<MoveSystem>();
 
 ## 实现
 
-参考libs/utils/ecs
+参考zetools/ecs
 
 ## 参考资料
 
