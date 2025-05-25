@@ -97,4 +97,15 @@ elseif(${BACKEND_TYPE} STREQUAL "OPENGL")
 	target_include_directories(glad PUBLIC ${EXTERNALS_DIR}/glad-api3_3-no_ext/include)
 endif()
 
+# ze-tools
+FetchContent_Declare(
+	zetools
+	GIT_REPOSITORY https://github.com/Ryu613/ze-tools.git
+	GIT_TAG origin/master
+	GIT_SHALLOW TRUE
+	GIT_PROGRESS TRUE
+	SOURCE_DIR ${PRIMALDAWN_DIR}/externals/zetools
+)
+FetchContent_MakeAvailable(zetools)
+
 

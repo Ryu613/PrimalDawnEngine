@@ -17,10 +17,10 @@ set(ENGINE_PRIVATE_HEADERS
 )
 
 set(EXTERNALS
-	primaldawn_utils
 	fmt
 	spdlog::spdlog
 	glm
+	ze_tools_ecs
 )
 
 set(EXT_HEADERS_DIR
