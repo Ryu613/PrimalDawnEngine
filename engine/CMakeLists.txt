@@ -20,6 +20,7 @@ set(EXTERNALS
 	fmt
 	spdlog::spdlog
 	glm
+	ze_tools_allocator
 	ze_tools_ecs
 )
 

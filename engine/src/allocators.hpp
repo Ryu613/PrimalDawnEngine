@@ -1,12 +1,12 @@
-#include "utils/allocator.hpp"
+#include "ze/allocator/allocator.hpp"
 
 namespace primaldawn {
 
 	// only need allocate on heap and aligned
-	using HeapAllocator = utils::Arena<
-		utils::ResourcePolicy::NullResource,
-		utils::AllocatorPolicy::HeapAllocator,
-		utils::LockingPolicy::NoLock,
-		utils::TrackingPolicy::Untracked
+	using HeapAllocator = ze::Arena<
+		ze::ResourcePolicy::NullResource,
+		ze::AllocatorPolicy::RawHeapAllocator,
+		ze::LockingPolicy::NoLock,
+		ze::TrackingPolicy::NoTracking
 	>;
 } // namespace primaldawn
