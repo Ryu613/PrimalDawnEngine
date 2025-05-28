@@ -38,10 +38,12 @@ namespace primaldawn {
 		Engine* engine_ = nullptr;
 		Scene* scene_ = nullptr;
 		View* view_ = nullptr;
+		Renderer* renderer_ = nullptr;
 		Camera* camera_ = nullptr;
+		SceneSetupCallback scene_setup_callback_;
 		bool close_ = true;
 		bool configured_ = false;
-		bool scene_setup_ = false;
+		bool scene_ready_ = false;
 	public:
 		Application(const Application&) = delete;
 		Application& operator=(const Application&) = delete;

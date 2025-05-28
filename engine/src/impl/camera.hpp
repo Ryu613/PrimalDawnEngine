@@ -6,6 +6,8 @@
 
 namespace primaldawn {
 	class PdCamera : public Camera {
+	public:
+
 	private:
 
 	};

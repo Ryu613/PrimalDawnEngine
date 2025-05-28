@@ -8,6 +8,7 @@ namespace primaldawn {
     class Scene;
     class View;
     class Camera;
+    class Renderer;
     /**
     * @brief Engine is Main entry of whole system, it provides global management api of subsystems 
     * Engine should be created by Create(), and destroy by Destroy(), cannot use ctor/dtor
@@ -44,6 +45,11 @@ namespace primaldawn {
         * @brief create a view
         */
         View* CreateView() noexcept;
+
+        /**
+        * @brief create a renderer
+        */
+        Renderer* CreateRenderer() noexcept;
 
         /**
         * @brief create a camera

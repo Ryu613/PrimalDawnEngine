@@ -6,6 +6,11 @@
 
 namespace primaldawn {
 	class PdScene : public Scene {
+	public:
+		explicit PdScene(PdEngine& engine);
+		~PdScene() = default;
+	private:
+		PdEngine& engine_;
 	};
 
 	DOWNCAST(Scene);

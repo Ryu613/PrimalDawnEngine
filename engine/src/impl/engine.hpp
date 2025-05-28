@@ -19,11 +19,11 @@ namespace primaldawn {
 	class PdEngine : public Engine {
     public:
         void* operator new(const std::size_t size) noexcept {
-            return ::utils::aligned_alloc(size, alignof(PdEngine));
+            return ze::aligned_alloc(size, alignof(PdEngine));
         }
 
         void operator delete(void* p) noexcept {
-            ::utils::aligned_free(p);
+            ze::aligned_free(p);
         }
     public:
         /**
@@ -46,6 +46,19 @@ namespace primaldawn {
         */
         PdScene* CreateScene();
 
+        /**
+        * @brief 创建视图
+        */
+        PdView* CreateView();
+
+        /**
+        * @brief 创建渲染器
+        */
+        PdRenderer* CreateRenderer();
+
+        /**
+        * @ brief 创建相机
+        */
         PdCamera* CreateCamera();
 
         /**
@@ -61,12 +74,13 @@ namespace primaldawn {
 
         bool is_running_ = false;
         config::Engine config_;
+        HeapAllocator allocator_;
         // 注意声明顺序影响析构顺序！
         std::unique_ptr<PdPlatform> platform_{ nullptr };
         std::unique_ptr<PdRenderSystem> render_system_{ nullptr };
-        std::unique_ptr<PdRenderer> renderer_{ nullptr };
-        std::unique_ptr<PdScene> scene_{ nullptr };
-        std::unique_ptr<PdView> view_{ nullptr };
+        PdScene* scene_{ nullptr };
+        PdView* view_{ nullptr };
+        PdRenderer* renderer_{ nullptr };
 	};
 
     DOWNCAST(Engine);

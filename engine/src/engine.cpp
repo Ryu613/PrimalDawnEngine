@@ -4,6 +4,9 @@
 #include "impl/engine.hpp"
 
 #include "impl/scene.hpp"
+#include "impl/view.hpp"
+#include "impl/renderer.hpp"
+#include "impl/camera.hpp"
 
 namespace primaldawn {
 
@@ -24,11 +27,15 @@ namespace primaldawn {
     }
 
     View* Engine::CreateView() noexcept {
-        return nullptr;
+        return downcast(this)->CreateView();
+    }
+
+    Renderer* Engine::CreateRenderer() noexcept {
+        return downcast(this)->CreateRenderer();
     }
 
     Camera* Engine::CreateCamera() noexcept {
-        return nullptr;
+        return downcast(this)->CreateCamera();
     }
 
     bool Engine::IsRunning() const {

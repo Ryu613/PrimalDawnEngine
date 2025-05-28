@@ -2,10 +2,13 @@
 
 #include <stdexcept>
 
+#include "ze/ecs/ecs.hpp"
+
 #include "primaldawn/logging.hpp"
 #include "primaldawn/engine.hpp"
 #include "primaldawn/scene.hpp"
 #include "primaldawn/view.hpp"
+#include "primaldawn/renderer.hpp"
 
 namespace primaldawn {
     Application& Application::Get() {
@@ -14,6 +17,7 @@ namespace primaldawn {
     }
 
     Application::~Application() {
+        Engine::Destroy(engine_);
     }
 
     Application& Application::Configure(const ApplicationConfig* config) {
@@ -32,24 +36,18 @@ namespace primaldawn {
         return *this;
     }
 
-    Application& Application::SetupScene(SceneSetupCallback setup) {
-        // configure scene and view
-        //scene_ = engine_->CreateScene();
-        //view_ = engine_->CreateView();
-        //view_->SetScene(scene_);
-        //camera_ = engine_->CreateCamera();
-        if (!setup) {
-            LOGW("scene not setup, use default scene!")
-            scene_ = engine_->CreateScene();
-            //scene_->AddEntity();
-        }
-        scene_setup_ = true;
+    Application& Application::SetupScene(SceneSetupCallback sceneSetupCallback) {
+        scene_setup_callback_ = sceneSetupCallback;
+        scene_ready_ = true;
         return *this;
     }
 
     void Application::Run() {
         if (!configured_) {
             throw std::runtime_error("please run Configure() explicitly first!");
+        }
+        if (!scene_ready_) {
+            throw std::runtime_error("please run SetupScene() explicitly first");
         }
         // configure and create engine
         config::Engine engine_config;
@@ -75,14 +73,25 @@ namespace primaldawn {
         engine_config.platform.window_system.window_height = config_.window_height;
         engine_config.platform.window_system.window_width = config_.window_width;
         engine_ = Engine::Create(&engine_config);
-        // TODO renderer
+        scene_ = engine_->CreateScene();
+        view_ = engine_->CreateView();
+        camera_ = engine_->CreateCamera();
+        view_->SetScene(scene_);
+        view_->SetCamera(camera_);
+        // setup scene
+        scene_setup_callback_(engine_, scene_, view_);
+        // render phase
+        renderer_ = engine_->CreateRenderer();
         close_ = false;
-        // TODO render loop
         while (!close_) {
-
+            renderer_->Render(view_);
         }
-        // TODO destroy
+        // clean up & destroy
         Engine::Destroy(engine_);
+        camera_ = nullptr;
+        renderer_ = nullptr;
+        view_ = nullptr;
+        scene_ = nullptr;
         engine_ = nullptr;
     }
 
