@@ -4,7 +4,7 @@
 
 ## 什么是RenderGraph
 
-Render Graph又叫Frame Graph, 是一种针对渲染管线涉及的资源和任务的关系进行管理的一种设计模式。
+Render Graph又叫Frame Graph, 是针对渲染管线涉及的资源和任务的关系进行管理的一种设计模式。
 
 此设计模式主要用于解决以下问题：
 
@@ -18,7 +18,7 @@ Render Graph又叫Frame Graph, 是一种针对渲染管线涉及的资源和任�
 
 把渲染管线中的各个阶段看作一个有向无环图(DAG)
 
-- `节点`: 代表render pass，它自己知道需要输入哪些资源，输出哪些资源
+- `节点`: 代表 render pass，它自己知道需要输入哪些资源，输出哪些资源
 - `有单个方向的边`: 代表资源的依赖关系，从资源的输出节点，指向资源输入的节点，没有循环依赖
 
 把渲染过程抽象成DAG后，又分成三个阶段:
@@ -30,7 +30,12 @@ Render Graph又叫Frame Graph, 是一种针对渲染管线涉及的资源和任�
 ## 设计思路
 
 
+
 ## 参考资料
 
 1. [learning Render Graph](https://yrom.net/blog/2023/08/13/learning-render-graph)
 1. [Render Graph 101](https://blog.traverseresearch.nl/render-graph-101-f42646255636)
+1. [why talking about render graphs](https://logins.github.io/graphics/2021/05/31/RenderGraphs.html)
+1. [render graphs and vulkan](https://themaister.net/blog/2017/08/15/render-graphs-and-vulkan-a-deep-dive/)
+1. [dragonjoker/render graph](https://github.com/DragonJoker/RenderGraph)
+1. [gdc render graph](https://www.bilibili.com/video/BV1Vx411v7gY)
